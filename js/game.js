@@ -1,14 +1,12 @@
 let canvas;
 let ctx;
-let character = new Image();
+let world = new World();
 
 
 function init() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
 
-
-    character.src = '../img/Elementals_ground_monk_FULL_v1.3/png/run/run_1.png';
-
-    ctx.drawImage(character, 20, 20, 150, 150);
+    console.log('My Character is,', world.character);
+    console.log('My Enemy is,', world.enemies[0]);
 }
