@@ -1,11 +1,17 @@
 class Foreground extends MovableObject {
     height = 180;
     width = 80;
-    type = Math.floor(Math.random() * 5) + 1;
 
-    constructor(imagePath) {
+    constructor(imagePath, x) {
         super().loadImage(imagePath);
-        this.x = Math.random() * 500;
+        if (x) {
+            this.width = 120;
+            this.height = 220;
+            this.x = x;
+            this.y = 225;
+            return
+        }
+        this.x = Math.random() * 1440;
         this.y = 265;
 
     }
