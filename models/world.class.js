@@ -1,59 +1,12 @@
 class World {
     character = new Character();
-    enemies = [
-        new Slime(),
-        new Slime(),
-        new Slime()
-    ];
-    clouds = [
-        new Cloud(),
-        new Cloud()
-    ];
-    backgroundObject = [
-        new Background('img/Background/background/sky_odd.png', -720, 0),
-        new Background('img/Background/background/cloud.png', -720, 0, 720, 150),
-        new Background('img/Background/background/mountain2.png', -720, 150, 720, 200),
-        new Background('img/Background/background/mountain.png', -720, 80, 720, 400),
-        new Background('img/Background/background/sky.png', -2, 0),
-        new Background('img/Background/background/cloud.png', -2, 0, 720, 150),
-        new Background('img/Background/background/mountain2.png', -3, 150, 720, 200),
-        new Background('img/Background/background/mountain.png', -3, 80, 720, 400),
-        new Background('img/Background/background/sky_odd.png', 717, 0),
-        new Background('img/Background/background/cloud.png', 717, 0, 720, 150),
-        new Background('img/Background/background/mountain2.png', 716, 150, 720, 200),
-        new Background('img/Background/background/mountain.png', 716, 80, 720, 400)
-    ];
-    foregroundObjects = [
-        new Foreground('img/Background/props/tree1/green/3.png', -80),
-        new Foreground('img/Background/props/tree1/green/3.png', 660),
-        new Foreground('img/Background/props/cover grass/4.png'),
-        new Foreground('img/Background/props/cover grass/4.png'),
-        new Foreground('img/Background/props/cover grass/4.png'),
-        new Foreground('img/Background/props/cover grass/4.png'),
-        new Foreground('img/Background/props/cover grass/4.png'),
-        new Foreground('img/Background/props/cover grass/4.png'),
-        new Foreground('img/Background/props/cover grass/4.png'),
-        new Foreground('img/Background/props/cover grass/4.png'),
-        new Foreground('img/Background/props/cover grass/4.png'),
-        new Foreground('img/Background/props/tree2/green/1.png'),
-        new Foreground('img/Background/props/tree2/green/2.png'),
-        new Foreground('img/Background/props/tree2/green/4.png'),
-        new Foreground('img/Background/props/tree2/green/5.png'),
-        new Foreground('img/Background/props/high grass/1.png'),
-        new Foreground('img/Background/props/high grass/3.png'),
-        new Foreground('img/Background/props/high grass/2.png'),
-        new Foreground('img/Background/props/high grass/5.png'),
-        new Foreground('img/Background/props/bush/green/1.png'),
-        new Foreground('img/Background/props/tump/3.png'),
-        new Foreground('img/Background/props/stones/2.png'),
-        new Foreground('img/Background/props/tree2/orange/2.png'),
-        new Foreground('img/Background/props/tree2/orange/5.png'),
-    ];
+    level = level1;
     floor = [];
     canvas;
     ctx;
     keyboard;
     camera_x = 0;
+    ambient_audio_idle = new Audio('audio/background_loops/Overworld.wav');
 
 
     constructor(canvas, keyboard) {
@@ -62,7 +15,7 @@ class World {
         this.keyboard = keyboard;
         this.fillFloorArray();
         this.draw();
-        this.setWorld();
+        this.setWorld();  
     }
 
     setWorld() {
@@ -98,16 +51,16 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.backgroundObject);
+        this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.floor);
-        this.addObjectsToMap(this.foregroundObjects);
+        this.addObjectsToMap(this.level.foregroundObjects);
         this.addToMap(this.character);
-        this.addObjectsToMap(this.enemies);
-        this.addObjectsToMap(this.clouds);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.clouds);
         this.ctx.translate(-this.camera_x, 0);
         
-        // Generate infinite World
-        if (this.floor[this.floor.length - 1].x - this.character.x < 600) {
+        // Generate infinite Floor on moving right
+        if (this.floor[this.floor.length - 1].x - this.character.x < 800) {
             this.fillFloorArray(true);
         }
 

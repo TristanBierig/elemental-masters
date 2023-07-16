@@ -13,6 +13,7 @@ class Character extends MovableObject {
     ];
     world;
     speed = 2.5;
+    walking_sound = new Audio('audio/sound_effects/foodsteps_grass.mp3');
 
     constructor() {
         super().loadImage('img/Character/png/run/run_1.png');
@@ -21,25 +22,28 @@ class Character extends MovableObject {
     }
 
     animate() {
+        this.walking_sound.pause();
         // Move Horizontal
         setInterval(() => {
-            if (this.world.keyboard.RIGHT == true){
+            if (this.world.keyboard.RIGHT == true && this.x < this.world.level.level_end_x) {
                 this.x += this.speed;
                 this.otherDirection = false;
+                this.walking_sound.play();
             }
 
-            if (this.world.keyboard.LEFT == true){
+            if (this.world.keyboard.LEFT == true && this.x > -750) {
                 this.x -= this.speed;
                 this.otherDirection = true;
+                this.walking_sound.play();
             }
-            this.world.camera_x = -this.x;
+            this.world.camera_x = -this.x - 150;
             console.log(this.x);
         }, 1000 / 60);
 
         // Run Animation
         setInterval(() => {
             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                
+
                 let i = this.currentImage % this.IMAGES_RUN.length;
                 let path = this.IMAGES_RUN[i];
                 this.img = this.imageCache[path];
