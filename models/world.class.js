@@ -24,7 +24,7 @@ class World {
 
 
     /**
-     * This function pushes new objects into the this.floor-Array based of whether the character travelled a certain distance to the right. (infinite World generation)
+     * This function pushes new objects into the this.floor-Array based on whether the character travelled a certain distance to the right. (infinite World generation)
      * 
      * @param {boolean} newScreen - This is True when the character travelled a certain distance to the right 
      *                              in relation to the already rendered Background and Floor Sprites X-Coordinates 
@@ -44,6 +44,7 @@ class World {
         }
     }
 
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         // Prevents upscaling Pixelart to be smushy
@@ -54,8 +55,8 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.floor);
         this.addObjectsToMap(this.level.foregroundObjects);
-        this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
+        this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.ctx.translate(-this.camera_x, 0);
         

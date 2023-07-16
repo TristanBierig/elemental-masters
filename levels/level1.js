@@ -2,7 +2,8 @@ const level1 = new Level(
     [
         new Slime(),
         new Slime(),
-        new Slime()
+        new Slime(),
+        new Endboss()
     ],
     [
         new Cloud(),
