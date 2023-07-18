@@ -1,6 +1,10 @@
 class Slime extends MovableObject {
     height = 96;
     width = 96;
+    hitbox_x_start;
+    hitbox_y_start;
+    hitbox_x_end;
+    hitbox_y_end;
     IMAGES_WALKING = [
         'img/Enemies/Slime/BlueSlime/move/move_1.png',
         'img/Enemies/Slime/BlueSlime/move/move_2.png',
@@ -29,11 +33,20 @@ class Slime extends MovableObject {
             // if (this.y < 383) {
                 this.moveLeft();
             // }
+            this.updateHitbox();
         }, 1000 / 60);
 
         setInterval(() => {
            this.playAnimation(this.IMAGES_WALKING);
         }, 1000 / 4);
 
+    }
+
+
+    updateHitbox() {
+        this.hitbox_x_start = this.x + 24;
+        this.hitbox_y_start = this.y + 16;
+        this.hitbox_x_end = this.hitbox_x_start + (this.width - 56);
+        this.hitbox_y_end = this.hitbox_y_start + (this.height - 48);
     }
 }

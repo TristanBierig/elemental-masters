@@ -15,12 +15,27 @@ class World {
         this.keyboard = keyboard;
         this.fillFloorArray();
         this.draw();
+        this.checkCollisions();
         // this.setWorld();
     }
 
     // setWorld() {
     //     //this.character.world = this;
     // }
+
+    checkCollisions() {
+        setInterval(() => {
+              this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.takingHit = true;
+                    this.character.lifePoints -= 1;
+                    console.log(this.character, enemy);
+                    console.log(this.character.takingHit)
+                }
+                this.character.takingHit = false;
+            });
+        }, 100);
+    }
 
 
     /**
@@ -88,7 +103,7 @@ class World {
         mo.draw(this.ctx);
         // debugger
         mo.drawHitbox(this.ctx);
-      
+
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

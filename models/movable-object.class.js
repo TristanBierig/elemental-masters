@@ -44,18 +44,25 @@ class MovableObject {
 
 
     drawHitbox(ctx) {
-
         if (this instanceof Character || this instanceof Slime || this instanceof Endboss) {
             ctx.beginPath();
             ctx.lineWidth = '2';
             ctx.strokeStyle = 'blue';
             if (this instanceof Character) {
-                ctx.rect(this.x, this.y, this.width, this.height - 13) ;
-            } else if( this instanceof Slime) {
-                ctx.rect(this.x - 16, this.y + 16, this.width - 16, this.height - 16);
+                ctx.rect(this.x + 260, this.y + 170, this.width - 520, this.height - 180);
+            } else if (this instanceof Slime) {
+                ctx.rect(this.x + 24, this.y + 16, this.width - 56, this.height - 48);
             }
             ctx.stroke();
         }
+    }
+
+
+    isColliding(mo) {
+        return this.hitbox_x_end > mo.hitbox_x_start &&
+            this.hitbox_y_end > mo.hitbox_y_start &&
+            this.hitbox_x_start < mo.hitbox_x_end &&
+            this.hitbox_y_start < mo.hitbox_y_end;
     }
 
     moveRight() {
