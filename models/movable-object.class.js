@@ -6,25 +6,28 @@ class MovableObject {
     otherDirection = false;
     speedY = 0;
     accelertion = 1;
-    test = '';
+
 
     applyGravitiy() {
         setInterval(() => {
-            if (this.isAirborne()) {
-                this.y += this.speedY;
-                this.speedY += this.accelertion;
+            if (this.isAirborne() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.accelertion;
             }
         }, 1000 / 25);
     }
+
 
     isAirborne() {
         return this.y < 205;
     }
 
+
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
+
 
     loadImages(arr) {
         arr.forEach(path => {
@@ -34,22 +37,47 @@ class MovableObject {
         });
     }
 
+
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+
+
+    drawHitbox(ctx) {
+
+        if (this instanceof Character || this instanceof Slime || this instanceof Endboss) {
+            ctx.beginPath();
+            ctx.lineWidth = '2';
+            ctx.strokeStyle = 'blue';
+            if (this instanceof Character) {
+                ctx.rect(this.x, this.y, this.width, this.height - 13) ;
+            } else if( this instanceof Slime) {
+                ctx.rect(this.x - 16, this.y + 16, this.width - 16, this.height - 16);
+            }
+            ctx.stroke();
+        }
+    }
+
     moveRight() {
-        console.log('Moving right');
+        this.x += this.speed;
+        this.otherDirection = false;
     }
 
 
     moveLeft() {
-        setInterval(() => {
-            this.x -= this.speed;
-        }, 1000 / 60);
+        this.x -= this.speed;
+        this.otherDirection = true;
+    }
+
+    jump() {
+        this.speedY = 20;
     }
 
 
     /**
      * This function iterates over a passed in Array 
      * 
-     * @param {Array} images - Expects and array with all the path to a particual animation 
+     * @param {Array} images - Expects and array with all the paths to a particual animation 
      */
     playAnimation(images) {
         let i = this.currentImage % images.length;

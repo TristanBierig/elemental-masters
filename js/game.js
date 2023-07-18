@@ -4,7 +4,7 @@ let keyboard = new Keyboard();
 
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard); 
+    world = new World(canvas, keyboard);
 }
 
 
@@ -21,7 +21,7 @@ window.addEventListener("keydown", function (e) {
     if (e.code == 'ArrowDown') {
         keyboard.DOWN = true;
     }
-    if (e.code == 'Space') {
+    if (!e.event && e.code == 'Space') {
         keyboard.SPACE = true;
     }
 });

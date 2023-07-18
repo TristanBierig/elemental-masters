@@ -15,12 +15,12 @@ class World {
         this.keyboard = keyboard;
         this.fillFloorArray();
         this.draw();
-        this.setWorld();  
+        // this.setWorld();
     }
 
-    setWorld() {
-        //this.character.world = this;
-    }
+    // setWorld() {
+    //     //this.character.world = this;
+    // }
 
 
     /**
@@ -55,11 +55,12 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.floor);
         this.addObjectsToMap(this.level.foregroundObjects);
+        // debugger
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.ctx.translate(-this.camera_x, 0);
-        
+
         // Generate infinite Floor on moving right
         if (this.floor[this.floor.length - 1].x - this.character.x < 800) {
             this.fillFloorArray(true);
@@ -82,16 +83,30 @@ class World {
 
     addToMap(mo) {
         if (mo.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(mo.width, 0);
-            this.ctx.scale(-1, 1);
-            mo.x = mo.x * - 1;
+            this.flipImage(mo);
         }
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        mo.draw(this.ctx);
+        // debugger
+        mo.drawHitbox(this.ctx);
+      
 
         if (mo.otherDirection) {
-            mo.x = mo.x * - 1;
-            this.ctx.restore();
+            this.flipImageBack(mo);
         }
+
+    }
+
+
+    flipImage(mo) {
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0);
+        this.ctx.scale(-1, 1);
+        mo.x = mo.x * - 1;
+    }
+
+
+    flipImageBack(mo) {
+        mo.x = mo.x * - 1;
+        this.ctx.restore();
     }
 }
