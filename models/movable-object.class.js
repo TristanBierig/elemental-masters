@@ -1,11 +1,25 @@
 class MovableObject {
-    x = -200;
-    y = 205;
     img;
     imageCache = {};
     currentImage = 0;
     speed = 0.15;
     otherDirection = false;
+    speedY = 0;
+    accelertion = 1;
+    test = '';
+
+    applyGravitiy() {
+        setInterval(() => {
+            if (this.isAirborne()) {
+                this.y += this.speedY;
+                this.speedY += this.accelertion;
+            }
+        }, 1000 / 25);
+    }
+
+    isAirborne() {
+        return this.y < 205;
+    }
 
     loadImage(path) {
         this.img = new Image();
