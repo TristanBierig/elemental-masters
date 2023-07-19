@@ -1,6 +1,9 @@
 class Slime extends MovableObject {
     height = 96;
     width = 96;
+    isHitting = false;
+    x;
+    y;
     hitbox_x_start;
     hitbox_y_start;
     hitbox_x_end;
@@ -24,7 +27,7 @@ class Slime extends MovableObject {
         this.y = 383; // 383 Ground level
       
         this.loadImages(this.IMAGES_WALKING);
-        this.speed = this.speed + Math.random() * 0.35;
+        this.speed = this.speed + Math.random() * 2; // 0.35
         this.animate();
     }
 

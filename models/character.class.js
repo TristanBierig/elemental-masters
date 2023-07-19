@@ -3,8 +3,7 @@ class Character extends MovableObject {
     width = 576;
     x = -200;
     y = 150; // 205 Ground value
-    lifePoints = 100;
-    takingHit = 10;
+    takingHit;
     hitbox_x_start;
     hitbox_y_start;
     hitbox_x_end;
@@ -55,6 +54,27 @@ class Character extends MovableObject {
         'img/Character/png/take_hit/take_hit_6.png'
     ];
 
+    IMAGES_DEAD = [
+        'img/Character/png/death/death_1.png',
+        'img/Character/png/death/death_2.png',
+        'img/Character/png/death/death_3.png',
+        'img/Character/png/death/death_4.png',
+        'img/Character/png/death/death_5.png',
+        'img/Character/png/death/death_6.png',
+        'img/Character/png/death/death_7.png',
+        'img/Character/png/death/death_8.png',
+        'img/Character/png/death/death_9.png',
+        'img/Character/png/death/death_10.png',
+        'img/Character/png/death/death_11.png',
+        'img/Character/png/death/death_12.png',
+        'img/Character/png/death/death_13.png',
+        'img/Character/png/death/death_14.png',
+        'img/Character/png/death/death_15.png',
+        'img/Character/png/death/death_16.png',
+        'img/Character/png/death/death_17.png',
+        'img/Character/png/death/death_18.png',
+    ];
+
 
     constructor() {
         super().loadImage('img/Character/png/run/run_1.png');
@@ -63,6 +83,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING_DOWN);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_TAKING_HIT);
+        this.loadImages(this.IMAGES_DEAD);
         this.animate();
         this.applyGravitiy();
     }
@@ -95,25 +116,30 @@ class Character extends MovableObject {
 
         // Just looping through ANIMATION frames (no movement here)            
         setInterval(() => {
-            if (this.takingHit) {
+            // debugger
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+            } else if (this.takingHit) {
+                // Taking Hit
                 this.playAnimation(this.IMAGES_TAKING_HIT);
-            } else
-                // Jumping Up
-                if (this.isAirborne() && this.speedY > 0) {
-                    this.playAnimation(this.IMAGES_JUMPING_UP);
-                    // Falling Down
-                } else if (this.isAirborne() && this.speedY <= 0) {
-                    this.playAnimation(this.IMAGES_JUMPING_DOWN);
-                } else if (world && world.keyboard.RIGHT || world.keyboard.LEFT) {
-                    // Run Animation
-                    this.playAnimation(this.IMAGES_WALKING)
-                }
-                else {
-                    this.playAnimation(this.IMAGES_IDLE);
-                }
+            } else if (!this.takingHit && this.isAirborne() && this.speedY > 0) {
+                // Jumping up
+                this.playAnimation(this.IMAGES_JUMPING_UP);
+            } else if (!this.takingHit && this.isAirborne() && this.speedY <= 0) {
+                // Falling Down
+                this.playAnimation(this.IMAGES_JUMPING_DOWN);
+            } else if (!this.takingHit && world && world.keyboard.RIGHT || world.keyboard.LEFT) {
+                // Run Animation
+                this.playAnimation(this.IMAGES_WALKING)
+            }
+            else if (!this.takingHit) {
+                // Doing nothing
+                this.playAnimation(this.IMAGES_IDLE);
+            }
 
-        }, 80);
+        }, 100);
     }
+
 
     /**
      * This functions updates the Hitbox on moving the character and the integers are setting the hitbox to the direct outline of the character in basic form

@@ -25,17 +25,32 @@ class World {
 
     checkCollisions() {
         setInterval(() => {
-              this.level.enemies.forEach((enemy) => {
+            // debugger
+            this.level.enemies.forEach((enemy) => {
+
                 if (this.character.isColliding(enemy)) {
+                    enemy.isHitting = true;
                     this.character.takingHit = true;
-                    this.character.lifePoints -= 1;
+                    this.character.gettingHit();
                     console.log(this.character, enemy);
-                    console.log(this.character.takingHit)
-                }
-                this.character.takingHit = false;
+                    console.log(this.character.lifePoints);
+                    console.log(this.character.takingHit);
+                    return;
+                } 
+
+                if (!this.character.isColliding(enemy) && enemy.isHitting) {
+                    enemy.isHitting = false;
+                    this.character.takingHit = false;
+                }               
             });
         }, 100);
     }
+
+
+    checkEnemyHitting(enemy) {
+        return enemy.isHitting == true;
+    }
+
 
 
     /**

@@ -6,6 +6,7 @@ class MovableObject {
     otherDirection = false;
     speedY = 0;
     accelertion = 1;
+    lifePoints = 100;
 
 
     applyGravitiy() {
@@ -52,6 +53,8 @@ class MovableObject {
                 ctx.rect(this.x + 260, this.y + 170, this.width - 520, this.height - 180);
             } else if (this instanceof Slime) {
                 ctx.rect(this.x + 24, this.y + 16, this.width - 56, this.height - 48);
+            } else if (this instanceof Endboss) {
+                ctx.rect(this.x + 260, this.y + 70, this.width - 520, this.height + 110);
             }
             ctx.stroke();
         }
@@ -65,6 +68,28 @@ class MovableObject {
             this.hitbox_y_start < mo.hitbox_y_end;
     }
 
+
+    gettingHit() {
+        this.lifePoints -= 1;
+        if (this.lifePoints < 0) {
+            this.lifePoints = 0
+        }
+        // debugger
+        // setInterval(() => {
+        //     if (this.takingHit && this.lifePoints > 0) {
+        //         this.playAnimation(this.IMAGES_TAKING_HIT);
+        //     } else {
+        //         return;
+        //     }
+        // }, 100);
+    }
+
+
+    isDead() {
+        return this.lifePoints == 0;
+    }
+
+
     moveRight() {
         this.x += this.speed;
         this.otherDirection = false;
@@ -75,6 +100,7 @@ class MovableObject {
         this.x -= this.speed;
         this.otherDirection = true;
     }
+
 
     jump() {
         this.speedY = 20;
@@ -87,6 +113,7 @@ class MovableObject {
      * @param {Array} images - Expects and array with all the paths to a particual animation 
      */
     playAnimation(images) {
+        // debugger
         let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imageCache[path];
