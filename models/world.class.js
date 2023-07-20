@@ -2,6 +2,7 @@ class World {
     character = new Character();
     level = level1;
     floor = [];
+    statusBar = new StatusBar();
     canvas;
     ctx;
     keyboard;
@@ -16,12 +17,8 @@ class World {
         this.fillFloorArray();
         this.draw();
         this.checkCollisions();
-        // this.setWorld();
     }
 
-    // setWorld() {
-    //     //this.character.world = this;
-    // }
 
     checkCollisions() {
         setInterval(() => {
@@ -32,16 +29,17 @@ class World {
                     enemy.isHitting = true;
                     this.character.takingHit = true;
                     this.character.gettingHit();
+                    this.statusBar.percentage = this.character.lifePoints;
                     console.log(this.character, enemy);
                     console.log(this.character.lifePoints);
                     console.log(this.character.takingHit);
                     return;
-                } 
+                }
 
                 if (!this.character.isColliding(enemy) && enemy.isHitting) {
                     enemy.isHitting = false;
                     this.character.takingHit = false;
-                }               
+                }
             });
         }, 100);
     }
@@ -50,7 +48,6 @@ class World {
     checkEnemyHitting(enemy) {
         return enemy.isHitting == true;
     }
-
 
 
     /**
@@ -89,6 +86,11 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
+
+        this.ctx.translate(-this.camera_x, 0); //Back
+        this.addToMap(this.statusBar);
+        this.ctx.translate(this.camera_x, 0); // Forwards
+
         this.ctx.translate(-this.camera_x, 0);
 
         // Generate infinite Floor on moving right
@@ -117,13 +119,15 @@ class World {
         }
         mo.draw(this.ctx);
         // debugger
+        if (mo.drawHitbox(this.ctx)) {
+
+        }
         mo.drawHitbox(this.ctx);
 
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
-
     }
 
 

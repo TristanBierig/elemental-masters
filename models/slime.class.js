@@ -20,16 +20,16 @@ class Slime extends MovableObject {
     ];
 
 
-
     constructor() {
         super().loadImage('img/Enemies/Slime/BlueSlime/move/move_1.png');
         this.x = 200 + Math.random() * 500;
         this.y = 383; // 383 Ground level
       
         this.loadImages(this.IMAGES_WALKING);
-        this.speed = this.speed + Math.random() * 2; // 0.35
+        this.speed = this.speed + Math.random() * 0.35; // 0.35
         this.animate();
     }
+
 
     animate() {
         setInterval(() => {

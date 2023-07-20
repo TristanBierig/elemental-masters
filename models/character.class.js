@@ -8,8 +8,6 @@ class Character extends MovableObject {
     hitbox_y_start;
     hitbox_x_end;
     hitbox_y_end;
-
-    //world;
     speed = 2.5;
     walking_sound = new Audio('audio/sound_effects/foodsteps_grass.mp3');
 
