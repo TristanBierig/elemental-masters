@@ -2,7 +2,10 @@ class World {
     character = new Character();
     level = level1;
     floor = [];
-    statusBar = new StatusBar();
+    statusBar = [
+        new StatusBar(),
+        new StatusBarMana()
+    ]
     canvas;
     ctx;
     keyboard;
@@ -29,7 +32,7 @@ class World {
                     enemy.isHitting = true;
                     this.character.takingHit = true;
                     this.character.gettingHit();
-                    this.statusBar.percentage = this.character.lifePoints;
+                    this.statusBar[0].percentage = this.character.lifePoints;
                     console.log(this.character, enemy);
                     console.log(this.character.lifePoints);
                     console.log(this.character.takingHit);
@@ -87,8 +90,9 @@ class World {
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
 
-        this.ctx.translate(-this.camera_x, 0); //Back
-        this.addToMap(this.statusBar);
+        this.ctx.translate(-this.camera_x, 0); // Back
+        // debugger
+        this.addObjectsToMap(this.statusBar);
         this.ctx.translate(this.camera_x, 0); // Forwards
 
         this.ctx.translate(-this.camera_x, 0);

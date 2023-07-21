@@ -8,10 +8,11 @@ class MovableObject extends DrawableObject {
 
     applyGravitiy() {
         setInterval(() => {
+            // debugger
             if (this.isAirborne() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.accelertion;
-            }
+            } 
         }, 1000 / 25);
     }
 
@@ -30,7 +31,7 @@ class MovableObject extends DrawableObject {
 
 
     gettingHit() {
-        this.lifePoints -= 1;
+        this.lifePoints -= 10; // Default 1
         if (this.lifePoints <= 0) {
             this.lifePoints = 0
         }
@@ -55,7 +56,17 @@ class MovableObject extends DrawableObject {
 
 
     jump() {
-        this.speedY = 20;
+        this.speedY = 17;
+    }
+
+
+    /**
+     * This function stops any given Interfal
+     * 
+     * @param {interval} Interval - Expects an Interval ID to be stopped
+     */
+    stopInterval(Interval) {
+        clearInterval(Interval);
     }
 
 

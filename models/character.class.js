@@ -9,6 +9,9 @@ class Character extends MovableObject {
     hitbox_x_end;
     hitbox_y_end;
     speed = 2.5;
+    status;
+    animationInterval;
+    movementInterval;
     walking_sound = new Audio('audio/sound_effects/foodsteps_grass.mp3');
 
     IMAGES_WALKING = [
@@ -89,7 +92,7 @@ class Character extends MovableObject {
     animate() {
         this.walking_sound.pause();
         // Move Horizontal
-        setInterval(() => {
+        this.movementInterval = setInterval(() => {
             if (world && world.keyboard.RIGHT == true && this.x < world.level.level_end_x) {
                 this.moveRight();
                 this.walking_sound.play();
@@ -101,6 +104,7 @@ class Character extends MovableObject {
             }
 
             // console.log('this.speedY =', this.speedY);
+
             if (world && world.keyboard.SPACE == true && !this.isAirborne()) {
                 this.jump();
             }
@@ -113,12 +117,25 @@ class Character extends MovableObject {
 
 
         // Just looping through ANIMATION frames (no movement here)            
-        setInterval(() => {
+        this.animationInterval = setInterval(() => {
             // debugger
             if (this.isDead()) {
+                if (this.status != 'DEAD') {
+                    this.currentImage = 0;
+                    this.status = 'DEAD';
+                    this.stopInterval(this.movementInterval);
+                }
                 this.playAnimation(this.IMAGES_DEAD);
+                // debugger
+                if (this.currentImage == 18) {
+                    this.stopInterval(this.animationInterval);
+                }
             } else if (this.takingHit) {
                 // Taking Hit
+                if (this.status != 'HIT') {
+                    this.currentImage = 0;
+                    this.status = 'HIT';
+                }
                 this.playAnimation(this.IMAGES_TAKING_HIT);
             } else if (!this.takingHit && this.isAirborne() && this.speedY > 0) {
                 // Jumping up
@@ -134,9 +151,10 @@ class Character extends MovableObject {
                 // Doing nothing
                 this.playAnimation(this.IMAGES_IDLE);
             }
-
+            // console.log(this.status);
         }, 100);
     }
+
 
 
     /**

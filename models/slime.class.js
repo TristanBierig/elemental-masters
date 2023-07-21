@@ -41,7 +41,7 @@ class Slime extends MovableObject {
 
         setInterval(() => {
            this.playAnimation(this.IMAGES_WALKING);
-        }, 1000 / 4);
+        }, 1000 / 5);
 
     }
 

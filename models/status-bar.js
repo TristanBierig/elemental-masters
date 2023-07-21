@@ -1,6 +1,6 @@
 class StatusBar extends DrawableObject {
     percentage = 100;
-
+    IMAGE_FRAME = 'img/UI/ingame_bars/frames/frame_grey.png';
     IMAGES_GREEN_BAR = [
         'img/UI/ingame_bars/bar_green/tile055.png',
         'img/UI/ingame_bars/bar_green/tile054.png',
@@ -14,10 +14,10 @@ class StatusBar extends DrawableObject {
     constructor() {
         // debugger
         super();
-        this.loadImage('img/UI/ingame_bars/frames/frame_grey.png');
+        this.loadImage(this.IMAGES_GREEN_BAR[0]);
         this.loadImages(this.IMAGES_GREEN_BAR);
         this.x = 20;
-        this.y = 20;
+        this.y = 0;
         this.height = 32;
         this.width = 128;
 
@@ -26,7 +26,6 @@ class StatusBar extends DrawableObject {
             this.loadImage('img/UI/ingame_bars/frames/frame_grey.png');
             this.setPercentage();
         }, 100);
-
     }
 
 
