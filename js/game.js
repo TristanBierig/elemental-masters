@@ -9,17 +9,26 @@ function init() {
 
 
 window.addEventListener("keydown", function (e) {
+    if (e.code == 'Escape') {
+        keyboard.ESCAPE = true;
+    }
     if (e.code == 'ArrowRight') {
         keyboard.RIGHT = true;
     }
     if (e.code == 'ArrowLeft') {
         keyboard.LEFT = true;
     }
-    if (e.code == 'ArrowUp') {
-        keyboard.UP = true;
+    if (e.code == 'KeyQ') {
+        keyboard.Q = true;
     }
-    if (e.code == 'ArrowDown') {
-        keyboard.DOWN = true;
+    if (e.code == 'KeyW') {
+        keyboard.W = true;
+    }
+    if (e.code == 'KeyE') {
+        keyboard.E = true;
+    }
+    if (e.code == 'KeyR') {
+        keyboard.R = true;
     }
     if (!e.event && e.code == 'Space') {
         keyboard.SPACE = true;
@@ -27,17 +36,26 @@ window.addEventListener("keydown", function (e) {
 });
 
 window.addEventListener("keyup", function (e) {
+    if (e.code == 'Escape') {
+        keyboard.ESCAPE = false;
+    }
     if (e.code == 'ArrowRight') {
         keyboard.RIGHT = false;
     }
     if (e.code == 'ArrowLeft') {
         keyboard.LEFT = false;
     }
-    if (e.code == 'ArrowUp') {
-        keyboard.UP = false;
+    if (e.code == 'KeyQ') {
+        keyboard.Q = false;
     }
-    if (e.code == 'ArrowDown') {
-        keyboard.DOWN = false;
+    if (e.code == 'KeyW') {
+        keyboard.W = false;
+    }
+    if (e.code == 'KeyE') {
+        keyboard.E = false;
+    }
+    if (e.code == 'KeyR') {
+        keyboard.R = false;
     }
     if (e.code == 'Space') {
         keyboard.SPACE = false;
