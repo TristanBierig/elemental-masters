@@ -4,7 +4,8 @@ class World {
     floor = [];
     statusBar = [
         new StatusBar(),
-        new StatusBarMana()
+        new StatusBarMana(),
+        new StatusBarStars()
     ]
     canvas;
     ctx;
@@ -93,6 +94,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0); // Back
         // debugger
         this.addObjectsToMap(this.statusBar);
+        this.addFrameToMap(this.statusBar);
         this.ctx.translate(this.camera_x, 0); // Forwards
 
         this.ctx.translate(-this.camera_x, 0);
@@ -107,6 +109,14 @@ class World {
         requestAnimationFrame(function () {
             self.draw();
         });
+    }
+
+
+    addFrameToMap(object) {
+        object.forEach(obj => {
+            this.addToMap(obj.statusbarFrame);
+            this.addToMap(obj.statusbarIcon);
+        })
     }
 
 

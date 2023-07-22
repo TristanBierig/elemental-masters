@@ -53,5 +53,8 @@ const level1 = new Level(
         new Foreground('img/Background/props/stones/2.png'),
         new Foreground('img/Background/props/tree2/orange/2.png'),
         new Foreground('img/Background/props/tree2/orange/5.png')
+    ],
+    [
+        
     ]
 );
