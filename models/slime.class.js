@@ -26,7 +26,7 @@ class Slime extends MovableObject {
         this.y = 383; // 383 Ground level
       
         this.loadImages(this.IMAGES_WALKING);
-        this.speed = this.speed + Math.random() * 0.35; // 0.35
+        this.speed = this.speed + Math.random() * -100; // 0.35
         this.animate();
     }
 

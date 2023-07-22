@@ -3,15 +3,20 @@ class Character extends MovableObject {
     width = 576;
     x = -200;
     y = 150; // 205 Ground value
-    takingHit;
+    speed = 2.5;
     hitbox_x_start;
     hitbox_y_start;
     hitbox_x_end;
     hitbox_y_end;
-    speed = 2.5;
-    status;
+
+    takingHit;
+    animationStatus;
+    movementStatus;
     animationInterval;
     movementInterval;
+    activeSpells = [];
+    spellCooldown = false;
+
     walking_sound = new Audio('audio/sound_effects/foodsteps_grass.mp3');
 
     IMAGES_WALKING = [
@@ -76,6 +81,15 @@ class Character extends MovableObject {
         'img/Character/png/death/death_18.png',
     ];
 
+    IMAGES_ATTACK_E = [
+        'img/Character/png/1_atk/1_atk_1.png',
+        'img/Character/png/1_atk/1_atk_2.png',
+        'img/Character/png/1_atk/1_atk_3.png',
+        'img/Character/png/1_atk/1_atk_4.png',
+        'img/Character/png/1_atk/1_atk_5.png',
+        'img/Character/png/1_atk/1_atk_6.png'
+    ];
+
 
     constructor() {
         super().loadImage('img/Character/png/run/run_1.png');
@@ -96,11 +110,13 @@ class Character extends MovableObject {
             if (world && world.keyboard.RIGHT == true && this.x < world.level.level_end_x) {
                 this.moveRight();
                 this.walking_sound.play();
+                this.movementStatus = 'RIGHT';
             }
 
             if (world && world.keyboard.LEFT == true && this.x > -750) {
                 this.moveLeft();
                 this.walking_sound.play();
+                this.movementStatus = 'LEFT';
             }
 
             // console.log('this.speedY =', this.speedY);
@@ -109,10 +125,20 @@ class Character extends MovableObject {
                 this.jump();
             }
 
+            if (world && world.keyboard.E == true && !this.spellCooldown) {
+                this.activeSpells.push(new ThrowableObject(this.hitbox_x_start + ((this.hitbox_x_end - this.hitbox_x_start) / 4), this.y + this.height / 2, this.movementStatus));
+                this.spellCooldown = true;
+                setTimeout(() => {
+                    this.spellCooldown = false;
+                }, 1000);
+            }
+
             this.updateHitbox();
 
             world.camera_x = -this.x - 150;
             // console.log(this.y);
+            // console.log(this.spellCooldown);
+            console.log(this.x);
         }, 1000 / 60);
 
 
@@ -120,21 +146,21 @@ class Character extends MovableObject {
         this.animationInterval = setInterval(() => {
             // debugger
             if (this.isDead()) {
-                if (this.status != 'DEAD') {
+                // Death Animation and stops Intervals
+                if (this.animationStatus != 'DEAD') {
                     this.currentImage = 0;
-                    this.status = 'DEAD';
+                    this.animationStatus = 'DEAD';
                     this.stopInterval(this.movementInterval);
                 }
                 this.playAnimation(this.IMAGES_DEAD);
-                // debugger
                 if (this.currentImage == 18) {
                     this.stopInterval(this.animationInterval);
                 }
             } else if (this.takingHit) {
                 // Taking Hit
-                if (this.status != 'HIT') {
+                if (this.animationStatus != 'HIT') {
                     this.currentImage = 0;
-                    this.status = 'HIT';
+                    this.animationStatus = 'HIT';
                 }
                 this.playAnimation(this.IMAGES_TAKING_HIT);
             } else if (!this.takingHit && this.isAirborne() && this.speedY > 0) {
@@ -151,7 +177,7 @@ class Character extends MovableObject {
                 // Doing nothing
                 this.playAnimation(this.IMAGES_IDLE);
             }
-            // console.log(this.status);
+            // console.log(this.animationStatus);
         }, 100);
     }
 

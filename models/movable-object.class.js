@@ -6,14 +6,26 @@ class MovableObject extends DrawableObject {
     lifePoints = 100;
 
 
-    applyGravitiy() {
-        setInterval(() => {
-            // debugger
-            if (this.isAirborne() || this.speedY > 0) {
-                this.y -= this.speedY;
-                this.speedY -= this.accelertion;
-            } 
-        }, 1000 / 25);
+    applyGravitiy(spellCasted) {
+        // Prevents chracter from falling through ground
+        if (!spellCasted) {
+            setInterval(() => {
+                // debugger
+                if (this.isAirborne() || this.speedY > 0) {
+                    this.y -= this.speedY;
+                    this.speedY -= this.accelertion;
+                }
+            }, 1000 / 25);
+        }
+
+        // Lets Spell Animation fall through ground and out of view
+        if (spellCasted) {
+            setInterval(() => {
+                // debugger
+                    this.y -= this.speedY;
+                    this.speedY -= this.accelertion; 
+            }, 1000 / 25);
+        }
     }
 
 
@@ -54,6 +66,9 @@ class MovableObject extends DrawableObject {
         this.otherDirection = true;
     }
 
+    shoot() {
+
+    }
 
     jump() {
         this.speedY = 17;

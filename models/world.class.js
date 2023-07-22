@@ -89,6 +89,9 @@ class World {
         // debugger
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
+        if (this.character.activeSpells.length > 0) {
+            this.addObjectsToMap(this.character.activeSpells);
+        }
         this.addObjectsToMap(this.level.clouds);
 
         this.ctx.translate(-this.camera_x, 0); // Back
