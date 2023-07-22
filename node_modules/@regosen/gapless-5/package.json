@@ -1,0 +1,36 @@
+{
+  "name": "@regosen/gapless-5",
+  "version": "1.4.1",
+  "description": "A gapless JavaScript audio player for HTML5",
+  "main": "gapless5.js",
+  "style": "gapless5.css",
+  "scripts": {
+    "lint": "eslint *.js",
+    "test": "jest --runInBand"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/regosen/Gapless-5.git"
+  },
+  "keywords": [
+    "audio",
+    "music",
+    "css",
+    "webAudio",
+    "gui",
+    "seamless",
+    "transition",
+    "crossfade",
+    "cross-fade",
+    "loop"
+  ],
+  "author": "Regaip Sen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/regosen/Gapless-5/issues"
+  },
+  "homepage": "https://github.com/regosen/Gapless-5#readme",
+  "devDependencies": {
+    "jest": "^27.3.1"
+  }
+}
