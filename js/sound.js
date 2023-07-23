@@ -1,6 +1,6 @@
 // Background OST
 const playerBackgroundIdle = new Gapless5({
-    tracks: ['../audio/background_loops/Overworld.wav'],
+    tracks: ['audio/background_loops/Overworld.wav'],
     loop: true,
     singleMode: true,
     volume: 0.05,
@@ -9,7 +9,7 @@ const playerBackgroundIdle = new Gapless5({
 
 // Endboss Music
 const playerBackgroundBoss = new Gapless5({
-    tracks: ['../audio/background_loops/Battle_Theme 2.wav'],
+    tracks: ['audio/background_loops/Battle_Theme 2.wav'],
     loop: true,
     singleMode: true,
     volume: 0.1,
@@ -18,7 +18,7 @@ const playerBackgroundBoss = new Gapless5({
 
 // Character runs on grass
 const playerSoundsRun = new Gapless5({
-    tracks: ['../audio/sound_effects/footsteps_grass.mp3'],
+    tracks: ['audio/sound_effects/footsteps_grass.mp3'],
     loop: true,
     singleMode: true,
     loadLimit: 1,
@@ -26,8 +26,17 @@ const playerSoundsRun = new Gapless5({
 
 // Character in the Air
 const playerSoundsFlying = new Gapless5({
-    tracks: ['../audio/sound_effects/flying.mp3'],
+    tracks: ['audio/sound_effects/flying.mp3'],
     loop: true,
+    singleMode: true,
+    loadLimit: 1,
+    volume: 0.2,
+});
+
+// Killing Slime
+const playerSoundsKillSlime = new Gapless5({
+    tracks: ['audio/sound_effects/pop.mp3'],
+    loop: false,
     singleMode: true,
     loadLimit: 1,
     volume: 0.2,

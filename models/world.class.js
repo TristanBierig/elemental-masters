@@ -11,7 +11,7 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    ambient_audio_idle = new Audio('audio/background_loops/Overworld.wav');
+    slimeKillAudio = playerSoundsKillSlime;
 
 
     constructor(canvas, keyboard) {
@@ -27,16 +27,32 @@ class World {
     checkCollisions() {
         setInterval(() => {
             // debugger
-            this.level.enemies.forEach((enemy) => {
+            this.level.enemies.forEach((enemy, index) => {
 
+                // Checks if character is landing on top of enemy -> kills given enemy
+                if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne()) {
+                    this.character.jump();
+                    this.slimeKillAudio.play();
+                    enemy.lifePoints = 0;
+                    // Prevents getting hit by dead enemy while its animation is still playing
+                    enemy.offset.top = 500;
+
+                    // Delets enemyobject from world after death animation played
+                    setTimeout(() => {
+                        this.level.enemies.splice(index, 1);
+                    }, 1200);
+                    console.log('Gegner gekillt');
+                }
+
+                // Checks for collision bewtween character and any enemy
                 if (this.character.isColliding(enemy)) {
                     enemy.isHitting = true;
                     this.character.takingHit = true;
                     this.character.gettingHit();
                     this.statusBar[0].percentage = this.character.lifePoints;
-                    console.log(this.character, enemy);
-                    console.log(this.character.lifePoints);
-                    console.log(this.character.takingHit);
+                    // console.log(this.character, enemy);
+                    // console.log(this.character.lifePoints);
+                    // console.log(this.character.takingHit);
                     return;
                 }
 
@@ -45,7 +61,7 @@ class World {
                     this.character.takingHit = false;
                 }
             });
-        }, 100);
+        }, 1000 / 24);
     }
 
 

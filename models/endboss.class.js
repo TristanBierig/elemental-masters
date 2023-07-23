@@ -1,31 +1,30 @@
 class Endboss extends MovableObject {
-    height = 160;
-    width = 288;
     isHitting = false;
-    hitbox_x_start;
-    hitbox_y_start;
-    hitbox_x_end;
-    hitbox_y_end;
-
     IMAGES_WALKING = [
-        'img/Endboss/individual sprites/02_move/move_1.png',
-        'img/Endboss/individual sprites/02_move/move_2.png',
-        'img/Endboss/individual sprites/02_move/move_3.png',
-        'img/Endboss/individual sprites/02_move/move_4.png',
-        'img/Endboss/individual sprites/02_move/move_5.png',
-        'img/Endboss/individual sprites/02_move/move_6.png',
-        'img/Endboss/individual sprites/02_move/move_7.png',
-        'img/Endboss/individual sprites/02_move/move_8.png'
+        'img/Endboss/individual sprites/01_idle/idle_1.png',
+        'img/Endboss/individual sprites/01_idle/idle_2.png',
+        'img/Endboss/individual sprites/01_idle/idle_3.png',
+        'img/Endboss/individual sprites/01_idle/idle_4.png',
+        'img/Endboss/individual sprites/01_idle/idle_5.png',
+        'img/Endboss/individual sprites/01_idle/idle_6.png'
     ];
 
 
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
-        this.x = 1500;
-        this.y = 288;
-
         this.loadImages(this.IMAGES_WALKING);
-        this.speed = 0.2;
+        this.x = 500; // 1500 default
+        this.y = 288;
+        this.width = 288;
+        this.height = 160;
+        this.speed = 0.15; // 0.2 default
+        // Defines the Hitbox
+        this.offset = {
+            top: 140,
+            bottom: 139,
+            left: 130,
+            right: 268
+        };
         this.animate();
     }
 
@@ -37,13 +36,6 @@ class Endboss extends MovableObject {
 
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING)
-        }, 250);
-    }
-
-    updateHitbox() {
-        this.hitbox_x_start = this.x + 260;
-        this.hitbox_y_start = this.y + 70;
-        this.hitbox_x_end = this.hitbox_x_start + (this.width - 520);
-        this.hitbox_y_end = this.hitbox_y_start + (this.height + 110);
+        }, 1000 / 5);
     }
 }

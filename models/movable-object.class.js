@@ -4,6 +4,12 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     accelertion = 1;
     lifePoints = 100;
+    
+    animationInterval;
+    movementInterval;
+    animationStatus;
+    movementStatus;
+
     //Defines the hitbox
     offset = {
         top: 0,
@@ -44,8 +50,8 @@ class MovableObject extends DrawableObject {
     isColliding(mo) {
         return this.x + this.offset.left + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.offset.top + this.height - this.offset.bottom > mo.y + mo.offset.top &&
-            this.x + this.offset.left < mo.x + mo.offset.right &&
-            this.y + this.offset.top < mo.y + mo.offset.bottom;
+            this.x + this.offset.left < mo.x + mo.offset.left + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.offset.top + mo.height - mo.offset.bottom;
     }
 
 

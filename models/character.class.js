@@ -1,9 +1,6 @@
 class Character extends MovableObject {
     takingHit;
-    animationStatus;
-    movementStatus;
-    animationInterval;
-    movementInterval;
+    
     activeSpells = [];
     spellCooldown = false;
 
@@ -137,8 +134,6 @@ class Character extends MovableObject {
                 }
             }
 
-            // console.log('this.speedY =', this.speedY);
-
             // Plays flying sound
             if (world && world.keyboard.SPACE == true && !this.isAirborne()) {
                 this.jump();
@@ -153,8 +148,8 @@ class Character extends MovableObject {
                 this.airborne_sound.playpause();
                 this.playAir = false;
             }
-
-
+            
+            
             if (world && world.keyboard.E == true && !this.spellCooldown) {
                 this.activeSpells.push(new ThrowableObject(this.hitbox_x_start + ((this.hitbox_x_end - this.hitbox_x_start) / 4), this.y + this.height / 2, this.movementStatus));
                 this.spellCooldown = true;
@@ -162,12 +157,16 @@ class Character extends MovableObject {
                     this.spellCooldown = false;
                 }, 1000);
             }
-
+            
             world.camera_x = -this.x - 150;
+            // console.log('this.speedY =', this.speedY);
             // console.log(this.y);
             // console.log(this.spellCooldown);
             // console.log(this.x);
         }, 1000 / 60);
+
+
+
 
         // Just looping through ANIMATION frames (no movement here)            
         this.animationInterval = setInterval(() => {
@@ -177,6 +176,7 @@ class Character extends MovableObject {
                 if (this.animationStatus != 'DEAD') {
                     this.currentImage = 0;
                     this.animationStatus = 'DEAD';
+                    this.walking_sound.stop();
                     this.stopInterval(this.movementInterval);
                 }
                 this.playAnimation(this.IMAGES_DEAD);
@@ -208,7 +208,7 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_IDLE);
                 this.animationStatus = 'IDLE';
             }
-            console.log(this.animationStatus);
+            // console.log(this.animationStatus);
         }, 100);
     }
 }

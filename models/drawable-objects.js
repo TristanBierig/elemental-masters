@@ -51,7 +51,13 @@ class DrawableObject {
                     this.width - this.offset.right,
                     this.height - this.offset.bottom);
             } else if (this instanceof Endboss) {
+                // Whole dimension of png 
                 ctx.rect(this.x, this.y, this.width, this.height);
+                // Actual hitbox
+                ctx.rect(this.x + this.offset.left,
+                    this.y + this.offset.top,
+                    this.width - this.offset.right,
+                    this.height - this.offset.bottom);
             } else if (this instanceof ThrowableObject) {
                 ctx.strokeStyle = 'blue';
                 ctx.rect(this.x, this.y, this.width, this.height);
@@ -59,6 +65,4 @@ class DrawableObject {
             ctx.stroke();
         }
     }
-
-
 }
