@@ -5,7 +5,7 @@ class DrawableObject {
     y;
     img;
     imageCache = {};
-    currentImage = 0;  
+    currentImage = 0;
 
 
     loadImage(path) {
@@ -31,22 +31,34 @@ class DrawableObject {
     drawHitbox(ctx) {
         if (this instanceof Character || this instanceof Slime || this instanceof Endboss || this instanceof ThrowableObject) {
             ctx.beginPath();
-            ctx.lineWidth = '3';
+            ctx.lineWidth = '2';
             ctx.strokeStyle = 'red';
             if (this instanceof Character) {
                 ctx.strokeStyle = 'green';
-                ctx.rect(this.x + 260, this.y + 170, this.width - 520, this.height - 180);
+                // Whole dimension of png 
+                ctx.rect(this.x, this.y, this.width, this.height);
+                // Actual hitbox
+                ctx.rect(this.x + this.offset.left,
+                    this.y + this.offset.top,
+                    this.width - this.offset.right,
+                    this.height - this.offset.bottom);
             } else if (this instanceof Slime) {
-                ctx.rect(this.x + 24, this.y + 16, this.width - 56, this.height - 48);
+                // Whole dimension of png 
+                ctx.rect(this.x, this.y, this.width, this.height);
+                // Actual hitbox
+                ctx.rect(this.x + this.offset.left,
+                    this.y + this.offset.top,
+                    this.width - this.offset.right,
+                    this.height - this.offset.bottom);
             } else if (this instanceof Endboss) {
-                ctx.rect(this.x + 260, this.y + 70, this.width - 520, this.height + 110);
+                ctx.rect(this.x, this.y, this.width, this.height);
             } else if (this instanceof ThrowableObject) {
                 ctx.strokeStyle = 'blue';
-                ctx.rect(this.x, this.y + this.height / 4, this.width - 32, this.height / 2);
+                ctx.rect(this.x, this.y, this.width, this.height);
             }
             ctx.stroke();
         }
     }
 
-    
+
 }

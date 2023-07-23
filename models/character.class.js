@@ -1,14 +1,4 @@
 class Character extends MovableObject {
-    height = 256;
-    width = 576;
-    x = -200;
-    y = 150; // 205 Ground value
-    speed = 2.5;
-    hitbox_x_start;
-    hitbox_y_start;
-    hitbox_x_end;
-    hitbox_y_end;
-
     takingHit;
     animationStatus;
     movementStatus;
@@ -17,7 +7,10 @@ class Character extends MovableObject {
     activeSpells = [];
     spellCooldown = false;
 
-    walking_sound = new Audio('audio/sound_effects/foodsteps_grass.mp3');
+    walking_sound = playerSoundsRun;
+    airborne_sound = playerSoundsFlying;
+    playRun = false;
+    playAir = false;
 
     IMAGES_WALKING = [
         'img/Character/png/run/run_1.png',
@@ -100,30 +93,67 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_TAKING_HIT);
         this.loadImages(this.IMAGES_DEAD);
         this.animate();
+        this.height = 256;
+        this.width = 576;
+        this.x = -200;
+        this.y = 150; // 205 Ground value
+        this.speed = 2.5;
+        // Defines the Hitbox
+        this.offset = {
+            top: 172,
+            bottom: 185,
+            left: 275,
+            right: 550
+        };
         this.applyGravitiy();
     }
 
     animate() {
-        this.walking_sound.pause();
-        // Move Horizontal
+        // Move Horizontal + plays running sound
         this.movementInterval = setInterval(() => {
             if (world && world.keyboard.RIGHT == true && this.x < world.level.level_end_x) {
                 this.moveRight();
-                this.walking_sound.play();
+                if (!this.playRun) {
+                    this.walking_sound.playpause();
+                    this.playRun = true;
+                }
                 this.movementStatus = 'RIGHT';
             }
 
             if (world && world.keyboard.LEFT == true && this.x > -750) {
                 this.moveLeft();
-                this.walking_sound.play();
+                if (!this.playRun) {
+                    this.walking_sound.playpause();
+                    this.playRun = true;
+                }
                 this.movementStatus = 'LEFT';
+            }
+
+            // Mutes running sound when standing or jumping
+            if (world && (!world.keyboard.LEFT && !world.keyboard.RIGHT) || this.isAirborne()) {
+                if (this.playRun) {
+                    this.walking_sound.playpause();
+                    this.playRun = false;
+                }
             }
 
             // console.log('this.speedY =', this.speedY);
 
+            // Plays flying sound
             if (world && world.keyboard.SPACE == true && !this.isAirborne()) {
                 this.jump();
+                if (!this.playAir) {
+                    this.airborne_sound.playpause();
+                    this.playAir = true;
+                }
             }
+
+            // Mutes fly sound on the the ground
+            if (!this.isAirborne() && this.playAir && this.speedY < 0) {
+                this.airborne_sound.playpause();
+                this.playAir = false;
+            }
+
 
             if (world && world.keyboard.E == true && !this.spellCooldown) {
                 this.activeSpells.push(new ThrowableObject(this.hitbox_x_start + ((this.hitbox_x_end - this.hitbox_x_start) / 4), this.y + this.height / 2, this.movementStatus));
@@ -133,14 +163,11 @@ class Character extends MovableObject {
                 }, 1000);
             }
 
-            this.updateHitbox();
-
             world.camera_x = -this.x - 150;
             // console.log(this.y);
             // console.log(this.spellCooldown);
-            console.log(this.x);
+            // console.log(this.x);
         }, 1000 / 60);
-
 
         // Just looping through ANIMATION frames (no movement here)            
         this.animationInterval = setInterval(() => {
@@ -166,31 +193,22 @@ class Character extends MovableObject {
             } else if (!this.takingHit && this.isAirborne() && this.speedY > 0) {
                 // Jumping up
                 this.playAnimation(this.IMAGES_JUMPING_UP);
+                this.animationStatus = 'AIRBORNE';
             } else if (!this.takingHit && this.isAirborne() && this.speedY <= 0) {
                 // Falling Down
                 this.playAnimation(this.IMAGES_JUMPING_DOWN);
+                this.animationStatus = 'AIRBORNE';
             } else if (!this.takingHit && world && world.keyboard.RIGHT || world.keyboard.LEFT) {
                 // Run Animation
-                this.playAnimation(this.IMAGES_WALKING)
+                this.playAnimation(this.IMAGES_WALKING);
+                this.animationStatus = 'RUN';
             }
             else if (!this.takingHit) {
                 // Doing nothing
                 this.playAnimation(this.IMAGES_IDLE);
+                this.animationStatus = 'IDLE';
             }
-            // console.log(this.animationStatus);
+            console.log(this.animationStatus);
         }, 100);
-    }
-
-
-
-    /**
-     * This functions updates the Hitbox on moving the character and the integers are setting the hitbox to the direct outline of the character in basic form
-     * 
-     */
-    updateHitbox() {
-        this.hitbox_x_start = this.x + 260;
-        this.hitbox_y_start = this.y + 170;
-        this.hitbox_x_end = this.hitbox_x_start + (this.width - 520);
-        this.hitbox_y_end = this.hitbox_y_start + (this.height - 180);
     }
 }

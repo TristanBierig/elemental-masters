@@ -6,9 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elemental Masters</title>
-    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
 
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="font.css">
     <link rel="stylesheet" href="style.css">
+
     <script src="models/drawable-objects.js"></script>
     <script src="models/movable-object.class.js"></script>
     <script src="models/throwable-object.class.js"></script>
@@ -27,16 +29,23 @@
     <script src="models/level.class.js"></script>
     <script src="models/world.class.js"></script>
     <script src="levels/level1.js"></script>
+    <script src="node_modules/@regosen/gapless-5/gapless5.js" language="JavaScript" type="text/javascript"></script>
+    <script src="js/sound.js"></script>
     <script src="js/game.js"></script>
-    <script src="gapless5.js" language="JavaScript" type="text/javascript"></script>
 </head>
 
 <body onload="init()">
 
-    <h1>Elemental Masters</h1>
+        <h1 id="gameTitle">Elemental Masters</h1>
+        <canvas id="canvas" width="720" height="480"></canvas>
 
-    <canvas id="canvas" width="720" height="480"></canvas>
+        <div id="startScreen" class="start-screen">
 
+            <button onclick="startGame()">
+                Start Game
+            </button>
+        </div>
+ 
 </body>
 
 </html>

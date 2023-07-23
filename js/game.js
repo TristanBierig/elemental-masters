@@ -7,6 +7,13 @@ function init() {
     world = new World(canvas, keyboard);
 }
 
+function startGame() {
+    gameTitle.classList.add('ingame-title');
+    startScreen.classList.add('ingame-start-screen');
+    playerBackgroundIdle.playpause();
+    
+}
+
 
 window.addEventListener("keydown", function (e) {
     if (e.code == 'Escape') {

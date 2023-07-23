@@ -1,22 +1,9 @@
 class Slime extends MovableObject {
-    height = 96;
-    width = 96;
     isHitting = false;
-    x;
-    y;
-    hitbox_x_start;
-    hitbox_y_start;
-    hitbox_x_end;
-    hitbox_y_end;
     IMAGES_WALKING = [
-        'img/Enemies/Slime/BlueSlime/move/move_1.png',
-        'img/Enemies/Slime/BlueSlime/move/move_2.png',
-        'img/Enemies/Slime/BlueSlime/move/move_3.png',
-        'img/Enemies/Slime/BlueSlime/move/move_4.png',
-        'img/Enemies/Slime/BlueSlime/move/move_5.png',
-        'img/Enemies/Slime/BlueSlime/move/move_6.png',
-        'img/Enemies/Slime/BlueSlime/move/move_7.png',
-        'img/Enemies/Slime/BlueSlime/move/move_8.png'        
+        'img/Enemies/Slime/BlueSlime/idle/idle_1.png',
+        'img/Enemies/Slime/BlueSlime/idle/idle_2.png',
+        'img/Enemies/Slime/BlueSlime/idle/idle_3.png',
     ];
 
 
@@ -24,32 +11,30 @@ class Slime extends MovableObject {
         super().loadImage('img/Enemies/Slime/BlueSlime/move/move_1.png');
         this.x = 200 + Math.random() * 500;
         this.y = 383; // 383 Ground level
-      
+        this.width = 96;
+        this.height = 96;
+        this.speed = 0.15;
+        // Defines the Hitbox
+        this.offset = {
+            top: 40,
+            bottom: 72,
+            left: 32,
+            right: 66
+        };
         this.loadImages(this.IMAGES_WALKING);
-        this.speed = this.speed + Math.random() * -100; // 0.35
+        this.speed = this.speed + Math.random() * 0.35; // 0.35
         this.animate();
     }
 
 
     animate() {
         setInterval(() => {
-            // if (this.y < 383) {
-                this.moveLeft();
-            // }
-            this.updateHitbox();
+            this.moveLeft();
         }, 1000 / 60);
 
         setInterval(() => {
-           this.playAnimation(this.IMAGES_WALKING);
+            this.playAnimation(this.IMAGES_WALKING);
         }, 1000 / 5);
 
-    }
-
-
-    updateHitbox() {
-        this.hitbox_x_start = this.x + 24;
-        this.hitbox_y_start = this.y + 16;
-        this.hitbox_x_end = this.hitbox_x_start + (this.width - 56);
-        this.hitbox_y_end = this.hitbox_y_start + (this.height - 48);
     }
 }

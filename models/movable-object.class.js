@@ -1,9 +1,16 @@
 class MovableObject extends DrawableObject {
-    speed = 0.15;
+    speed;
     otherDirection = false;
     speedY = 0;
     accelertion = 1;
     lifePoints = 100;
+    //Defines the hitbox
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+    };
 
 
     applyGravitiy(spellCasted) {
@@ -35,15 +42,15 @@ class MovableObject extends DrawableObject {
 
 
     isColliding(mo) {
-        return this.hitbox_x_end > mo.hitbox_x_start &&
-            this.hitbox_y_end > mo.hitbox_y_start &&
-            this.hitbox_x_start < mo.hitbox_x_end &&
-            this.hitbox_y_start < mo.hitbox_y_end;
+        return this.x + this.offset.left + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.offset.top + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.offset.bottom;
     }
 
 
     gettingHit() {
-        this.lifePoints -= 10; // Default 1
+        this.lifePoints -= 1; // Default 1
         if (this.lifePoints <= 0) {
             this.lifePoints = 0
         }
