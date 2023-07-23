@@ -1,6 +1,6 @@
 class Character extends MovableObject {
     takingHit;
-    
+
     activeSpells = [];
     spellCooldown = false;
 
@@ -148,16 +148,18 @@ class Character extends MovableObject {
                 this.airborne_sound.playpause();
                 this.playAir = false;
             }
-            
-            
+
+
             if (world && world.keyboard.E == true && !this.spellCooldown) {
-                this.activeSpells.push(new ThrowableObject(this.hitbox_x_start + ((this.hitbox_x_end - this.hitbox_x_start) / 4), this.y + this.height / 2, this.movementStatus));
+                this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
+                    this.y + this.offset.top,
+                    this.movementStatus));
                 this.spellCooldown = true;
                 setTimeout(() => {
                     this.spellCooldown = false;
                 }, 1000);
             }
-            
+
             world.camera_x = -this.x - 150;
             // console.log('this.speedY =', this.speedY);
             // console.log(this.y);

@@ -4,14 +4,13 @@ let keyboard = new Keyboard();
 
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
 }
 
 function startGame() {
     gameTitle.classList.add('ingame-title');
     startScreen.classList.add('ingame-start-screen');
     playerBackgroundIdle.playpause();
-    
+    world = new World(canvas, keyboard);
 }
 
 

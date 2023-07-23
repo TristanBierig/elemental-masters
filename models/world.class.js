@@ -1,6 +1,6 @@
 class World {
     character = new Character();
-    level = level1;
+    level = level1; // ground on Y-axis 440
     floor = [];
     statusBar = [
         new StatusBar(),
@@ -12,6 +12,7 @@ class World {
     keyboard;
     camera_x = 0;
     slimeKillAudio = playerSoundsKillSlime;
+    rockShatterAudio = playerSoundsEarthSpell;
 
 
     constructor(canvas, keyboard) {
@@ -28,7 +29,6 @@ class World {
         setInterval(() => {
             // debugger
             this.level.enemies.forEach((enemy, index) => {
-
                 // Checks if character is landing on top of enemy -> kills given enemy
                 if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne()) {
                     this.character.jump();
@@ -39,9 +39,32 @@ class World {
 
                     // Delets enemyobject from world after death animation played
                     setTimeout(() => {
-                        this.level.enemies.splice(index, 1);
+                        if (enemy instanceof Slime) {
+                            this.level.enemies.splice(index, 1);
+                        }
                     }, 1200);
                     console.log('Gegner gekillt');
+                }
+
+                // Checks if spell is hitting enemy 
+                if (this.character.activeSpells.length > 0) {
+                    this.character.activeSpells.forEach((spell, i) => {
+                        if (spell.isColliding(enemy)) {
+                            this.rockShatterAudio.play();
+                            enemy.lifePoints = 0;
+                            spell.lifePoints = 0;
+                            // Prevents getting hit by dead enemy while its animation is still playing
+                            enemy.offset.top = -1500;
+                            spell.offset.top = 1500;
+                            // Delets enemy object from world after death animation played
+                            setTimeout(() => {
+                                this.character.activeSpells.splice(i, 1);
+                                if (enemy instanceof Slime) {
+                                    this.level.enemies.splice(index, 1);
+                                } 
+                            }, 1200);
+                        }
+                    })
                 }
 
                 // Checks for collision bewtween character and any enemy

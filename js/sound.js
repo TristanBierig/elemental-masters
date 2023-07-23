@@ -21,7 +21,7 @@ const playerSoundsRun = new Gapless5({
     tracks: ['audio/sound_effects/footsteps_grass.mp3'],
     loop: true,
     singleMode: true,
-    loadLimit: 1,
+    loadLimit: 0.5,
 });
 
 // Character in the Air
@@ -30,12 +30,21 @@ const playerSoundsFlying = new Gapless5({
     loop: true,
     singleMode: true,
     loadLimit: 1,
-    volume: 0.2,
+    volume: 0.1,
 });
 
 // Killing Slime
 const playerSoundsKillSlime = new Gapless5({
     tracks: ['audio/sound_effects/pop.mp3'],
+    loop: false,
+    singleMode: true,
+    loadLimit: 1,
+    volume: 0.2,
+});
+
+// Spellcast Earth
+const playerSoundsEarthSpell = new Gapless5({
+    tracks: ['audio/sound_effects/rock-shatter.mp3'],
     loop: false,
     singleMode: true,
     loadLimit: 1,

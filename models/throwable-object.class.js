@@ -1,5 +1,6 @@
 class ThrowableObject extends MovableObject {
-    status;
+    animationStatus;
+    hit = false;
 
     IMAGES_START = [
         'img/Earthspell/first/start/tile000.png',
@@ -44,41 +45,57 @@ class ThrowableObject extends MovableObject {
         this.width = 96;
         this.height = 96;
         this.x = x;
-        this.y = y;
+        this.y = y - 20;
+        this.offset = {
+            top: 30,
+            bottom: 62,
+            left: 12,
+            right: 68
+        };
+        this.animationStatus = 'FLY';
         this.animate();
         this.status = status;
-        this.speed = 4;
-        this.speedY = 15;
-        this.accelertion = 1;
+        this.speed = 4; // 4 default
+        this.speedY = 15; // 15 default
+        this.accelertion = 1; // 1 default
         this.applyGravitiy(true);
     }
 
 
     animate() {
-        setInterval(() => {
+        this.movementInterval = setInterval(() => {
             if (this.status == 'RIGHT' || this.status == undefined) {
                 this.moveRight();
-            } 
-            
+            }
+
             if (this.status == 'LEFT') {
                 this.moveLeft();
             }
 
-            this.updateHitbox();
-            console.log('Rock-X:' + this.x);
+            // console.log('Rock-X:' + this.x);
         }, 1000 / 60);
 
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_FLYING);
+        this.animationInterval = setInterval(() => {
+            if (this.isDead()) {
+                // Death Animation and stops Intervals
+                if (this.animationStatus != 'DEAD') {
+                    this.currentImage = 0;
+                    this.animationStatus = 'DEAD';
+                    setTimeout(() => {
+                        this.stopInterval(this.movementInterval);
+                    }, 1200);
+                }
+                this.playAnimation(this.IMAGES_HITTING);
+                if (this.currentImage == 9) {
+                    this.stopInterval(this.animationInterval);
+                }
+            } else {
+                this.playAnimation(this.IMAGES_FLYING);
+            }
         }, 1000 / 25);
 
     }
 
 
-    updateHitbox() {
-        this.hitbox_x_start = this.x + 24;
-        this.hitbox_y_start = this.y + 16;
-        this.hitbox_x_end = this.hitbox_x_start + (this.width - 56);
-        this.hitbox_y_end = this.hitbox_y_start + (this.height - 48);
-    }
+
 }

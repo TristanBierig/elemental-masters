@@ -35,7 +35,7 @@ class DrawableObject {
             ctx.strokeStyle = 'red';
             if (this instanceof Character) {
                 ctx.strokeStyle = 'green';
-                // Whole dimension of png 
+                // Whole dimension of png
                 ctx.rect(this.x, this.y, this.width, this.height);
                 // Actual hitbox
                 ctx.rect(this.x + this.offset.left,
@@ -60,7 +60,13 @@ class DrawableObject {
                     this.height - this.offset.bottom);
             } else if (this instanceof ThrowableObject) {
                 ctx.strokeStyle = 'blue';
+                // Whole dimension of png 
                 ctx.rect(this.x, this.y, this.width, this.height);
+                // Actual hitbox
+                ctx.rect(this.x + this.offset.left,
+                    this.y + this.offset.top,
+                    this.width - this.offset.right,
+                    this.height - this.offset.bottom);
             }
             ctx.stroke();
         }
