@@ -6,7 +6,8 @@ class World {
         new StatusBar(),
         new StatusBarMana(),
         new StatusBarStars()
-    ]
+    ];
+    collectableItems = [];
     canvas;
     ctx;
     keyboard;
@@ -40,7 +41,7 @@ class World {
                     // Delets enemyobject from world after death animation played
                     setTimeout(() => {
                         if (enemy instanceof Slime) {
-                            new StatusbarIcon(enemy.x, enemy.y, 'MANA');
+                            this.collectableItems.push(new StatusbarIcon(enemy.x, enemy.y, 'MANA'));
                             this.level.enemies.splice(index, 1);
                         }
                     }, 1200);
@@ -131,6 +132,9 @@ class World {
         this.addToMap(this.character);
         if (this.character.activeSpells.length > 0) {
             this.addObjectsToMap(this.character.activeSpells);
+        }
+        if (this.collectableItems.length > 0) {
+            this.addObjectsToMap(this.collectableItems);
         }
         this.addObjectsToMap(this.level.clouds);
 
