@@ -42,6 +42,15 @@ const playerSoundsKillSlime = new Gapless5({
     volume: 0.2,
 });
 
+// Collect loot
+const playerSoundsCollectLoot = new Gapless5({
+    tracks: ['audio/sound_effects/collect.mp3'],
+    loop: false,
+    singleMode: true,
+    loadLimit: 1,
+    volume: 0.5,
+});
+
 // Spellcast Earth
 const playerSoundsEarthSpell = new Gapless5({
     tracks: ['audio/sound_effects/rock-shatter.mp3'],

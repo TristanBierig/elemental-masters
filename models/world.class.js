@@ -8,12 +8,14 @@ class World {
         new StatusBarStars()
     ];
     collectableItems = [];
+    droprate;
     canvas;
     ctx;
     keyboard;
     camera_x = 0;
     slimeKillAudio = playerSoundsKillSlime;
     rockShatterAudio = playerSoundsEarthSpell;
+    collectItemsAudio = playerSoundsCollectLoot;
 
 
     constructor(canvas, keyboard) {
@@ -41,7 +43,7 @@ class World {
                     // Deletes enemy object from world after death animation played and drops an collectable item as loot
                     setTimeout(() => {
                         if (enemy instanceof Slime) {
-                            this.collectableItems.push(new StatusbarIcon(enemy.x, enemy.y, 'MANA'));
+                            this.dropLoot(enemy);
                             this.level.enemies.splice(index, 1);
                         }
                     }, 1200);
@@ -63,8 +65,25 @@ class World {
                                 this.character.activeSpells.splice(i, 1);
                                 if (enemy instanceof Slime) {
                                     this.level.enemies.splice(index, 1);
-                                } 
-                            }, 1200);
+                                }
+                            }, 1000);
+                        }
+                    })
+                }
+
+                // Checks if character collides with loot and collects it
+                if (this.collectableItems.length > 0) {
+                    this.collectableItems.forEach((item, i) => {
+                        if (item.isColliding(this.character)) {
+                            this.collectItemsAudio.play();
+                            item.lifePoints = 0;
+                            this.collectableItems.splice(i, 1);
+                            // checks if collected item is mana pot or star and fills the statusbar accordingly
+                            if (item.category == 'MANA') {
+                                this.statusBar[1].percentage += 10;
+                            } else {
+                                this.statusBar[2].percentage += 10;
+                            }
                         }
                     })
                 }
@@ -203,5 +222,15 @@ class World {
     flipImageBack(mo) {
         mo.x = mo.x * - 1;
         this.ctx.restore();
+    }
+
+    dropLoot(enemy) {
+        // Defines the droprate. Whether a manapot or star is dropped.
+        this.droprate = Math.random() * 100;
+        if (this.droprate > 35) {
+            this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'MANA'));
+        } else {
+            this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'STAR'));
+        }
     }
 }

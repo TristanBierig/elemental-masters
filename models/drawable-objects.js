@@ -29,7 +29,7 @@ class DrawableObject {
 
 
     drawHitbox(ctx) {
-        if (this instanceof Character || this instanceof Slime || this instanceof Endboss || this instanceof ThrowableObject) {
+        if (this instanceof Character || this instanceof Slime || this instanceof Endboss || this instanceof ThrowableObject || this instanceof StatusbarIcon) {
             ctx.beginPath();
             ctx.lineWidth = '2';
             ctx.strokeStyle = 'red';
@@ -67,6 +67,10 @@ class DrawableObject {
                     this.y + this.offset.top,
                     this.width - this.offset.right,
                     this.height - this.offset.bottom);
+            } else if (this instanceof StatusbarIcon) {
+                ctx.strokeStyle = 'yellow';
+                // Whole dimension of png and actual Hitbox
+                ctx.rect(this.x, this.y, this.width, this.height);                
             }
             ctx.stroke();
         }

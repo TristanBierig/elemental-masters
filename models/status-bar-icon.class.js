@@ -1,5 +1,6 @@
 class StatusbarIcon extends MovableObject {
     icons;
+    category;
 
     ICONS_LIFE = [
         'img/Collectables/health/tile000.png',
@@ -35,27 +36,35 @@ class StatusbarIcon extends MovableObject {
     ];
 
     constructor(x, y, icons) {
-        super().loadImage(this.ICONS_LIFE[0]);
+        super().loadImage('img/Enemies/Slime/BlueSlime/death/death_8.png');
         this.loadImages(this.ICONS_LIFE);
         this.loadImages(this.ICONS_MANA);
         this.loadImages(this.ICONS_STAR);
         if (icons == 'LIFE') {
-            this.icons = this.ICONS_LIFE;            
+            this.icons = this.ICONS_LIFE;
         } else if (icons == 'MANA') {
             this.icons = this.ICONS_MANA;
         } else if (icons == 'STAR') {
             this.icons = this.ICONS_STAR;
         }
+        this.category = icons;
         this.x = x;
         this.y = y;
         this.height = 32;
         this.width = 32;
+        // Defines the Hitbox
+        this.offset = {
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0
+        };
         this.animate();
     }
 
     animate() {
         setInterval(() => {
             this.playAnimation(this.icons);
-         }, 1000 / 8);
+        }, 1000 / 8);
     }
 }

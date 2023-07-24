@@ -24,7 +24,7 @@ class Slime extends MovableObject {
         super().loadImage('img/Enemies/Slime/BlueSlime/move/move_1.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 200 + Math.random() * 500;
+        this.x = 200 + Math.floor(Math.random() * 500);
         this.y = 383; // 383 Ground level
         this.width = 96;
         this.height = 96;

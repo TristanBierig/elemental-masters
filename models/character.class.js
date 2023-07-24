@@ -149,12 +149,13 @@ class Character extends MovableObject {
                 this.playAir = false;
             }
 
-
-            if (world && world.keyboard.E == true && !this.spellCooldown) {
+            // Casts E-Spell
+            if (world && world.keyboard.E == true && !this.spellCooldown && world.statusBar[1].percentage >= 10) {
                 this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
                     this.y + this.offset.top,
                     this.movementStatus));
                 this.spellCooldown = true;
+                world.statusBar[1].percentage -= 10;
                 setTimeout(() => {
                     this.spellCooldown = false;
                 }, 1000);
