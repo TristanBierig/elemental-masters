@@ -40,6 +40,7 @@ class World {
                     // Delets enemyobject from world after death animation played
                     setTimeout(() => {
                         if (enemy instanceof Slime) {
+                            new StatusbarIcon(enemy.x, enemy.y, 'MANA');
                             this.level.enemies.splice(index, 1);
                         }
                     }, 1200);

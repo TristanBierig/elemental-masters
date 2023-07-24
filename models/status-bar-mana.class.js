@@ -34,7 +34,6 @@ class StatusBarMana extends DrawableObject {
         this.height = 32;
         this.width = 200;
         this.statusbarFrame = new StatusbarFrame(this.x, this.y, this.height, this.width, 'img/UI/ingame_bars/frames/frame_grey.png');
-        this.statusbarIcon = new StatusbarIcon(this.y, this.ICONS);
-
+        this.statusbarIcon = new StatusbarIcon(0, this.y, 'MANA');
     }
 }
