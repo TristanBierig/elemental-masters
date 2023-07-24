@@ -1,6 +1,4 @@
 class StatusbarIcon extends MovableObject {
-    x;
-    y;
     icons;
 
     ICONS_LIFE = [

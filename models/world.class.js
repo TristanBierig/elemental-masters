@@ -38,7 +38,7 @@ class World {
                     // Prevents getting hit by dead enemy while its animation is still playing
                     enemy.offset.top = 500;
 
-                    // Delets enemyobject from world after death animation played
+                    // Deletes enemy object from world after death animation played and drops an collectable item as loot
                     setTimeout(() => {
                         if (enemy instanceof Slime) {
                             this.collectableItems.push(new StatusbarIcon(enemy.x, enemy.y, 'MANA'));
