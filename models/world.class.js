@@ -17,7 +17,6 @@ class World {
     rockShatterAudio = playerSoundsEarthSpell;
     collectItemsAudio = playerSoundsCollectLoot;
 
-
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -80,9 +79,9 @@ class World {
                             this.collectableItems.splice(i, 1);
                             // checks if collected item is mana pot or star and fills the statusbar accordingly
                             if (item.category == 'MANA') {
-                                this.statusBar[1].percentage += 10;
+                                this.statusBar[1].percentage += 20;
                             } else {
-                                this.statusBar[2].percentage += 10;
+                                this.statusBar[2].percentage += 20;
                             }
                         }
                     })
@@ -227,7 +226,7 @@ class World {
     dropLoot(enemy) {
         // Defines the droprate. Whether a manapot or star is dropped.
         this.droprate = Math.random() * 100;
-        if (this.droprate > 35) {
+        if (this.droprate > 0) {
             this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'MANA'));
         } else {
             this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'STAR'));

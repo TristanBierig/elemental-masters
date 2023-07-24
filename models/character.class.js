@@ -2,7 +2,9 @@ class Character extends MovableObject {
     takingHit;
 
     activeSpells = [];
-    spellCooldown = false;
+    spellCooldownQ = false;
+    spellCooldownW = false;
+    spellCooldownE = false;
 
     walking_sound = playerSoundsRun;
     airborne_sound = playerSoundsFlying;
@@ -71,7 +73,7 @@ class Character extends MovableObject {
         'img/Character/png/death/death_18.png',
     ];
 
-    IMAGES_ATTACK_E = [
+    IMAGES_ATTACK_Q = [
         'img/Character/png/1_atk/1_atk_1.png',
         'img/Character/png/1_atk/1_atk_2.png',
         'img/Character/png/1_atk/1_atk_3.png',
@@ -149,17 +151,31 @@ class Character extends MovableObject {
                 this.playAir = false;
             }
 
-            // Casts E-Spell
-            if (world && world.keyboard.E == true && !this.spellCooldown && world.statusBar[1].percentage >= 10) {
+            // Casts E-Spell only when having mana and the cooldown is up
+            if (world && world.keyboard.E == true && !this.spellCooldownE && world.statusBar[1].percentage >= 10) {
                 this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
                     this.y + this.offset.top,
-                    this.movementStatus));
-                this.spellCooldown = true;
+                    this.movementStatus, 'E'));
+                this.spellCooldownE = true;
                 world.statusBar[1].percentage -= 10;
                 setTimeout(() => {
-                    this.spellCooldown = false;
+                    this.spellCooldownE = false;
                 }, 1000);
             }
+
+            // Cast W-Spell only when having mana and the cooldown is up
+            if (world && world.keyboard.W == true && !this.spellCooldownW) {
+                this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
+                    this.y + this.offset.top,
+                    this.movementStatus, 'W'));
+                this.spellCooldownW = true;
+                world.rockShatterAudio.playpause();
+                setTimeout(() => {
+                    this.spellCooldownW = false;
+                }, 1000);
+            }
+
+
 
             world.camera_x = -this.x - 150;
             // console.log('this.speedY =', this.speedY);
