@@ -127,7 +127,6 @@ class Character extends MovableObject {
             right: 550
         };
         this.applyGravitiy();
-        this.generateNewEnemies();
     }
 
     animate() {
@@ -313,13 +312,5 @@ class Character extends MovableObject {
             }
             // console.log(this.animationStatus);
         }, 100);
-    }
-
-    generateNewEnemies() {
-        this.spawnInterval = setInterval(() => {
-                world.level.enemies.push(new Slime(this.x));
-                world.level.enemies.push(new Slime(this.x, true));
-                world.level.enemies.push(new Slime(this.x, false));
-        }, 15000);
     }
 }

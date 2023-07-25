@@ -13,6 +13,10 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+
+    backgroundStartX = 1434;
+    oddBackgroundNeeded = true;
+
     slimeKillAudio = playerSoundsKillSlime;
     rockShatterAudio = playerSoundsEarthSpell;
     collectItemsAudio = playerSoundsCollectLoot;
@@ -21,8 +25,9 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.fillFloorArray();
+        this.expandFloor();
         this.draw();
+        this.spawnNewEnemies();
         this.updateGame();
     }
 
@@ -59,7 +64,7 @@ class World {
      * @param {boolean} newScreen - This is True when the character travelled a certain distance to the right 
      *                              in relation to the already rendered Background and Floor Sprites X-Coordinates 
      */
-    fillFloorArray(newScreen) {
+    expandFloor(newScreen) {
         let oneScreenWidth = 6;
         let tileStart = -720;
         if (newScreen) {
@@ -72,6 +77,28 @@ class World {
             );
             tileStart = tileStart + 140;
         }
+    }
+
+
+    expandBackground() {
+        // let cloudHeight = Math.floor(Math.random() * 1);
+        // if (this.oddBackgroundNeeded && world) {
+        //     world.level.backgroundObjects.push(
+        //         new Background('img/Background/background/sky_odd.png', this.backgroundStartX - 1, 0),
+        //         new Background('img/Background/background/cloud.png', this.backgroundStartX - 1, 0, 720, 150),
+        //         new Background('img/Background/background/mountain2.png', this.backgroundStartX - 3, 150, 720, 200),
+        //         new Background('img/Background/background/mountain.png', this.backgroundStartX - 3, 80, 720, 400)
+        //     );
+        //     this.backgroundStartX += 2 
+        //     this.oddBackgroundNeeded = false;
+        // } else if(world) {
+        //     world.level.backgroundObjects.push(
+        //         new Background('img/Background/background/sky.png', this.backgroundStartX - 1, 0),
+        //         new Background('img/Background/background/cloud.png', this.backgroundStartX - 1, 0, 720, 150),
+        //         new Background('img/Background/background/mountain2.png', this.backgroundStartX - 3, 150, 720, 200),
+        //         new Background('img/Background/background/mountain.png', this.backgroundStartX - 3, 80, 720, 400)
+        //     );
+        // }
     }
 
 
@@ -106,7 +133,8 @@ class World {
 
         // Generate infinite Floor on moving right
         if (this.floor[this.floor.length - 1].x - this.character.x < 800) {
-            this.fillFloorArray(true);
+            this.expandFloor(true);
+            this.expandBackground();
         }
 
         // draw() wird immer wieder aufgerufen
@@ -163,6 +191,13 @@ class World {
         this.ctx.restore();
     }
 
+    spawnNewEnemies() {
+        this.spawnInterval = setInterval(() => {
+            world.level.enemies.push(new Slime(world.character.x));
+            world.level.enemies.push(new Slime(world.character.x, true));
+            world.level.enemies.push(new Slime(world.character.x, false));
+        }, 15000);
+    }
 
     checkJumpOnEnemy(enemy, index) {
         if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne()) {
