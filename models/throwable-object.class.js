@@ -1,7 +1,7 @@
 class ThrowableObject extends MovableObject {
     hit = false;
     category;
-    indexOfWSpell;
+    index;
 
     IMAGES_START_E = [
         'img/Earthspell/first/start/tile000.png',
@@ -61,7 +61,7 @@ class ThrowableObject extends MovableObject {
         'img/Earthspell/W/tile019.png',
     ];
 
-    constructor(x, y, status, category) {
+    constructor(x, y, status, category, index) {
         super().loadImage('img/Enemies/Slime/BlueSlime/death/death_8.png');
         this.loadImages(this.IMAGES_START_E);
         this.loadImages(this.IMAGES_FLYING_E);
@@ -71,24 +71,39 @@ class ThrowableObject extends MovableObject {
         this.height = 96;
         this.x = x;
         this.y = y - 20;
-        this.offset = {
-            top: 30,
-            bottom: 62,
-            left: 12,
-            right: 68
-        };
+        this.index = index;
         this.category = category;
         this.animationStatus = 'FLY';
+
         if (category == 'E') {
+            this.offset = {
+                top: 30,
+                bottom: 62,
+                left: 12,
+                right: 68
+            };
+            this.x -= 32;
             this.animateE();
             this.movementStatus = status;
             this.speed = 8; // 4 default
             this.speedY = 15; // 15 default
             this.accelertion = 1; // 1 default
             this.applyGravitiy(true);
-        } else if (category == 'W') {
-            this.animateW();
-        }
+        } else
+
+            if (category == 'W') {
+                this.offset = {
+                    top: 30,
+                    bottom: 30,
+                    left: 12,
+                    right: 40
+                };
+                this.animateW();
+                this.movementStatus = status;
+                if (this.movementStatus == 'LEFT') {
+                    this.x -= 120;
+                }
+            }
     }
 
 
@@ -126,12 +141,23 @@ class ThrowableObject extends MovableObject {
 
 
     animateW() {
+        this.movementInterval = setInterval(() => {
+            if (this.movementStatus == 'LEFT') {
+                this.otherDirection = true;
+            }
+        }, 1000 / 25);
+
         this.animationInterval = setInterval(() => {
-                this.playAnimation(this.IMAGES_HITTING_W);
-                if (this.currentImage == 20) {
-                    this.stopInterval(this.animationInterval);
-                    this.indexOfWSpell = world.character.activeSpells.findIndex(world.character.activeSpells.category == 'W');
-                }
+            if (this.animationStatus != 'ONCE') {
+                this.currentImage = 0;
+                this.animationStatus = 'ONCE';
+            }
+            this.playAnimation(this.IMAGES_HITTING_W);
+
+            if (this.currentImage >= 20) {
+                this.stopInterval(this.animationInterval);
+                world.character.activeSpells.splice(this.index, 1);
+            }
         }, 1000 / 25);
     }
 }

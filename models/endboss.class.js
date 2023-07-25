@@ -89,17 +89,18 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_SMASH);
-        this.x = 1500; // 1500 default
-        this.y = 288;
-        this.width = 288; // 288 default
-        this.height = 160; // 160 default
+        this.x = 100; // 1500 default
+        this.y = 130;
+        this.width = 576; // 576 default
+        this.height = 320; // 320 default
         this.speed = 0.15; // 0.2 default
-        // Defines the Hitbox
+        
+        // Defines the Hitbox in small Form
         this.offset = {
-            top: 140,
-            bottom: 139,
-            left: 130,
-            right: 268
+            top: 280,
+            bottom: 280,
+            left: 265,
+            right: 540
         };
         this.animate();
     }

@@ -24,24 +24,26 @@ class MovableObject extends DrawableObject {
      * @param {boolean} spellCasted -This param is always true and only given from a throwableObject
      */
     applyGravitiy(spellCasted) {
-        // Prevents chracter from falling through ground
+        // Applys Gravitiy just for character
         if (!spellCasted) {
             setInterval(() => {
                 // debugger
                 if (this.isAirborne() || this.speedY > 0) {
                     this.y -= this.speedY;
                     this.speedY -= this.accelertion;
+                    // Prevents Character from falling to low underneath ground level
                     if (this.y > 205) {
                         this.y = 205
                     }
-                    if (this.speedY < - 20) {
-                        this.speedY = -20;
+                    // Throttles Speed at a point where collision with enemy is still triggered (no infinite acceleration on falling)
+                    if (this.speedY < - 18) {
+                        this.speedY = -18;
                     }
                 }
             }, 1000 / 25);
         }
 
-        // Lets Spell Animation fall through ground and out of view
+        // Applys gravitiy to throwableObjects (lets them fall underneath ground level)
         if (spellCasted) {
             setInterval(() => {
                 // debugger
@@ -94,7 +96,7 @@ class MovableObject extends DrawableObject {
     }
 
     jump() {
-        this.speedY = 25; // default 17
+        this.speedY = 17; // default 17
     }
 
 

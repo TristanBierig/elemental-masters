@@ -49,7 +49,7 @@ class World {
                     console.log('Gegner gekillt');
                 }
 
-                // Checks if spell is hitting enemy 
+                // Checks if any active Spell is hitting enemy 
                 if (this.character.activeSpells.length > 0) {
                     this.character.activeSpells.forEach((spell, i) => {
                         if (spell.isColliding(enemy)) {
@@ -59,10 +59,11 @@ class World {
                             // Prevents getting hit by dead enemy while its animation is still playing
                             enemy.offset.top = -1500;
                             spell.offset.top = 1500;
-                            // Delets enemy object from world after death animation played
+                            // Deletes enemy object from world after death animation played
                             setTimeout(() => {
                                 this.character.activeSpells.splice(i, 1);
                                 if (enemy instanceof Slime) {
+                                    this.dropLoot(enemy);
                                     this.level.enemies.splice(index, 1);
                                 }
                             }, 1000);
@@ -96,9 +97,10 @@ class World {
                     // console.log(this.character, enemy);
                     // console.log(this.character.lifePoints);
                     // console.log(this.character.takingHit);
-                    return;
+                    // return;
                 }
 
+                // Stops hit animation from char when he is not being hit anymore
                 if (!this.character.isColliding(enemy) && enemy.isHitting) {
                     enemy.isHitting = false;
                     this.character.takingHit = false;

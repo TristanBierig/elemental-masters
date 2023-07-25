@@ -1,5 +1,6 @@
 class Character extends MovableObject {
     takingHit;
+    doubleJumpAvailable = true;
 
     activeSpells = [];
     spellCooldownQ = false;
@@ -31,7 +32,7 @@ class Character extends MovableObject {
     IMAGES_JUMPING_DOWN = [
         'img/Character/png/j_down/j_down_1.png',
         'img/Character/png/j_down/j_down_2.png',
-        'img/Character/png/j_down/j_down_3.png',
+        'img/Character/png/j_down/j_down_3.png'
     ];
 
     IMAGES_IDLE = [
@@ -40,7 +41,13 @@ class Character extends MovableObject {
         'img/Character/png/idle/idle_3.png',
         'img/Character/png/idle/idle_4.png',
         'img/Character/png/idle/idle_5.png',
-        'img/Character/png/idle/idle_6.png',
+        'img/Character/png/idle/idle_6.png'
+        // 'img/Character/png/e_idle/e_idle_1.png',
+        // 'img/Character/png/e_idle/e_idle_2.png',
+        // 'img/Character/png/e_idle/e_idle_3.png',
+        // 'img/Character/png/e_idle/e_idle_4.png',
+        // 'img/Character/png/e_idle/e_idle_5.png',
+        // 'img/Character/png/e_idle/e_idle_6.png'
     ];
 
     IMAGES_TAKING_HIT = [
@@ -94,7 +101,7 @@ class Character extends MovableObject {
         this.animate();
         this.height = 256;
         this.width = 576;
-        this.x = -200;
+        this.x = -200; // -200 default
         this.y = 150; // 205 Ground value
         this.speed = 2.5;
         // Defines the Hitbox
@@ -136,9 +143,15 @@ class Character extends MovableObject {
                 }
             }
 
-            // Plays flying sound
-            if (world && world.keyboard.SPACE == true && !this.isAirborne()) {
+            // Jumps or doubleJump and plays flying sound
+            if (world && world.keyboard.SPACE == true && (!this.isAirborne() || (this.y < 120 && this.doubleJumpAvailable))) {
                 this.jump();
+
+                // Disables double jump when already jumped a second time while in air
+                if (this.isAirborne() && this.y < 200 && this.doubleJumpAvailable) {
+                    this.doubleJumpAvailable = false;
+                }
+
                 if (!this.playAir) {
                     this.airborne_sound.playpause();
                     this.playAir = true;
@@ -149,13 +162,14 @@ class Character extends MovableObject {
             if (!this.isAirborne() && this.playAir && this.speedY < 0) {
                 this.airborne_sound.playpause();
                 this.playAir = false;
+                this.doubleJumpAvailable = true;
             }
 
             // Casts E-Spell only when having mana and the cooldown is up
             if (world && world.keyboard.E == true && !this.spellCooldownE && world.statusBar[1].percentage >= 10) {
                 this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
                     this.y + this.offset.top,
-                    this.movementStatus, 'E'));
+                    this.movementStatus, 'E', this.activeSpells.length));
                 this.spellCooldownE = true;
                 world.statusBar[1].percentage -= 10;
                 setTimeout(() => {
@@ -164,10 +178,13 @@ class Character extends MovableObject {
             }
 
             // Cast W-Spell only when having mana and the cooldown is up
-            if (world && world.keyboard.W == true && !this.spellCooldownW) {
+            if (world && world.keyboard.W == true && !this.spellCooldownW && !this.isAirborne()) {
                 this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
-                    this.y + this.offset.top,
-                    this.movementStatus, 'W'));
+                this.y + this.offset.top,
+                this.movementStatus,
+                'W',
+                this.activeSpells.length));
+                
                 this.spellCooldownW = true;
                 world.rockShatterAudio.playpause();
                 setTimeout(() => {
@@ -177,9 +194,9 @@ class Character extends MovableObject {
 
 
 
-            world.camera_x = -this.x - 150;
-            console.log('this.speedY =', this.speedY);
-            console.log(this.y);
+            world.camera_x = -this.x + 60; // 150 default
+            // console.log('this.speedY =', this.speedY);
+            // console.log(this.y);
             // console.log(this.spellCooldown);
             // console.log(this.x);
         }, 1000 / 60);
