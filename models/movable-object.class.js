@@ -2,9 +2,9 @@ class MovableObject extends DrawableObject {
     speed;
     otherDirection = false;
     speedY = 0;
-    accelertion = 1;
+    accelertion = 1; // 1 default
     lifePoints = 100;
-    
+
     animationInterval;
     movementInterval;
     animationStatus;
@@ -19,6 +19,10 @@ class MovableObject extends DrawableObject {
     };
 
 
+    /**
+     * 
+     * @param {boolean} spellCasted -This param is always true and only given from a throwableObject
+     */
     applyGravitiy(spellCasted) {
         // Prevents chracter from falling through ground
         if (!spellCasted) {
@@ -27,6 +31,12 @@ class MovableObject extends DrawableObject {
                 if (this.isAirborne() || this.speedY > 0) {
                     this.y -= this.speedY;
                     this.speedY -= this.accelertion;
+                    if (this.y > 205) {
+                        this.y = 205
+                    }
+                    if (this.speedY < - 20) {
+                        this.speedY = -20;
+                    }
                 }
             }, 1000 / 25);
         }
@@ -35,8 +45,8 @@ class MovableObject extends DrawableObject {
         if (spellCasted) {
             setInterval(() => {
                 // debugger
-                    this.y -= this.speedY;
-                    this.speedY -= this.accelertion; 
+                this.y -= this.speedY;
+                this.speedY -= this.accelertion;
             }, 1000 / 25);
         }
     }
@@ -84,7 +94,7 @@ class MovableObject extends DrawableObject {
     }
 
     jump() {
-        this.speedY = 17;
+        this.speedY = 25; // default 17
     }
 
 

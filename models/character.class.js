@@ -178,8 +178,8 @@ class Character extends MovableObject {
 
 
             world.camera_x = -this.x - 150;
-            // console.log('this.speedY =', this.speedY);
-            // console.log(this.y);
+            console.log('this.speedY =', this.speedY);
+            console.log(this.y);
             // console.log(this.spellCooldown);
             // console.log(this.x);
         }, 1000 / 60);

@@ -104,7 +104,7 @@ class World {
                     this.character.takingHit = false;
                 }
             });
-        }, 1000 / 24);
+        }, 1000 / 25);
     }
 
 
@@ -226,7 +226,7 @@ class World {
     dropLoot(enemy) {
         // Defines the droprate. Whether a manapot or star is dropped.
         this.droprate = Math.random() * 100;
-        if (this.droprate > 0) {
+        if (this.droprate > 50) {
             this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'MANA'));
         } else {
             this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'STAR'));
