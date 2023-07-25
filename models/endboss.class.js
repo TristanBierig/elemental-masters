@@ -89,7 +89,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_SMASH);
-        this.x = 100; // 1500 default
+        this.x = 1500; // 1500 default
         this.y = 130;
         this.width = 576; // 576 default
         this.height = 320; // 320 default

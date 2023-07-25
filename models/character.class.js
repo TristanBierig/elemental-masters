@@ -223,7 +223,7 @@ class Character extends MovableObject {
             }
 
             // Cast W-Spell only when having mana and the cooldown is up
-            if (world && world.keyboard.W == true && !this.spellCooldownW && !this.isAirborne()) {
+            if (world && world.keyboard.W == true && !this.spellCooldownW && !this.isAirborne() && world.statusBar[1].percentage >= 10) {
                 world.rockShatterAudio.play();
                 this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
                     this.y + this.offset.top,
@@ -232,6 +232,7 @@ class Character extends MovableObject {
                     this.activeSpells.length));
 
                 this.spellCooldownW = true;
+                world.statusBar[1].percentage -= 10;
                 setTimeout(() => {
                     this.spellCooldownW = false;
                 }, 1000);

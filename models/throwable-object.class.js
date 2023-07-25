@@ -89,21 +89,22 @@ class ThrowableObject extends MovableObject {
             this.speedY = 15; // 15 default
             this.accelertion = 1; // 1 default
             this.applyGravitiy(true);
-        } else
+        }
 
-            if (category == 'W') {
-                this.offset = {
-                    top: 30,
-                    bottom: 30,
-                    left: 12,
-                    right: 40
-                };
-                this.animateW();
-                this.movementStatus = status;
-                if (this.movementStatus == 'LEFT') {
-                    this.x -= 120;
-                }
+        if (category == 'W') {
+            this.y += 2;
+            this.offset = {
+                top: 30,
+                bottom: 30,
+                left: 12,
+                right: 40
+            };
+            this.animateW();
+            this.movementStatus = status;
+            if (this.movementStatus == 'LEFT') {
+                this.x -= 120;
             }
+        }
     }
 
 
