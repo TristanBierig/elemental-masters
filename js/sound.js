@@ -12,7 +12,7 @@ const playerBackgroundBoss = new Gapless5({
     tracks: ['audio/background_loops/Battle_Theme 2.wav'],
     loop: true,
     singleMode: true,
-    volume: 0.1,
+    volume: 0.05,
     loadLimit: 2,
 });
 
@@ -57,5 +57,13 @@ const playerSoundsEarthSpell = new Gapless5({
     loop: false,
     singleMode: true,
     loadLimit: 1,
-    volume: 0.2,
+    volume: 0.4,
+});
+
+const playerSoundsPunch = new Gapless5({
+    tracks: ['audio/sound_effects/punch.mp3'],
+    loop: false,
+    singleMode: true,
+    loadLimit: 1,
+    volume: 0.4,
 });

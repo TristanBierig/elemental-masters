@@ -4,10 +4,15 @@ let level1;
 function initLevel() {
 
 level1 = new Level(
-    [
+    [   // Creates normal slime
         new Slime(),
         new Slime(),
-        new Slime(),
+        // Creates flying slime
+        new Slime(undefined, false),
+        new Slime(undefined, false),
+        // Creates tiny slime
+        new Slime(undefined, true),
+        new Slime(undefined, true),
         new Endboss()
     ],
     [

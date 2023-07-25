@@ -1,5 +1,6 @@
 class Character extends MovableObject {
     takingHit;
+    spawnInterval;
     doubleJumpAvailable = true;
 
     activeSpells = [];
@@ -9,6 +10,8 @@ class Character extends MovableObject {
 
     walking_sound = playerSoundsRun;
     airborne_sound = playerSoundsFlying;
+    punch_sound = playerSoundsPunch;
+
     playRun = false;
     playAir = false;
 
@@ -77,7 +80,7 @@ class Character extends MovableObject {
         'img/Character/png/death/death_15.png',
         'img/Character/png/death/death_16.png',
         'img/Character/png/death/death_17.png',
-        'img/Character/png/death/death_18.png',
+        'img/Character/png/death/death_18.png'
     ];
 
     IMAGES_ATTACK_Q = [
@@ -89,6 +92,16 @@ class Character extends MovableObject {
         'img/Character/png/1_atk/1_atk_6.png'
     ];
 
+    IMAGES_ATTACK_Q_AIR = [
+        'img/Character/png/air_atk/air_atk_1.png',
+        'img/Character/png/air_atk/air_atk_2.png',
+        'img/Character/png/air_atk/air_atk_3.png',
+        'img/Character/png/air_atk/air_atk_4.png',
+        'img/Character/png/air_atk/air_atk_5.png',
+        'img/Character/png/air_atk/air_atk_6.png',
+        'img/Character/png/air_atk/air_atk_7.png'
+    ];
+
 
     constructor() {
         super().loadImage('img/Character/png/run/run_1.png');
@@ -98,6 +111,8 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_TAKING_HIT);
         this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_ATTACK_Q);
+        this.loadImages(this.IMAGES_ATTACK_Q_AIR);
         this.animate();
         this.height = 256;
         this.width = 576;
@@ -112,6 +127,7 @@ class Character extends MovableObject {
             right: 550
         };
         this.applyGravitiy();
+        this.generateNewEnemies();
     }
 
     animate() {
@@ -126,7 +142,7 @@ class Character extends MovableObject {
                 this.movementStatus = 'RIGHT';
             }
 
-            if (world && world.keyboard.LEFT == true && this.x > -750) {
+            if (world && world.keyboard.LEFT == true && this.x > -550) {
                 this.moveLeft();
                 if (!this.playRun) {
                     this.walking_sound.playpause();
@@ -165,6 +181,63 @@ class Character extends MovableObject {
                 this.doubleJumpAvailable = true;
             }
 
+            // Cast Q-Attack
+            if (world && world.keyboard.Q == true && !this.spellCooldownQ) {
+                this.spellCooldownQ = true;
+
+                // Expands hitbox to right synched with animation
+                if (this.movementStatus == 'RIGHT' || this.movementStatus == undefined) {
+                    setTimeout(() => {
+                        this.offset = {
+                            top: 172,
+                            bottom: 185,
+                            left: 275,
+                            right: 510
+                        }
+                        this.punch_sound.playpause();
+                    }, 200);
+                }
+
+                // Expands hitbox to right synched with animation
+                if (this.movementStatus == 'LEFT') {
+                    setTimeout(() => {
+                        this.offset = {
+                            top: 172,
+                            bottom: 185,
+                            left: 235,
+                            right: 550
+                        }
+                        this.punch_sound.playpause();
+                    }, 200);
+                }
+
+                // Shrinks hitbox sychned with animation
+                setTimeout(() => {
+                    this.spellCooldownQ = false;
+                    this.offset = {
+                        top: 172,
+                        bottom: 185,
+                        left: 275,
+                        right: 550
+                    };
+                }, 500);
+            }
+
+            // Cast W-Spell only when having mana and the cooldown is up
+            if (world && world.keyboard.W == true && !this.spellCooldownW && !this.isAirborne()) {
+                world.rockShatterAudio.play();
+                this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
+                    this.y + this.offset.top,
+                    this.movementStatus,
+                    'W',
+                    this.activeSpells.length));
+
+                this.spellCooldownW = true;
+                setTimeout(() => {
+                    this.spellCooldownW = false;
+                }, 1000);
+            }
+
             // Casts E-Spell only when having mana and the cooldown is up
             if (world && world.keyboard.E == true && !this.spellCooldownE && world.statusBar[1].percentage >= 10) {
                 this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
@@ -177,32 +250,12 @@ class Character extends MovableObject {
                 }, 1000);
             }
 
-            // Cast W-Spell only when having mana and the cooldown is up
-            if (world && world.keyboard.W == true && !this.spellCooldownW && !this.isAirborne()) {
-                this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
-                this.y + this.offset.top,
-                this.movementStatus,
-                'W',
-                this.activeSpells.length));
-                
-                this.spellCooldownW = true;
-                world.rockShatterAudio.playpause();
-                setTimeout(() => {
-                    this.spellCooldownW = false;
-                }, 1000);
-            }
-
-
-
-            world.camera_x = -this.x + 60; // 150 default
+            world.camera_x = -this.x + 60; // 60 default
             // console.log('this.speedY =', this.speedY);
             // console.log(this.y);
             // console.log(this.spellCooldown);
             // console.log(this.x);
         }, 1000 / 60);
-
-
-
 
         // Just looping through ANIMATION frames (no movement here)            
         this.animationInterval = setInterval(() => {
@@ -226,6 +279,13 @@ class Character extends MovableObject {
                     this.animationStatus = 'HIT';
                 }
                 this.playAnimation(this.IMAGES_TAKING_HIT);
+            } else if (this.spellCooldownQ && this.isAirborne()) {
+                // Q-Attack in Air
+                if (this.animationStatus != 'Q-ATTACK') {
+                    this.currentImage = 0;
+                    this.animationStatus = 'Q-ATTACK';
+                }
+                this.playAnimation(this.IMAGES_ATTACK_Q_AIR);
             } else if (!this.takingHit && this.isAirborne() && this.speedY > 0) {
                 // Jumping up
                 this.playAnimation(this.IMAGES_JUMPING_UP);
@@ -234,6 +294,13 @@ class Character extends MovableObject {
                 // Falling Down
                 this.playAnimation(this.IMAGES_JUMPING_DOWN);
                 this.animationStatus = 'AIRBORNE';
+            } else if (this.spellCooldownQ) {
+                // Q-ATTACK
+                if (this.animationStatus != 'Q-ATTACK') {
+                    this.currentImage = 0;
+                    this.animationStatus = 'Q-ATTACK';
+                }
+                this.playAnimation(this.IMAGES_ATTACK_Q);
             } else if (!this.takingHit && world && world.keyboard.RIGHT || world.keyboard.LEFT) {
                 // Run Animation
                 this.playAnimation(this.IMAGES_WALKING);
@@ -246,5 +313,13 @@ class Character extends MovableObject {
             }
             // console.log(this.animationStatus);
         }, 100);
+    }
+
+    generateNewEnemies() {
+        this.spawnInterval = setInterval(() => {
+                world.level.enemies.push(new Slime(this.x));
+                world.level.enemies.push(new Slime(this.x, true));
+                world.level.enemies.push(new Slime(this.x, false));
+        }, 15000);
     }
 }
