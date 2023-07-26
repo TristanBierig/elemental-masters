@@ -76,7 +76,7 @@ class MovableObject extends DrawableObject {
 
 
     isDead() {
-        return this.lifePoints == 0;
+        return this.lifePoints <= 0;
     }
 
 
@@ -101,7 +101,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * This function stops any given Interfal
+     * This function stops any given Interval
      * 
      * @param {interval} Interval - Expects an Interval ID to be stopped
      */

@@ -42,9 +42,11 @@ class World {
                 // Checks if any active Spell is hitting enemy
                 this.checkSpellAttack(enemy, index);
                 // Checks if character collides with loot and collects it
-                this.checksLoot();
+                this.collectLoot();
                 // Checks for collision bewtween character and any enemy
-                this.checkGettingHit(enemy)
+                this.checkGettingHit(enemy);
+
+                this.killEnemyOutOfMap(enemy, index);
                 // console.log(this.character, enemy);
                 // console.log(this.character.lifePoints);
                 // console.log(this.character.takingHit);
@@ -191,13 +193,28 @@ class World {
         this.ctx.restore();
     }
 
+
+    /**
+     * This function checks all 5 seconds if there are still enemies on the map and spawns new one if there are none
+     * 
+     */
     spawnNewEnemies() {
         this.spawnInterval = setInterval(() => {
-            world.level.enemies.push(new Slime(world.character.x));
-            world.level.enemies.push(new Slime(world.character.x, true));
-            world.level.enemies.push(new Slime(world.character.x, false));
-        }, 15000);
+            let hasEnemies;
+            if (world) {
+                hasEnemies = world.level.enemies.some((enemy) => enemy instanceof Slime);
+            }
+            if (!hasEnemies) {
+                world.level.enemies.push(new Slime(world.character.x, 'normal'));
+                world.level.enemies.push(new Slime(world.character.x, 'normal'));
+                world.level.enemies.push(new Slime(world.character.x, 'tiny'));
+                world.level.enemies.push(new Slime(world.character.x, 'tiny'));
+                world.level.enemies.push(new Slime(world.character.x, 'fly'));
+                world.level.enemies.push(new Slime(world.character.x, 'fly'));
+            }
+        }, 5000);
     }
+
 
     checkJumpOnEnemy(enemy, index) {
         if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne()) {
@@ -224,17 +241,6 @@ class World {
                     spell.lifePoints = 0;
                     spell.offset.top = 1500;
                     this.damageEnemy(enemy, index, 100);
-                    // enemy.lifePoints = 0;
-                    // Prevents getting hit by dead enemy while its animation is still playing
-                    // enemy.offset.top = -1500;
-                    // Deletes enemy object from world after death animation played
-                    // setTimeout(() => {
-                    //     this.character.activeSpells.splice(i, 1);
-                    //     if (enemy instanceof Slime) {
-                    //         this.dropLoot(enemy);
-                    //         this.level.enemies.splice(index, 1, new Slime(this.character.x));
-                    //     }
-                    // }, 1000);
                 }
             })
         }
@@ -251,25 +257,22 @@ class World {
         };
         if (enemy.lifePoints <= 0) {
             // Shrinks hitbox to prevent enemy interaction while death animation is playing
+            enemy.isKilled = true;
             enemy.offset.top = -500;
-            this.killAndSpawnEnemy(enemy, index);
+            this.killEnemy(enemy, index);
         }
     }
 
-    killAndSpawnEnemy(enemy, index) {
+    killEnemy(enemy, index) {
         // Deletes enemy object from world after death animation played, spawns new one and drops a collectable item as loot
-        setTimeout(() => {
-            if (enemy instanceof Slime) {
-                this.dropLoot(enemy);
-                if (enemy.tiny === undefined) {
-                    this.level.enemies.splice(index, 1, new Slime(this.character.x, undefined));
-                } else if (enemy.tiny === false) {
-                    this.level.enemies.splice(index, 1, new Slime(this.character.x, false));
-                } else {
-                    this.level.enemies.splice(index, 1, new Slime(this.character.x, true));
+        if (enemy instanceof Slime && enemy.isKilled) {
+            setTimeout(() => {
+                if (enemy.isKilled) {
+                    this.dropLoot(enemy);
+                    this.level.enemies.splice(index, 1);
                 }
-            }
-        }, 1200);
+            }, 1200);
+        }
         console.log('Gegner gekillt');
     }
 
@@ -290,7 +293,7 @@ class World {
         }
     }
 
-    checksLoot() {
+    collectLoot() {
         if (this.collectableItems.length > 0) {
             this.collectableItems.forEach((item, i) => {
                 if (item.isColliding(this.character)) {
@@ -321,6 +324,12 @@ class World {
         if (!this.character.isColliding(enemy) && enemy.isHitting) {
             enemy.isHitting = false;
             this.character.takingHit = false;
+        }
+    }
+
+    killEnemyOutOfMap(enemy, index) {
+        if (enemy.x < - 815) {
+            world.level.enemies.splice([index], 1);
         }
     }
 }

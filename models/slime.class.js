@@ -1,6 +1,7 @@
 class Slime extends MovableObject {
     isHitting = false;
-    tiny;
+    category;
+    isKilled = false;
     movingInterval;
 
     IMAGES_WALKING = [
@@ -68,7 +69,7 @@ class Slime extends MovableObject {
     ];
 
 
-    constructor(additional, tiny) {
+    constructor(start, category) {
         super().loadImage('img/Enemies/Slime/BlueSlime/move/move_1.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
@@ -76,7 +77,7 @@ class Slime extends MovableObject {
         this.loadImages(this.IMAGES_DEAD_TINY);
         this.loadImages(this.IMAGES_WALKING_FLY);
         this.loadImages(this.IMAGES_DEAD_FLY);
-        this.tiny = tiny;
+        this.category = category;
         this.y = 380;
         this.width = 96;
         this.height = 96;
@@ -91,17 +92,17 @@ class Slime extends MovableObject {
         };
 
         // If first wave of enemy is killed new one spawns just out sight to the right
-        if (additional != undefined) {
-            this.x = additional + 720 + Math.random() * 200;
+        if (start != undefined) {
+            this.x = start + 720 + Math.random() * 200;
         } else {
             this.x = 200 + Math.floor(Math.random() * 800); // 200 + 800 default
         }
-        if (this.tiny === false) {
+        if (this.category == 'fly') {
             this.y = 383; // 383 Ground level
             this.y = 180 + Math.floor(Math.random() * 100);
             this.speed = 1;
         }
-        if (this.tiny) {
+        if (this.category == 'tiny') {
             this.speed = 0.25
             this.y = 388;
         }
@@ -114,7 +115,7 @@ class Slime extends MovableObject {
             this.moveLeft();
         }, 1000 / 60);
 
-        if (this.tiny == undefined) {
+        if (this.category == 'normal') {
             // Handling normal slimes
             this.animationInterval = setInterval(() => {
                 if (this.isDead()) {
@@ -132,7 +133,7 @@ class Slime extends MovableObject {
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             }, 1000 / 5);
-        } else if (this.tiny) {
+        } else if (this.category == 'tiny') {
             // Handling tiny slimes
             this.animationInterval = setInterval(() => {
                 if (this.isDead()) {
