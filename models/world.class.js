@@ -206,15 +206,31 @@ class World {
                 hasEnemies = world.level.enemies.some((enemy) => enemy instanceof Slime);
             }
             if (!hasEnemies) {
-                world.level.enemies.push(new Slime(world.character.x, 'normal'));
-                world.level.enemies.push(new Slime(world.character.x, 'normal'));
-                world.level.enemies.push(new Slime(world.character.x, 'tiny'));
-                world.level.enemies.push(new Slime(world.character.x, 'tiny'));
-                world.level.enemies.push(new Slime(world.character.x, 'fly'));
-                world.level.enemies.push(new Slime(world.character.x, 'fly'));
+                this.spawnNormalSlime();
+                this.spawnTinySlime();
+                this.spawnFlyingSlime();
             }
-        }, 5000);
+        }, 1000);
     }
+
+
+    spawnNormalSlime() {
+        world.level.enemies.push(new Slime(world.character.x, 'normal'));
+        world.level.enemies.push(new Slime(world.character.x, 'normal'));
+    }
+
+
+    spawnTinySlime() {
+        world.level.enemies.push(new Slime(world.character.x, 'tiny'));
+        world.level.enemies.push(new Slime(world.character.x, 'tiny'));
+    }
+
+
+    spawnFlyingSlime() {
+        world.level.enemies.push(new Slime(world.character.x, 'fly'));
+        world.level.enemies.push(new Slime(world.character.x, 'fly'));
+    }
+
 
 
     checkJumpOnEnemy(enemy, index) {
