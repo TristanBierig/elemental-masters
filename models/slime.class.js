@@ -93,8 +93,9 @@ class Slime extends MovableObject {
 
         // If first wave of enemy is killed new one spawns just out sight to the right
         if (start != undefined) {
-            this.x = start + 720 + Math.random() * 200;
+            this.x = start + 720 + Math.random() * 300;
         } else {
+            // Just for first spawn
             this.x = 200 + Math.floor(Math.random() * 800); // 200 + 800 default
         }
         if (this.category == 'fly') {

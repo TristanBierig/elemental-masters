@@ -132,7 +132,7 @@ class Character extends MovableObject {
     animate() {
         // Move Horizontal + plays running sound
         this.movementInterval = setInterval(() => {
-            if (world && world.keyboard.RIGHT == true && this.x < world.level.level_end_x) {
+            if (world && world.keyboard.RIGHT == true) {
                 this.moveRight();
                 if (!this.playRun) {
                     this.walking_sound.playpause();

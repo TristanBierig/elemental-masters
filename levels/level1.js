@@ -12,29 +12,13 @@ level1 = new Level(
         new Slime(undefined, 'fly'),
         // Creates tiny slime
         new Slime(undefined, 'tiny'),
-        new Slime(undefined, 'tiny'),
+        new Slime(undefined, 'tiny')
     ],
     [
         new Cloud(),
         new Cloud()
     ],
     [
-        new Background('img/Background/background/sky_odd.png', -720, 0),
-        new Background('img/Background/background/cloud.png', -720, 0, 720, 150),
-        new Background('img/Background/background/mountain2.png', -720, 150, 720, 200),
-        new Background('img/Background/background/mountain.png', -720, 80, 720, 400),
-        new Background('img/Background/background/sky.png', -1, 0),
-        new Background('img/Background/background/cloud.png', -1, -20, 720, 150),
-        new Background('img/Background/background/mountain2.png', -3, 150, 720, 200),
-        new Background('img/Background/background/mountain.png', -3, 80, 720, 400),
-        new Background('img/Background/background/sky_odd.png', 718, 0),
-        new Background('img/Background/background/cloud.png', 718, 50, 720, 150),
-        new Background('img/Background/background/mountain2.png', 714, 150, 720, 200),
-        new Background('img/Background/background/mountain.png', 714, 80, 720, 400),
-        new Background('img/Background/background/sky.png', 1437, 0),
-        new Background('img/Background/background/cloud.png', 1437, 0, 720, 150),
-        new Background('img/Background/background/mountain2.png', 1434, 150, 720, 200),
-        new Background('img/Background/background/mountain.png', 1434, 80, 720, 400),
     ],
     [
         new Foreground('img/Background/props/tree1/green/3.png', -80),

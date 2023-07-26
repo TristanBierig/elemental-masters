@@ -14,7 +14,8 @@ class World {
     keyboard;
     camera_x = 0;
 
-    backgroundStartX = 1434;
+    // Starts background render to left til out of sight
+    backgroundStartX = -2160; // -2160 default
     oddBackgroundNeeded = true;
 
     slimeKillAudio = playerSoundsKillSlime;
@@ -30,6 +31,7 @@ class World {
         this.spawnNewEnemies();
         this.updateGame();
         this.killEnemy();
+        this.spawnClouds();
     }
 
 
@@ -47,7 +49,7 @@ class World {
                 // Checks for collision bewtween character and any enemy
                 this.checkGettingHit(enemy);
 
-                this.killEnemyOutOfMap(enemy, index);
+                this.killEnemyOutOfSight(enemy, index);
                 // console.log(this.character, enemy);
                 // console.log(this.character.lifePoints);
                 // console.log(this.character.takingHit);
@@ -64,13 +66,13 @@ class World {
     /**
      * This function pushes new objects into the this.floor-Array based on whether the character travelled a certain distance to the right. (infinite World generation)
      * 
-     * @param {boolean} newScreen - This is True when the character travelled a certain distance to the right 
+     * @param {boolean} isNewScreen - This is True when the character travelled a certain distance to the right 
      *                              in relation to the already rendered Background and Floor Sprites X-Coordinates 
      */
-    expandFloor(newScreen) {
+    expandFloor(isNewScreen) {
         let oneScreenWidth = 6;
         let tileStart = -720;
-        if (newScreen) {
+        if (isNewScreen) {
             oneScreenWidth + 6;
             tileStart = this.floor[this.floor.length - 1].x;
         }
@@ -84,24 +86,28 @@ class World {
 
 
     expandBackground() {
-        // let cloudHeight = Math.floor(Math.random() * 1);
-        // if (this.oddBackgroundNeeded && world) {
-        //     world.level.backgroundObjects.push(
-        //         new Background('img/Background/background/sky_odd.png', this.backgroundStartX - 1, 0),
-        //         new Background('img/Background/background/cloud.png', this.backgroundStartX - 1, 0, 720, 150),
-        //         new Background('img/Background/background/mountain2.png', this.backgroundStartX - 3, 150, 720, 200),
-        //         new Background('img/Background/background/mountain.png', this.backgroundStartX - 3, 80, 720, 400)
-        //     );
-        //     this.backgroundStartX += 2 
-        //     this.oddBackgroundNeeded = false;
-        // } else if(world) {
-        //     world.level.backgroundObjects.push(
-        //         new Background('img/Background/background/sky.png', this.backgroundStartX - 1, 0),
-        //         new Background('img/Background/background/cloud.png', this.backgroundStartX - 1, 0, 720, 150),
-        //         new Background('img/Background/background/mountain2.png', this.backgroundStartX - 3, 150, 720, 200),
-        //         new Background('img/Background/background/mountain.png', this.backgroundStartX - 3, 80, 720, 400)
-        //     );
-        // }
+        let cloudHeight = Math.floor(Math.random() * 1);
+        let newStartSky = this.backgroundStartX + 719;
+        let newStartMountain = this.backgroundStartX + 717;
+
+        if (this.oddBackgroundNeeded && world) {
+            world.level.backgroundObjects.push(
+                new Background('img/Background/background/sky_odd.png', newStartSky, 0),
+                new Background('img/Background/background/cloud.png', newStartSky, cloudHeight, 720, 150),
+                new Background('img/Background/background/mountain2.png', newStartMountain, 150, 720, 200),
+                new Background('img/Background/background/mountain.png', newStartMountain, 80, 720, 400)
+            );
+            this.oddBackgroundNeeded = false;
+        } else if (world) {
+            world.level.backgroundObjects.push(
+                new Background('img/Background/background/sky.png', newStartSky, 0),
+                new Background('img/Background/background/cloud.png', newStartSky, cloudHeight, 720, 150),
+                new Background('img/Background/background/mountain2.png', newStartMountain, 150, 720, 200),
+                new Background('img/Background/background/mountain.png', newStartMountain, 80, 720, 400)
+            );
+            this.oddBackgroundNeeded = true;
+        }
+        this.backgroundStartX = newStartSky;
     }
 
 
@@ -134,9 +140,11 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0);
 
-        // Generate infinite Floor on moving right
+        // Generate infinite World on moving right
         if (this.floor[this.floor.length - 1].x - this.character.x < 800) {
             this.expandFloor(true);
+        }
+        if (this.backgroundStartX < this.character.x || this.character.x + 720 > this.backgroundStartX) {
             this.expandBackground();
         }
 
@@ -232,7 +240,13 @@ class World {
     }
 
 
+    spawnClouds() {
+        setInterval(() => {
+            world.level.clouds.push(new Cloud(this.character.x));
+        }, 10000);
+    }
 
+    
     checkJumpOnEnemy(enemy, index) {
         if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne()) {
             this.character.jump();
@@ -359,9 +373,9 @@ class World {
         }
     }
 
-    killEnemyOutOfMap(enemy, index) {
-        if (enemy.x < - 815) {
-            world.level.enemies.splice([index], 1);
+    killEnemyOutOfSight(enemy, index) {
+        if ((this.character.x - 720) > enemy.x && enemy.x < this.character.x) {
+            enemy.isKilled = true;
         }
     }
 }
