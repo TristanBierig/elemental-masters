@@ -29,6 +29,7 @@ class World {
         this.draw();
         this.spawnNewEnemies();
         this.updateGame();
+        this.killEnemy();
     }
 
 
@@ -257,36 +258,51 @@ class World {
         };
         if (enemy.lifePoints <= 0) {
             // Shrinks hitbox to prevent enemy interaction while death animation is playing
-            enemy.isKilled = true;
+            setTimeout(() => {
+                this.dropLoot(enemy);
+                enemy.isKilled = true;
+            }, 1200);
             enemy.offset.top = -500;
-            this.killEnemy(enemy, index);
+            // this.killEnemy(enemy, index);
         }
     }
 
-    killEnemy(enemy, index) {
-        // Deletes enemy object from world after death animation played, spawns new one and drops a collectable item as loot
-        if (enemy instanceof Slime && enemy.isKilled) {
-            setTimeout(() => {
+
+    killEnemy() {
+        setInterval(() => {
+            for (let i = world.level.enemies.length - 1; i >= 0; i--) {
+                const enemy = world.level.enemies[i];
                 if (enemy.isKilled) {
-                    this.dropLoot(enemy);
-                    this.level.enemies.splice(index, 1);
+                    world.level.enemies.splice(i, 1, new Slime(this.character.x, enemy.category));
                 }
-            }, 1200);
-        }
-        console.log('Gegner gekillt');
+            }
+        }, 1000 / 60);
     }
+
+    // killEnemy(enemy, index) {
+    //     // Deletes enemy object from world after death animation played, spawns new one and drops a collectable item as loot
+    //     if (enemy instanceof Slime && enemy.isKilled) {
+    //         setTimeout(() => {
+    //             if (enemy.isKilled) {
+    //                 this.dropLoot(enemy);
+    //                 this.level.enemies.splice(index, 1);
+    //             }
+    //         }, 1200);
+    //     }
+    //     console.log('Gegner gekillt');
+    // }
 
     dropLoot(enemy) {
         // Defines the droprate. Whether a manapot or star is dropped.
         this.droprate = Math.random() * 100;
 
-        if (enemy.tiny) {
+        if (enemy.category == 'tiny') {
             if (this.droprate < 50) {
                 this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'MANA'));
             } else {
                 this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'STAR'));
             }
-        } else if (enemy.tiny === false) {
+        } else if (enemy.category == 'fly') {
             this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'STAR'));
         } else {
             this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'MANA'));
