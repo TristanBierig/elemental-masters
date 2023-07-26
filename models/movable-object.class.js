@@ -76,7 +76,7 @@ class MovableObject extends DrawableObject {
 
 
     isDead() {
-        return this.lifePoints == 0;
+        return this.lifePoints <= 0;
     }
 
 
