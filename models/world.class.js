@@ -230,7 +230,7 @@ class World {
 
 
     spawnEndboss() {
-
+        world.level.enemies.push(new Endboss(this.character.x));
     }
 
 
@@ -385,13 +385,13 @@ class World {
                     // checks if collected item is mana pot or star and fills the statusbar accordingly
                     if (item.category == 'MANA') {
                         this.statusBar[1].percentage += 20;
-                        if (this.statusBar[1] > 100) {
-                            this.statusBar[1] = 100;
+                        if (this.statusBar[1].percentage > 100) {
+                            this.statusBar[1].percentage = 100;
                         }
                     } else {
                         this.statusBar[2].percentage += 20;
-                        if (this.statusBar[2] > 100) {
-                            this.statusBar[2] = 100;
+                        if (this.statusBar[2].percentage > 100) {
+                            this.statusBar[2].percentage = 100;
                         }
                     }
                 }
