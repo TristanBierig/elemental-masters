@@ -258,7 +258,7 @@ class World {
         }, 10000);
     }
 
-    
+
     checkJumpOnEnemy(enemy, index) {
         if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne()) {
             this.character.jump();
@@ -282,15 +282,17 @@ class World {
                 if (spell.isColliding(enemy)) {
                     this.rockShatterAudio.play();
                     spell.lifePoints = 0;
-                    spell.offset.top = 1500;
-                    this.damageEnemy(enemy, index, 100);
+                    setTimeout(() => {
+                        spell.isKilled = true;
+                    }, 400);
+                    this.damageEnemy(enemy, spell, 100);
                 }
             })
         }
     }
 
 
-    damageEnemy(enemy, index, damage) {
+    damageEnemy(enemy, spell, damage) {
         enemy.lifePoints -= damage;
         this.character.offset = this.offset = {
             top: 172,
@@ -318,6 +320,12 @@ class World {
                     world.level.enemies.splice(i, 1, new Slime(this.character.x, enemy.category));
                 }
             }
+            for (let i = this.character.activeSpells.length - 1; i >= 0; i--) {
+                const spell = this.character.activeSpells[i];
+                if (spell.isKilled) {
+                    this.character.activeSpells.splice(i, 1);
+                }
+            }
         }, 1000 / 60);
     }
 
@@ -339,17 +347,33 @@ class World {
         this.droprate = Math.random() * 100;
 
         if (enemy.category == 'tiny') {
-            if (this.droprate < 50) {
-                this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'MANA'));
-            } else {
-                this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'STAR'));
+            switch (true) {
+                case (this.droprate < 25):
+                    this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'MANA'));
+                    break;
+                case (this.droprate < 50):
+                    this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'STAR'));
+                    break;
             }
-        } else if (enemy.category == 'fly') {
-            this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'STAR'));
-        } else {
-            this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'MANA'));
+        }
+
+        if (enemy.category == 'fly') {
+            switch (true) {
+                case (this.droprate < 40):
+                    this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'STAR'));
+                    break;
+            }
+        }
+
+        if (enemy.category == 'normal') {
+            switch (true) {
+                case (this.droprate < 70):
+                    this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'MANA'));
+                    break;
+            }
         }
     }
+
 
     collectLoot() {
         if (this.collectableItems.length > 0) {
@@ -362,12 +386,12 @@ class World {
                     if (item.category == 'MANA') {
                         this.statusBar[1].percentage += 20;
                         if (this.statusBar[1] > 100) {
-                            this.statusBar[1]  = 100;
+                            this.statusBar[1] = 100;
                         }
                     } else {
                         this.statusBar[2].percentage += 20;
-                        if (this.statusBar[2] > 200) {
-                            this.statusBar[2]  = 100;
+                        if (this.statusBar[2] > 100) {
+                            this.statusBar[2] = 100;
                         }
                     }
                 }

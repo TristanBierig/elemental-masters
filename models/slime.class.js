@@ -1,7 +1,6 @@
 class Slime extends MovableObject {
     isHitting = false;
     category;
-    isKilled = false;
     movingInterval;
 
     IMAGES_WALKING = [

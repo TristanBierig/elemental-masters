@@ -4,6 +4,7 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     accelertion = 1; // 1 default
     lifePoints = 100;
+    isKilled = false;
 
     animationInterval;
     movementInterval;
