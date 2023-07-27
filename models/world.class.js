@@ -12,6 +12,7 @@ class World {
     canvas;
     ctx;
     keyboard;
+    endbossSpawned = false;
     camera_x = 0;
 
     // Starts background render to left til out of sight
@@ -50,6 +51,12 @@ class World {
                 this.checkGettingHit(enemy);
 
                 this.killEnemyOutOfSight(enemy, index);
+
+                if (world && world.statusBar[2].percentage == 100 && !this.endbossSpawned && this.character.x > 1400) {
+                    this.endbossSpawned = true;
+                    this.spawnEndboss();
+                    console.log('Endboss spawn');
+                }
                 // console.log(this.character, enemy);
                 // console.log(this.character.lifePoints);
                 // console.log(this.character.takingHit);
@@ -222,6 +229,11 @@ class World {
     }
 
 
+    spawnEndboss() {
+
+    }
+
+
     spawnNormalSlime() {
         world.level.enemies.push(new Slime(world.character.x, 'normal'));
         world.level.enemies.push(new Slime(world.character.x, 'normal'));
@@ -349,8 +361,14 @@ class World {
                     // checks if collected item is mana pot or star and fills the statusbar accordingly
                     if (item.category == 'MANA') {
                         this.statusBar[1].percentage += 20;
+                        if (this.statusBar[1] > 100) {
+                            this.statusBar[1]  = 100;
+                        }
                     } else {
                         this.statusBar[2].percentage += 20;
+                        if (this.statusBar[2] > 200) {
+                            this.statusBar[2]  = 100;
+                        }
                     }
                 }
             })
@@ -373,7 +391,7 @@ class World {
         }
     }
 
-    killEnemyOutOfSight(enemy, index) {
+    killEnemyOutOfSight(enemy) {
         if ((this.character.x - 720) > enemy.x && enemy.x < this.character.x) {
             enemy.isKilled = true;
         }
