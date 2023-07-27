@@ -89,12 +89,13 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_SMASH);
-        this.x = start + 1000; // 1000 default
+        // this.x = start + 1000; // 1000 default
+        this.x = 0;
         this.y = 130;
         this.width = 576; // 576 default
         this.height = 320; // 320 default
-        this.speed = 0.15; // 0.2 default
-        
+        this.speed = 0; // 0.2 default
+
         // Defines the Hitbox in small Form
         this.offset = {
             top: 280,
@@ -119,6 +120,7 @@ class Endboss extends MovableObject {
                     playerBackgroundBoss.playpause();
                     this.currentImage = 0;
                     this.animationStatus = 'DEAD';
+                    this.offset.top = -200;
                     this.stopInterval(this.movementInterval);
                 }
                 this.playAnimation(this.IMAGES_DEAD);
@@ -134,15 +136,41 @@ class Endboss extends MovableObject {
                     this.animationStatus = 'SMASH';
                 }
                 this.playAnimation(this.IMAGES_SMASH);
+                if (this.currentImage >= 12) {
+                    this.setTransformHitbox();
+                }
 
                 if (this.currentImage == this.IMAGES_SMASH.length) {
+                    this.animationStatus = 'IDLE';
                     this.movementStatus = 'IDLE';
+                    this.setTransformHitbox();
                 }
             } else if (this.isTransform && this.movementStatus == 'IDLE') {
                 this.playAnimation(this.IMAGES_IDLE);
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
             }
+
         }, 1000 / 5);
+    }
+
+
+    setTransformHitbox() {
+        if (this.animationStatus == 'SMASH') {
+            this.offset = {
+                top: 175,
+                bottom: 175,
+                left: 100,
+                right: 200
+            };
+        } else {
+            // Defines big hitbox
+            this.offset = {
+                top: 175,
+                bottom: 175,
+                left: 215,
+                right: 430
+            };
+        }
     }
 }

@@ -12,7 +12,8 @@ level1 = new Level(
         new Slime(undefined, 'fly'),
         // Creates tiny slime
         new Slime(undefined, 'tiny'),
-        new Slime(undefined, 'tiny')
+        new Slime(undefined, 'tiny'),
+        new Endboss()
     ],
     [
         new Cloud(),
@@ -47,8 +48,7 @@ level1 = new Level(
         new Foreground('img/Background/props/tree2/orange/2.png'),
         new Foreground('img/Background/props/tree2/orange/5.png')
     ],
-    [
-        
+    [  
     ]
 );
 }

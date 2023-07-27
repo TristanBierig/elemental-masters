@@ -13,6 +13,7 @@ class World {
     ctx;
     keyboard;
     endbossSpawned = false;
+    spawnInterval;
     camera_x = 0;
 
     // Starts background render to left til out of sight
@@ -225,6 +226,10 @@ class World {
                 this.spawnTinySlime();
                 this.spawnFlyingSlime();
             }
+
+            if (this.endbossSpawned) {
+                clearInterval(this.spawnInterval);
+             }
         }, 1000);
     }
 
@@ -300,7 +305,7 @@ class World {
             left: 275,
             right: 550
         };
-        if (enemy.lifePoints <= 0) {
+        if (enemy.lifePoints <= 0 && enemy instanceof Slime) {
             // Shrinks hitbox to prevent enemy interaction while death animation is playing
             setTimeout(() => {
                 this.dropLoot(enemy);
@@ -316,8 +321,11 @@ class World {
         setInterval(() => {
             for (let i = world.level.enemies.length - 1; i >= 0; i--) {
                 const enemy = world.level.enemies[i];
-                if (enemy.isKilled) {
+                if (enemy.isKilled && !this.endbossSpawned) {
                     world.level.enemies.splice(i, 1, new Slime(this.character.x, enemy.category));
+                }
+                if (enemy.isKilled && this.endbossSpawned) {
+                    world.level.enemies.splice(i, 1);
                 }
             }
             for (let i = this.character.activeSpells.length - 1; i >= 0; i--) {
@@ -358,19 +366,14 @@ class World {
         }
 
         if (enemy.category == 'fly') {
-            switch (true) {
-                case (this.droprate < 40):
-                    this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'STAR'));
-                    break;
+            if (this.droprate < 40) {
+                this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'STAR'));
             }
         }
 
         if (enemy.category == 'normal') {
-            switch (true) {
-                case (this.droprate < 70):
-                    this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'MANA'));
-                    break;
-            }
+            if (this.droprate < 70)
+                this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'MANA'));
         }
     }
 
@@ -405,7 +408,6 @@ class World {
             this.character.takingHit = true;
             this.character.gettingHit();
             this.statusBar[0].percentage = this.character.lifePoints;
-            // return;
         }
 
         // Stops hit animation from char when he is not being hit anymore
