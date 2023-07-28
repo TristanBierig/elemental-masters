@@ -16,7 +16,7 @@ class World {
     spawnInterval;
     camera_x = 0;
 
-    // Starts background render to left til out of sight
+    // Starts background render from left out of sight
     backgroundStartX = -2160; // -2160 default
     oddBackgroundNeeded = true;
 
@@ -417,6 +417,13 @@ class World {
         }
     }
 
+
+    /**
+     * This function deletes enemy object from the enemies array when they are travelled to far to the left in Relation to the character.
+     * Helps cycling enemies
+     * 
+     * @param {object} enemy 
+     */
     killEnemyOutOfSight(enemy) {
         if ((this.character.x - 720) > enemy.x && enemy.x < this.character.x) {
             enemy.isKilled = true;
