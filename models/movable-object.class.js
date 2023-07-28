@@ -27,8 +27,16 @@ class MovableObject extends DrawableObject {
     applyGravitiy(spellCasted) {
         // Applys Gravitiy just for character
         if (!spellCasted) {
+        this.gravityForCharacter();
+        } else{
+        // Lets projectiles fall underneath ground level
+        this.gravityForSpells();
+        }
+    }
+
+
+    gravityForCharacter() {
             setInterval(() => {
-                // debugger
                 if (this.isAirborne() || this.speedY > 0) {
                     this.y -= this.speedY;
                     this.speedY -= this.accelertion;
@@ -44,21 +52,18 @@ class MovableObject extends DrawableObject {
             }, 1000 / 25);
         }
 
-        // Applys gravitiy to throwableObjects (lets them fall underneath ground level)
-        if (spellCasted) {
+
+    gravityForSpells() {
             setInterval(() => {
-                // debugger
                 this.y -= this.speedY;
                 this.speedY -= this.accelertion;
             }, 1000 / 25);
-        }
     }
 
 
     isAirborne() {
         return this.y < 205;
     }
-
 
     isColliding(mo) {
         return this.x + this.offset.left + this.width - this.offset.right > mo.x + mo.offset.left &&
@@ -92,9 +97,6 @@ class MovableObject extends DrawableObject {
         this.otherDirection = true;
     }
 
-    shoot() {
-
-    }
 
     jump() {
         this.speedY = 15; // default 17
