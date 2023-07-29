@@ -4,10 +4,11 @@ class MovableObject extends DrawableObject {
     accelertion = 1; // 1 default
     
     lifePoints = 100;
-    takingHit;
+    isTakingHit;
     isKilled = false;
 
     animationInterval;
+    animationIntervalTransform;
     movementInterval;
     animationStatus;
     movementStatus;

@@ -98,6 +98,10 @@ class Endboss extends MovableObject {
                 if (this.animationStatus != 'DEAD') {
                     this.currentImage = 0;
                     this.animationStatus = 'DEAD';
+                    playerBackgroundBoss.pause();
+                    setTimeout(() => {
+                       
+                    }, 500);
                 }
                 this.playAnimation(this.IMAGES_DEAD_FINAL);
             } else if (this.isTransformed && this.movementStatus == 'STAND') {
@@ -150,14 +154,14 @@ class Endboss extends MovableObject {
                     }
                 }
                 console.log(this.currentImage, this.animationStatus);
-            } else if (this.takingHit) {
+            } else if (this.isTakingHit) {
                 if (this.animationStatus != 'HIT') {
                     this.currentImage = 0;
                     this.animationStatus = 'HIT';
                 }
                 this.playAnimation(this.IMAGES_TAKE_HIT);
                 if (this.currentImage >= 5) {
-                    this.takingHit = false;
+                    this.isTakingHit = false;
                 }
             } else if (this.isTransformed) {
                 this.playAnimation(this.IMAGES_WALKING);

@@ -23,7 +23,7 @@ class World {
     slimeKillAudio = playerSoundsKillSlime;
     rockShatterAudio = playerSoundsEarthSpell;
     collectItemsAudio = playerSoundsCollectLoot;
-
+   
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -59,7 +59,7 @@ class World {
                 }
                 // console.log(this.character, enemy);
                 // console.log(this.character.lifePoints);
-                // console.log(this.character.takingHit);
+                // console.log(this.character.isTakingHit);
             });
         }, 1000 / 25);
     }
@@ -303,7 +303,7 @@ class World {
             enemy.lifePoints -= damage;
         } else if (enemy.isTransformed && enemy.Status != 'STAND') {
             enemy.lifePoints -= damage;
-            enemy.takingHit = true;
+            enemy.isTakingHit = true;
         }
 
         if (enemy instanceof Endboss && enemy.isTransformed) {
@@ -320,15 +320,19 @@ class World {
         };
         if (enemy.lifePoints <= 0 && enemy instanceof Slime) {
             // Shrinks hitbox to prevent enemy interaction while death animation is playing
+            // Handles normal enemy Kills
             setTimeout(() => {
                 this.dropLoot(enemy);
                 enemy.isKilled = true;
             }, 1200); // 1200
             enemy.offset.top = -500;
         }
+        // Handles Endboss Kill
         if (enemy.lifePoints <= 0 && enemy.isTransformed) {
+            playerSoundsEndbossDeath.play();
             setTimeout(() => {
                 enemy.isKilled = true;
+                playerSoundsVictory.play();
             }, 4000); // 4000
             enemy.offset.top = -500;
         }
@@ -412,7 +416,7 @@ class World {
     checkGettingHit(enemy) {
         if (this.character.isColliding(enemy)) {
             enemy.isHitting = true;
-            this.character.takingHit = true;
+            this.character.isTakingHit = true;
             this.character.gettingHit();
             this.statusBar[0].percentage = this.character.lifePoints;
         }
@@ -420,7 +424,7 @@ class World {
         // Stops hit animation from char when he is not being hit anymore
         if (!this.character.isColliding(enemy) && enemy.isHitting) {
             enemy.isHitting = false;
-            this.character.takingHit = false;
+            this.character.isTakingHit = false;
         }
     }
 
