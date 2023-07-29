@@ -56,8 +56,6 @@ class World {
                 if (world && world.statusBar[2].percentage == 100 && !this.endbossSpawned && this.character.x > 1400) {
                     this.endbossSpawned = true;
                     this.spawnEndboss();
-                    
-                    console.log('Endboss spawn');
                 }
                 // console.log(this.character, enemy);
                 // console.log(this.character.lifePoints);
@@ -230,7 +228,7 @@ class World {
 
             if (this.endbossSpawned) {
                 clearInterval(this.spawnInterval);
-             }
+            }
         }, 1000);
     }
 
@@ -266,11 +264,13 @@ class World {
 
 
     checkJumpOnEnemy(enemy, index) {
-        if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne()) {
-            this.character.jump();
-            this.slimeKillAudio.play();
-            this.damageEnemy(enemy, index, 100);
-        }
+       if (enemy instanceof Slime || !enemy.isTransformed) {
+         if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne()) {
+             this.character.jump();
+             this.slimeKillAudio.play();
+             this.damageEnemy(enemy, index, 100);
+         }
+       }
     }
 
 
@@ -291,7 +291,7 @@ class World {
                     setTimeout(() => {
                         spell.isKilled = true;
                     }, 400);
-                    this.damageEnemy(enemy, spell, 100);
+                    this.damageEnemy(enemy, spell, 50);
                 }
             })
         }
@@ -299,21 +299,32 @@ class World {
 
 
     damageEnemy(enemy, spell, damage) {
-        enemy.lifePoints -= damage;
+        if (enemy instanceof Slime || !enemy.isTransformed) {
+            enemy.lifePoints -= damage;
+        } else if (enemy.isTransformed && enemy.Status != 'STAND') {
+            enemy.lifePoints -= damage;
+        }
+
+        if (enemy instanceof Endboss && enemy.isTransformed) {
+            world.statusBar[3].percentage = enemy.lifePoints;
+            if (world.statusBar[3].percentage <= 0) {
+                world.statusBar[3].percentage = 0;
+            }
+        }
         this.character.offset = this.offset = {
             top: 172,
             bottom: 185,
             left: 275,
             right: 550
         };
-        if (enemy.lifePoints <= 0 && enemy instanceof Slime) {
+        if (enemy.lifePoints <= 0 && (enemy instanceof Slime || enemy.isTransformed)) {
             // Shrinks hitbox to prevent enemy interaction while death animation is playing
             setTimeout(() => {
                 this.dropLoot(enemy);
                 enemy.isKilled = true;
             }, 1200);
             enemy.offset.top = -500;
-            // this.killEnemy(enemy, index);
+
         }
     }
 
@@ -338,18 +349,6 @@ class World {
         }, 1000 / 60);
     }
 
-    // killEnemy(enemy, index) {
-    //     // Deletes enemy object from world after death animation played, spawns new one and drops a collectable item as loot
-    //     if (enemy instanceof Slime && enemy.isKilled) {
-    //         setTimeout(() => {
-    //             if (enemy.isKilled) {
-    //                 this.dropLoot(enemy);
-    //                 this.level.enemies.splice(index, 1);
-    //             }
-    //         }, 1200);
-    //     }
-    //     console.log('Gegner gekillt');
-    // }
 
     dropLoot(enemy) {
         // Defines the droprate. Whether a manapot or star is dropped.

@@ -4,6 +4,7 @@ class Endboss extends MovableObject {
     resetCurrentImage = true;
     isNextAttack = true;
     nextAttack;
+    isImmune = false;
 
     IMAGES_WALKING_BEFORE = [
         'img/Endboss/individual sprites/01_idle/idle_1.png',
@@ -191,7 +192,7 @@ class Endboss extends MovableObject {
                 }
                 this.playAnimation(this.IMAGES_DEAD);
                 if (this.currentImage == this.IMAGES_DEAD.length) {
-                    this.lifePoints = 100;
+                    this.lifePoints = 2000;
                     this.isTransformed = true;
                     this.animationStatus = 'SMASH';
                 }
@@ -233,8 +234,12 @@ class Endboss extends MovableObject {
                         this.animationStatus = 'CLEAVE';
                     }
 
-                    if (this.currentImage >= 10 && this.currentImage <= 13) {
+                    if (this.currentImage >= 9 && this.currentImage <= 11) {
+                        this.setTransformHitbox(true);
+                        this.isImmune = true;
+                    } else {
                         this.setTransformHitbox();
+                        this.isImmune = false;
                     }
 
                     this.playAnimation(this.IMAGES_CLEAVE);
@@ -249,6 +254,14 @@ class Endboss extends MovableObject {
                     if (this.animationStatus != 'BREATH') {
                         this.currentImage = 0;
                         this.animationStatus = 'BREATH';
+                    }
+
+                    if (this.currentImage >= 13 && this.currentImage <= 18) {
+                        this.setTransformHitbox(true);
+                        this.isImmune = true;
+                    } else {
+                        this.setTransformHitbox();
+                        this.isImmune = false;
                     }
 
                     this.playAnimation(this.IMAGES_BREATH);
@@ -302,7 +315,7 @@ class Endboss extends MovableObject {
     }
 
 
-    setTransformHitbox() {
+    setTransformHitbox(hitFrame) {
         if (this.animationStatus == 'SMASH') {
             this.offset = {
                 top: 175,
@@ -310,13 +323,38 @@ class Endboss extends MovableObject {
                 left: 100,
                 right: 200
             };
-        } else if (this.animationStatus == 'CLEAVE') {
-            this.offset = {
-                top: 175,
-                bottom: 175,
-                left: 80,
-                right: 430
-            };
+        } else if (this.animationStatus == 'CLEAVE' && hitFrame) {
+            if (!this.otherDirection) {
+                this.offset = {
+                    top: 175,
+                    bottom: 175,
+                    left: 70,
+                    right: 430
+                };
+            } else {
+                this.offset = {
+                    top: 175,
+                    bottom: 175,
+                    left: 215,
+                    right: 270
+                };
+            }
+        } else if (this.animationStatus == 'BREATH' && hitFrame) {
+            if (!this.otherDirection) {
+                this.offset = {
+                    top: 185,
+                    bottom: 175,
+                    left: 50,
+                    right: 430
+                };
+            } else {
+                this.offset = {
+                    top: 185,
+                    bottom: 175,
+                    left: 215,
+                    right: 290
+                };
+            }
         } else {
             // Defines big hitbox on walking/ idle
             this.offset = {
