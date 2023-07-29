@@ -23,7 +23,7 @@ class World {
     slimeKillAudio = playerSoundsKillSlime;
     rockShatterAudio = playerSoundsEarthSpell;
     collectItemsAudio = playerSoundsCollectLoot;
-
+   
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;

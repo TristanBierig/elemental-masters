@@ -33,6 +33,15 @@ const playerSoundsFlying = new Gapless5({
     volume: 0.1,
 });
 
+// Character getting hit
+const playerSoundsHurt = new Gapless5({
+    tracks: ['audio/sound_effects/ouch.mp3'],
+    loop: false,
+    singleMode: true,
+    loadLimit: 1,
+    volume: 0.4,
+});
+
 // Killing Slime
 const playerSoundsKillSlime = new Gapless5({
     tracks: ['audio/sound_effects/pop.mp3'],
@@ -60,6 +69,7 @@ const playerSoundsEarthSpell = new Gapless5({
     volume: 0.4,
 });
 
+// Punch
 const playerSoundsPunch = new Gapless5({
     tracks: ['audio/sound_effects/punch.mp3'],
     loop: false,
@@ -67,3 +77,40 @@ const playerSoundsPunch = new Gapless5({
     loadLimit: 1,
     volume: 0.4,
 });
+
+// Transform
+const playerSoundsTransform = new Gapless5({
+    tracks: ['audio/sound_effects/transform.mp3'],
+    loop: false,
+    singleMode: true,
+    loadLimit: 1,
+    volume: 0.4,
+});
+
+// GameOver Sound
+const playerSoundsGameOver = new Gapless5({
+    tracks: ['audio/sound_effects/game_over.mp3'],
+    loop: false,
+    singleMode: true,
+    loadLimit: 1,
+    volume: 0.4,
+});
+
+// GameOver Screen Loop
+const playerSoundsGameOverLoop = new Gapless5({
+    tracks: ['audio/background_loops/Gameover.wav'],
+    loop: false,
+    singleMode: true,
+    loadLimit: 1,
+    volume: 0.05,
+});
+
+// Victory Screen Loop
+const playerSoundsVictory = new Gapless5({
+    tracks: ['audio/background_loops/Victory.wav'],
+    loop: false,
+    singleMode: true,
+    loadLimit: 1,
+    volume: 0.05,
+});
+

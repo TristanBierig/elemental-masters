@@ -8,6 +8,7 @@ class MovableObject extends DrawableObject {
     isKilled = false;
 
     animationInterval;
+    animationIntervalTransform;
     movementInterval;
     animationStatus;
     movementStatus;
