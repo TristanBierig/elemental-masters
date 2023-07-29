@@ -12,9 +12,9 @@ class World {
     canvas;
     ctx;
     keyboard;
-    endbossSpawned = false;
     spawnInterval;
     camera_x = 0;
+    endbossSpawned = false;
 
     // Starts background render from left out of sight
     backgroundStartX = -2160; // -2160 default
@@ -56,6 +56,7 @@ class World {
                 if (world && world.statusBar[2].percentage == 100 && !this.endbossSpawned && this.character.x > 1400) {
                     this.endbossSpawned = true;
                     this.spawnEndboss();
+                    
                     console.log('Endboss spawn');
                 }
                 // console.log(this.character, enemy);

@@ -23,7 +23,7 @@ class StatusBar extends DrawableObject {
     ]
 
 
-    constructor() {
+    constructor(x, width, bossBar) {
         // debugger
 
         super().loadImage(this.IMAGES_BAR[0]);
@@ -32,6 +32,11 @@ class StatusBar extends DrawableObject {
         this.y = 0;
         this.height = 32;
         this.width = 200;
+        if (x && width && bossBar) {
+            this.x = x;
+            this.width = width;
+            this.otherDirection = true;
+        }
         this.statusbarFrame = new StatusbarFrame(this.x, this.y, this.height, this.width, 'img/UI/ingame_bars/frames/frame_grey.png');
         this.statusbarIcon = new StatusbarIcon(0, this.y, 'LIFE');
 

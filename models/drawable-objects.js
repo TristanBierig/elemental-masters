@@ -6,6 +6,7 @@ class DrawableObject {
     img;
     imageCache = {};
     currentImage = 0;
+    otherDirection = false;
 
 
     loadImage(path) {

@@ -1,6 +1,6 @@
 class MovableObject extends DrawableObject {
     speed;
-    otherDirection = false;
+   
     speedY = 0;
     accelertion = 1; // 1 default
     lifePoints = 100;
