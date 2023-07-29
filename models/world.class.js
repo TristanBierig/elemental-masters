@@ -264,13 +264,13 @@ class World {
 
 
     checkJumpOnEnemy(enemy, index) {
-       if (enemy instanceof Slime || !enemy.isTransformed) {
-         if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne()) {
-             this.character.jump();
-             this.slimeKillAudio.play();
-             this.damageEnemy(enemy, index, 100);
-         }
-       }
+        if (enemy instanceof Slime || !enemy.isTransformed) {
+            if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne()) {
+                this.character.jump();
+                this.slimeKillAudio.play();
+                this.damageEnemy(enemy, index, 100);
+            }
+        }
     }
 
 
@@ -303,6 +303,7 @@ class World {
             enemy.lifePoints -= damage;
         } else if (enemy.isTransformed && enemy.Status != 'STAND') {
             enemy.lifePoints -= damage;
+            enemy.takingHit = true;
         }
 
         if (enemy instanceof Endboss && enemy.isTransformed) {
@@ -317,14 +318,19 @@ class World {
             left: 275,
             right: 550
         };
-        if (enemy.lifePoints <= 0 && (enemy instanceof Slime || enemy.isTransformed)) {
+        if (enemy.lifePoints <= 0 && enemy instanceof Slime) {
             // Shrinks hitbox to prevent enemy interaction while death animation is playing
             setTimeout(() => {
                 this.dropLoot(enemy);
                 enemy.isKilled = true;
-            }, 1200);
+            }, 1200); // 1200
             enemy.offset.top = -500;
-
+        }
+        if (enemy.lifePoints <= 0 && enemy.isTransformed) {
+            setTimeout(() => {
+                enemy.isKilled = true;
+            }, 4000); // 4000
+            enemy.offset.top = -500;
         }
     }
 
@@ -402,6 +408,7 @@ class World {
         }
     }
 
+    
     checkGettingHit(enemy) {
         if (this.character.isColliding(enemy)) {
             enemy.isHitting = true;

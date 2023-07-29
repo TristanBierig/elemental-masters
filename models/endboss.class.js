@@ -145,6 +145,41 @@ class Endboss extends MovableObject {
     ];
 
 
+    IMAGES_TAKE_HIT = [
+        'img/Endboss/individual sprites/11_demon_take_hit/demon_take_hit_1.png',
+        'img/Endboss/individual sprites/11_demon_take_hit/demon_take_hit_2.png',
+        'img/Endboss/individual sprites/11_demon_take_hit/demon_take_hit_3.png',
+        'img/Endboss/individual sprites/11_demon_take_hit/demon_take_hit_4.png',
+        'img/Endboss/individual sprites/11_demon_take_hit/demon_take_hit_5.png'
+    ];
+
+
+    IMAGES_DEAD_FINAL = [
+        'img/Endboss/individual sprites/12_demon_death/demon_death_1.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_2.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_3.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_4.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_5.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_6.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_7.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_8.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_9.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_10.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_11.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_12.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_13.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_14.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_15.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_16.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_17.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_18.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_19.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_20.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_21.png',
+        'img/Endboss/individual sprites/12_demon_death/demon_death_22.png'
+    ];
+
+
 
 
     constructor(start) {
@@ -156,6 +191,8 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_SMASH);
         this.loadImages(this.IMAGES_CLEAVE);
         this.loadImages(this.IMAGES_BREATH);
+        this.loadImages(this.IMAGES_TAKE_HIT);
+        this.loadImages(this.IMAGES_DEAD_FINAL);
         // this.x = start + 1000; // 1000 default
         this.x = 0;
         this.y = 130;
@@ -222,6 +259,12 @@ class Endboss extends MovableObject {
                     }
                 }
                 // Attacks with random spell when in reach of the character
+            } else if (this.lifePoints <= 0 && this.isTransformed) {
+                if (this.animationStatus != 'DEAD') {
+                    this.currentImage = 0;
+                    this.animationStatus = 'DEAD';
+                }
+                this.playAnimation(this.IMAGES_DEAD_FINAL);
             } else if (this.isTransformed && this.movementStatus == 'STAND') {
                 if (this.isNextAttack) {
                     this.nextAttack = Math.random() * 100;
@@ -272,6 +315,15 @@ class Endboss extends MovableObject {
                     }
                 }
                 console.log(this.currentImage, this.animationStatus);
+            } else if (this.takingHit) {
+                if (this.animationStatus != 'HIT') {
+                    this.currentImage = 0;
+                    this.animationStatus = 'HIT';
+                }
+                this.playAnimation(this.IMAGES_TAKE_HIT);
+                if (this.currentImage >= 5) {
+                    this.takingHit = false;
+                }
             } else if (this.isTransformed) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
@@ -295,7 +347,11 @@ class Endboss extends MovableObject {
                 && world.character.x + world.character.offset.left + world.character.width - world.character.offset.right > this.x + this.offset.left - 50)
                 || (world.character.x + world.character.offset.left < this.x + this.offset.left + this.width - this.offset.right + 50
                     && world.character.x + world.character.offset.left > this.x + this.offset.left + this.width - this.offset.right)) {
-                this.movementStatus = 'STAND'
+                this.movementStatus = 'STAND';
+            }
+
+            if (this. isTransformed && this.lifePoints <= 0) {
+                this.movementStatus = 'STAND';
             }
         }, 1000 / 25);
     }

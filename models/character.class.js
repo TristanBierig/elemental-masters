@@ -1,5 +1,4 @@
 class Character extends MovableObject {
-    takingHit;
     spawnInterval;
     doubleJumpAvailable = true;
 
@@ -251,10 +250,6 @@ class Character extends MovableObject {
             }
 
             world.camera_x = -this.x + 60; // 60 default
-            // console.log('this.speedY =', this.speedY);
-            // console.log(this.y);
-            // console.log(this.spellCooldown);
-            // console.log(this.x);
         }, 1000 / 60);
 
         // Just looping through ANIMATION frames (no movement here)            

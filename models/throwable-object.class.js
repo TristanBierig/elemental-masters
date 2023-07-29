@@ -62,6 +62,7 @@ class ThrowableObject extends MovableObject {
     ];
 
     constructor(x, y, status, category, index) {
+        // Empty png on first load
         super().loadImage('img/Enemies/Slime/BlueSlime/death/death_8.png');
         this.loadImages(this.IMAGES_START_E);
         this.loadImages(this.IMAGES_FLYING_E);
@@ -76,19 +77,28 @@ class ThrowableObject extends MovableObject {
         this.animationStatus = 'FLY';
 
         if (category == 'E') {
-            this.offset = {
-                top: 30,
-                bottom: 62,
-                left: 12,
-                right: 68
-            };
-            this.x -= 32;
-            this.animateE();
             this.movementStatus = status;
+            this.x -= 56;
+            this.animateE();
             this.speed = 8; // 4 default
             this.speedY = 15; // 15 default
             this.accelertion = 1; // 1 default
             this.applyGravitiy(true);
+            if (!this.otherDirection) {
+                this.offset = {
+                    top: 30,
+                    bottom: 62,
+                    left: 12,
+                    right: 68
+                };
+            } else {
+                this.offset = {
+                    top: 30,
+                    bottom: 62,
+                    left: 68,
+                    right: 12
+                };
+            }
         }
 
         if (category == 'W') {
@@ -117,7 +127,6 @@ class ThrowableObject extends MovableObject {
             if (this.movementStatus == 'LEFT') {
                 this.moveLeft();
             }
-            // console.log('Rock-X:' + this.x);
         }, 1000 / 25);
 
         this.animationInterval = setInterval(() => {
