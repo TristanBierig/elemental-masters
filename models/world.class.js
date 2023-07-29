@@ -408,7 +408,7 @@ class World {
         }
     }
 
-    
+
     checkGettingHit(enemy) {
         if (this.character.isColliding(enemy)) {
             enemy.isHitting = true;

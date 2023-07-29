@@ -3,69 +3,14 @@ class Slime extends MovableObject {
     category;
     movingInterval;
 
-    IMAGES_WALKING = [
-        'img/Enemies/Slime/BlueSlime/idle/idle_1.png',
-        'img/Enemies/Slime/BlueSlime/idle/idle_2.png',
-        'img/Enemies/Slime/BlueSlime/idle/idle_3.png',
-    ];
+    IMAGES_WALKING = allImages.enemies.slimes.normalSlime.move;
+    IMAGES_DEAD = allImages.enemies.slimes.normalSlime.death;
 
-    IMAGES_DEAD = [
-        'img/Enemies/Slime/BlueSlime/death/death_1.png',
-        'img/Enemies/Slime/BlueSlime/death/death_2.png',
-        'img/Enemies/Slime/BlueSlime/death/death_3.png',
-        'img/Enemies/Slime/BlueSlime/death/death_4.png',
-        'img/Enemies/Slime/BlueSlime/death/death_5.png',
-        'img/Enemies/Slime/BlueSlime/death/death_6.png',
-        'img/Enemies/Slime/BlueSlime/death/death_7.png',
-        'img/Enemies/Slime/BlueSlime/death/death_8.png'
-    ];
+    IMAGES_WALKING_TINY = allImages.enemies.slimes.tinySlime.move;
+    IMAGES_DEAD_TINY = allImages.enemies.slimes.tinySlime.death;
 
-    IMAGES_WALKING_TINY = [
-        'img/Enemies/Tiny slime/move/tile008.png',
-        'img/Enemies/Tiny slime/move/tile009.png',
-        'img/Enemies/Tiny slime/move/tile010.png',
-        'img/Enemies/Tiny slime/move/tile011.png',
-        'img/Enemies/Tiny slime/move/tile012.png',
-        'img/Enemies/Tiny slime/move/tile012.png',
-        'img/Enemies/Tiny slime/move/tile011.png',
-        'img/Enemies/Tiny slime/move/tile013.png',
-        'img/Enemies/Tiny slime/idle/tile000.png',
-        'img/Enemies/Tiny slime/idle/tile001.png',
-        'img/Enemies/Tiny slime/idle/tile002.png',
-        'img/Enemies/Tiny slime/idle/tile000.png',
-        'img/Enemies/Tiny slime/idle/tile001.png',
-        'img/Enemies/Tiny slime/idle/tile002.png',
-        'img/Enemies/Tiny slime/idle/tile000.png',
-        'img/Enemies/Tiny slime/idle/tile001.png',
-        'img/Enemies/Tiny slime/idle/tile002.png'
-    ];
-
-    IMAGES_DEAD_TINY = [
-        'img/Enemies/Tiny slime/death/tile016.png',
-        'img/Enemies/Tiny slime/death/tile017.png',
-        'img/Enemies/Tiny slime/death/tile018.png',
-        'img/Enemies/Tiny slime/death/tile019.png',
-        'img/Enemies/Tiny slime/death/tile020.png',
-        'img/Enemies/Tiny slime/death/tile021.png',
-        'img/Enemies/Tiny slime/death/tile022.png',
-        'img/Enemies/Tiny slime/death/tile023.png'
-    ];
-
-    IMAGES_WALKING_FLY = [
-        'img/Enemies/Flying slime/idle/tile000.png',
-        'img/Enemies/Flying slime/idle/tile001.png',
-        'img/Enemies/Flying slime/idle/tile002.png',
-        'img/Enemies/Flying slime/idle/tile003.png'
-    ];
-
-    IMAGES_DEAD_FLY = [
-        'img/Enemies/Flying slime/death/tile000.png',
-        'img/Enemies/Flying slime/death/tile001.png',
-        'img/Enemies/Flying slime/death/tile002.png',
-        'img/Enemies/Flying slime/death/tile003.png',
-        'img/Enemies/Flying slime/death/tile004.png',
-        'img/Enemies/Flying slime/death/tile005.png'
-    ];
+    IMAGES_WALKING_FLY = allImages.enemies.slimes.flyingSlime.move;
+    IMAGES_DEAD_FLY = allImages.enemies.slimes.flyingSlime.death;
 
 
     constructor(start, category) {
@@ -77,7 +22,7 @@ class Slime extends MovableObject {
         this.loadImages(this.IMAGES_WALKING_FLY);
         this.loadImages(this.IMAGES_DEAD_FLY);
         this.category = category;
-        this.y = 380;
+        this.y = 385;
         this.width = 96;
         this.height = 96;
         this.speed = 0.10;

@@ -3,68 +3,13 @@ class ThrowableObject extends MovableObject {
     category;
     index;
 
-    IMAGES_START_E = [
-        'img/Earthspell/first/start/tile000.png',
-        'img/Earthspell/first/start/tile001.png',
-        'img/Earthspell/first/start/tile002.png',
-        'img/Earthspell/first/start/tile003.png',
-        'img/Earthspell/first/start/tile004.png',
-        'img/Earthspell/first/start/tile005.png',
-        'img/Earthspell/first/start/tile006.png'
-    ];
-
-    IMAGES_FLYING_E = [
-        'img/Earthspell/first/flying/tile013.png',
-        'img/Earthspell/first/flying/tile014.png',
-        'img/Earthspell/first/flying/tile015.png',
-        'img/Earthspell/first/flying/tile016.png',
-        'img/Earthspell/first/flying/tile017.png',
-        'img/Earthspell/first/flying/tile018.png',
-        'img/Earthspell/first/flying/tile019.png',
-        'img/Earthspell/first/flying/tile020.png',
-        'img/Earthspell/first/flying/tile021.png',
-        'img/Earthspell/first/flying/tile022.png'
-    ];
-
-    IMAGES_HITTING_E = [
-        'img/Earthspell/first/hitting/tile026.png',
-        'img/Earthspell/first/hitting/tile027.png',
-        'img/Earthspell/first/hitting/tile028.png',
-        'img/Earthspell/first/hitting/tile029.png',
-        'img/Earthspell/first/hitting/tile030.png',
-        'img/Earthspell/first/hitting/tile031.png',
-        'img/Earthspell/first/hitting/tile032.png',
-        'img/Earthspell/first/hitting/tile033.png',
-        'img/Earthspell/first/hitting/tile034.png'
-    ];
-
-    IMAGES_HITTING_W = [
-        'img/Earthspell/W/tile000.png',
-        'img/Earthspell/W/tile001.png',
-        'img/Earthspell/W/tile002.png',
-        'img/Earthspell/W/tile003.png',
-        'img/Earthspell/W/tile004.png',
-        'img/Earthspell/W/tile005.png',
-        'img/Earthspell/W/tile006.png',
-        'img/Earthspell/W/tile007.png',
-        'img/Earthspell/W/tile008.png',
-        'img/Earthspell/W/tile009.png',
-        'img/Earthspell/W/tile010.png',
-        'img/Earthspell/W/tile011.png',
-        'img/Earthspell/W/tile012.png',
-        'img/Earthspell/W/tile013.png',
-        'img/Earthspell/W/tile014.png',
-        'img/Earthspell/W/tile015.png',
-        'img/Earthspell/W/tile016.png',
-        'img/Earthspell/W/tile017.png',
-        'img/Earthspell/W/tile018.png',
-        'img/Earthspell/W/tile019.png',
-    ];
+    IMAGES_FLYING_E = allImages.characters.characterEarth.normalForm.abilities.eAttackFlying;
+    IMAGES_HITTING_E = allImages.characters.characterEarth.normalForm.abilities.eAttackHit;
+    IMAGES_HITTING_W = allImages.characters.characterEarth.normalForm.abilities.wAttack;
 
     constructor(x, y, status, category, index) {
         // Empty png on first load
         super().loadImage('img/Enemies/Slime/BlueSlime/death/death_8.png');
-        this.loadImages(this.IMAGES_START_E);
         this.loadImages(this.IMAGES_FLYING_E);
         this.loadImages(this.IMAGES_HITTING_E);
         this.loadImages(this.IMAGES_HITTING_W);

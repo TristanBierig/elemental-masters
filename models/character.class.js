@@ -14,93 +14,14 @@ class Character extends MovableObject {
     playRun = false;
     playAir = false;
 
-    IMAGES_WALKING = [
-        'img/Character/png/run/run_1.png',
-        'img/Character/png/run/run_2.png',
-        'img/Character/png/run/run_3.png',
-        'img/Character/png/run/run_4.png',
-        'img/Character/png/run/run_5.png',
-        'img/Character/png/run/run_6.png',
-        'img/Character/png/run/run_7.png',
-        'img/Character/png/run/run_8.png'
-    ];
-
-    IMAGES_JUMPING_UP = [
-        'img/Character/png/j_up/j_up_1.png',
-        'img/Character/png/j_up/j_up_2.png',
-        'img/Character/png/j_up/j_up_3.png'
-    ];
-
-    IMAGES_JUMPING_DOWN = [
-        'img/Character/png/j_down/j_down_1.png',
-        'img/Character/png/j_down/j_down_2.png',
-        'img/Character/png/j_down/j_down_3.png'
-    ];
-
-    IMAGES_IDLE = [
-        'img/Character/png/idle/idle_1.png',
-        'img/Character/png/idle/idle_2.png',
-        'img/Character/png/idle/idle_3.png',
-        'img/Character/png/idle/idle_4.png',
-        'img/Character/png/idle/idle_5.png',
-        'img/Character/png/idle/idle_6.png'
-        // 'img/Character/png/e_idle/e_idle_1.png',
-        // 'img/Character/png/e_idle/e_idle_2.png',
-        // 'img/Character/png/e_idle/e_idle_3.png',
-        // 'img/Character/png/e_idle/e_idle_4.png',
-        // 'img/Character/png/e_idle/e_idle_5.png',
-        // 'img/Character/png/e_idle/e_idle_6.png'
-    ];
-
-    IMAGES_TAKING_HIT = [
-        'img/Character/png/take_hit/take_hit_1.png',
-        'img/Character/png/take_hit/take_hit_2.png',
-        'img/Character/png/take_hit/take_hit_3.png',
-        'img/Character/png/take_hit/take_hit_4.png',
-        'img/Character/png/take_hit/take_hit_5.png',
-        'img/Character/png/take_hit/take_hit_6.png'
-    ];
-
-    IMAGES_DEAD = [
-        'img/Character/png/death/death_1.png',
-        'img/Character/png/death/death_2.png',
-        'img/Character/png/death/death_3.png',
-        'img/Character/png/death/death_4.png',
-        'img/Character/png/death/death_5.png',
-        'img/Character/png/death/death_6.png',
-        'img/Character/png/death/death_7.png',
-        'img/Character/png/death/death_8.png',
-        'img/Character/png/death/death_9.png',
-        'img/Character/png/death/death_10.png',
-        'img/Character/png/death/death_11.png',
-        'img/Character/png/death/death_12.png',
-        'img/Character/png/death/death_13.png',
-        'img/Character/png/death/death_14.png',
-        'img/Character/png/death/death_15.png',
-        'img/Character/png/death/death_16.png',
-        'img/Character/png/death/death_17.png',
-        'img/Character/png/death/death_18.png'
-    ];
-
-    IMAGES_ATTACK_Q = [
-        'img/Character/png/1_atk/1_atk_1.png',
-        'img/Character/png/1_atk/1_atk_2.png',
-        'img/Character/png/1_atk/1_atk_3.png',
-        'img/Character/png/1_atk/1_atk_4.png',
-        'img/Character/png/1_atk/1_atk_5.png',
-        'img/Character/png/1_atk/1_atk_6.png'
-    ];
-
-    IMAGES_ATTACK_Q_AIR = [
-        'img/Character/png/air_atk/air_atk_1.png',
-        'img/Character/png/air_atk/air_atk_2.png',
-        'img/Character/png/air_atk/air_atk_3.png',
-        'img/Character/png/air_atk/air_atk_4.png',
-        'img/Character/png/air_atk/air_atk_5.png',
-        'img/Character/png/air_atk/air_atk_6.png',
-        'img/Character/png/air_atk/air_atk_7.png'
-    ];
-
+    IMAGES_IDLE = allImages.characters.characterEarth.normalForm.movements.idle;
+    IMAGES_WALKING = allImages.characters.characterEarth.normalForm.movements.move;
+    IMAGES_JUMPING_UP = allImages.characters.characterEarth.normalForm.movements.jumpUp;
+    IMAGES_JUMPING_DOWN = allImages.characters.characterEarth.normalForm.movements.jumpDown;
+    IMAGES_TAKING_HIT = allImages.characters.characterEarth.normalForm.movements.takingHit;
+    IMAGES_DEAD = allImages.characters.characterEarth.normalForm.movements.death;
+    IMAGES_ATTACK_Q = allImages.characters.characterEarth.normalForm.abilities.qAttack;
+    IMAGES_ATTACK_Q_AIR = allImages.characters.characterEarth.normalForm.abilities.qAttackAir;
 
     constructor() {
         super().loadImage('img/Character/png/run/run_1.png');
@@ -118,12 +39,20 @@ class Character extends MovableObject {
         this.x = -200; // -200 default
         this.y = 150; // 205 Ground value
         this.speed = 2.5;
-        // Defines the Hitbox
+        // Normal hitbox
         this.offset = {
             top: 172,
             bottom: 185,
             left: 275,
             right: 550
+        };
+
+        // Transform hitbox
+        this.offset = {
+            top: 120,
+            bottom: 132,
+            left: 250,
+            right: 500
         };
         this.applyGravitiy();
     }

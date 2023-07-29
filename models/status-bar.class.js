@@ -3,26 +3,9 @@ class StatusBar extends DrawableObject {
     statusbarFrame;
     StatusbarIcon;
     bossBar;
-    IMAGES_BAR = [
-        'img/UI/ingame_bars/bar_green/tile055.png',
-        'img/UI/ingame_bars/bar_green/tile054.png',
-        'img/UI/ingame_bars/bar_green/tile053.png',
-        'img/UI/ingame_bars/bar_green/tile052.png',
-        'img/UI/ingame_bars/bar_green/tile051.png',
-        'img/UI/ingame_bars/bar_green/tile050.png'
-    ];
 
-    ICONS = [
-        'img/Collectables/health/tile000.png',
-        'img/Collectables/health/tile001.png',
-        'img/Collectables/health/tile002.png',
-        'img/Collectables/health/tile003.png',
-        'img/Collectables/health/tile004.png',
-        'img/Collectables/health/tile005.png',
-        'img/Collectables/health/tile006.png',
-        'img/Collectables/health/tile007.png'
-    ]
-
+    ICONS = allImages.ingameUI.icons.healthPot;
+    IMAGES_BAR = allImages.ingameUI.statusbar.health;
 
     constructor(x, width, bossBar) {
 
