@@ -40,26 +40,17 @@ class World {
     updateGame() {
         setInterval(() => {
             this.level.enemies.forEach((enemy, index) => {
-                // If character is landing on top of enemy -> kills enemy
                 this.checkJumpOnEnemy(enemy, index);
-                // Checks if colliding while Q-Attack is running
                 this.checkMeleeAttack(enemy, index);
-                // Checks if any active Spell is hitting enemy
                 this.checkSpellAttack(enemy, index);
-                // Checks if character collides with loot and collects it
-                this.collectLoot();
-                // Checks for collision bewtween character and any enemy
-                this.checkGettingHit(enemy);
-
                 this.killEnemyOutOfSight(enemy, index);
+                this.checkGettingHit(enemy);
+                this.collectLoot();
 
                 if (world && world.statusBar[2].percentage == 100 && !this.endbossSpawned && this.character.x > 1400) {
                     this.endbossSpawned = true;
                     this.spawnEndboss();
                 }
-                // console.log(this.character, enemy);
-                // console.log(this.character.lifePoints);
-                // console.log(this.character.isTakingHit);
             });
         }, 1000 / 25);
     }
