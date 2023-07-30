@@ -13,7 +13,6 @@ level1 = new Level(
         // Creates tiny slime
         new Slime(undefined, 'tiny'),
         new Slime(undefined, 'tiny'),
-        new Endboss()
     ],
     [
         new Cloud(),

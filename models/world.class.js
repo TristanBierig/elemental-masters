@@ -119,7 +119,7 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.floor);
         this.addObjectsToMap(this.level.foregroundObjects);
-        // debugger
+       
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
         if (this.character.activeSpells.length > 0) {
@@ -131,7 +131,7 @@ class World {
         this.addObjectsToMap(this.level.clouds);
 
         this.ctx.translate(-this.camera_x, 0); // Back
-        // debugger
+      
         this.addObjectsToMap(this.statusBar);
         this.addFrameToMap(this.statusBar);
         this.ctx.translate(this.camera_x, 0); // Forwards
@@ -174,13 +174,10 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        // debugger
         if (mo.drawHitbox(this.ctx)) {
 
         }
         mo.drawHitbox(this.ctx);
-
-
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }

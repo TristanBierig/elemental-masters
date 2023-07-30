@@ -211,11 +211,19 @@ class Character extends MovableObject {
             // Cast W-Spell only when having mana and the cooldown is up
             if (world && world.keyboard.W == true && !this.spellCooldownW && !this.isAirborne() && world.statusBar[1].percentage >= 10 && !this.isTransforming) {
                 world.rockShatterAudio.play();
-                this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
-                    this.y + this.offset.top,
-                    this.movementStatus,
-                    'W',
-                    this.activeSpells.length));
+                if (!this.isTransformed) {
+                    this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
+                        this.y + this.offset.top,
+                        this.movementStatus,
+                        'W',
+                        this.activeSpells.length));
+                } else {
+                    this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
+                        this.y + this.offset.top + 52,
+                        this.movementStatus,
+                        'W',
+                        this.activeSpells.length));
+                }
 
                 this.spellCooldownW = true;
                 world.statusBar[1].percentage -= 10;
@@ -242,8 +250,6 @@ class Character extends MovableObject {
 
                 this.isTransformed = true;
             }
-
-
             world.camera_x = -this.x + 60; // 60 default
         }, 1000 / 60);
 
@@ -332,14 +338,14 @@ class Character extends MovableObject {
 
     // Handles animations in evolved Transform
     animateCharacterTransform() {
-        // Transform hitbox
-        this.offset = {
-            top: 120,
-            bottom: 132,
-            left: 250,
-            right: 500
-        };
         this.animationIntervalTransform = setInterval(() => {
+            // Transform hitbox
+            this.offset = {
+                top: 120,
+                bottom: 132,
+                left: 250,
+                right: 500
+            };
             if (this.isDead()) {
                 // Death Animation and stops Intervals
                 if (this.animationStatus != 'DEAD') {

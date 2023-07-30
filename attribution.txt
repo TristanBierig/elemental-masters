@@ -1,1 +1,17 @@
 <a href="https://www.flaticon.com/free-icons/element" title="element icons">Element icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/mute" title="mute icons">Mute icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/speaker" title="speaker icons">Speaker icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/question" title="question icons">Question icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/reading" title="reading icons">Reading icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/play-station" title="play station icons">Play station icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/minimize" title="minimize icons">Minimize icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/maximize" title="maximize icons">Maximize icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/next" title="next icons">Next icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/back" title="back icons">Back icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/up-arrow" title="up arrow icons">Up arrow icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/q" title="q icons">Q icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/alphabet" title="alphabet icons">Alphabet icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/e" title="e icons">E icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/alphabet" title="alphabet icons">Alphabet icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/song" title="song icons">Song icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/no-music" title="no music icons">No music icons created by Freepik - Flaticon</a>

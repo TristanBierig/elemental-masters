@@ -40,32 +40,62 @@
     <div id="gameTitle" class="h1-wrapper">
         <h1>Elemental Masters</h1>
     </div>
-    <canvas id="canvas" width="720" height="480"></canvas>
+
+
+    <section class="canvas-container">
+        <canvas id="canvas" width="720" height="480"></canvas>
+
+        <aside class="sidebar d-none">
+            <img src="img/icons/maximize.png" alt="">
+            <img src="img/icons/role-playing-game.png" alt="">
+            <img src="img/icons/volume.png" alt="">
+            <img src="img/icons/music.png" alt="">
+        </aside>
+
+        <div class="movement-wrapper d-none">
+            <img src="img/icons/up-arrow.png" alt="">
+            <div>
+                <img src="img/icons/left-arrow.png" alt="">
+                <img src="img/icons/right-arrow.png" alt="">
+            </div>
+        </div>
+
+        <div class="ability-wrapper d-none">
+            <img src="img/icons/r.png" alt="">
+            <img src="img/icons/e.png" alt="">
+            <img src="img/icons/w.png" alt="">
+            <img src="img/icons/q.png" alt="">
+        </div>
+    </section>
 
     <div id="startScreen" class="start-screen">
+        <section></section>
 
         <section class="character-selection-container">
-            <div>
-                <img src="img/Character/Earth/ground_monk.png" alt="">
-                <span>EARTH</span>
+            <span class="sub-header-selection">Choose your Element!</span>
+            <div class="selection-wrapper">
+                <div>
+                    <img src="img/Character/Earth/ground_monk.png" alt="">
+                    <span>EARTH</span>
+                </div>
+                <div>
+                    <img src="img/Character/Fire/fire_knight.png" alt="">
+                    <span>FIRE</span>
+                </div>
+                <div>
+                    <img src="img/Character/Water/water_priestess.png" alt="">
+                    <span>WATER</span>
+                </div>
+                <div>
+                    <img src="img/Character/Wind/wind_hashashin.png" alt="">
+                    <span>WIND</span>
+                </div>
             </div>
-            <div>
-                <img src="img/Character/Fire/fire_knight.png" alt="">
-                <span>FIRE</span>
-            </div>
-            <div>
-                <img src="img/Character/Water/water_priestess.png" alt="">
-                <span>WATER</span>
-            </div>
-            <div>
-                <img src="img/Character/Wind/wind_hashashin.png" alt="">
-                <span>WIND</span>
-            </div>
+            <button class="start-btn" onclick="startGame()">
+                Start Game
+            </button>
         </section>
 
-        <button onclick="startGame()">
-            Start Game
-        </button>
     </div>
 
 </body>
