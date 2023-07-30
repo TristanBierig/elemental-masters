@@ -1,7 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let charSelected;
+let charSelected = 'Earth';
 
 function init() {
     canvas = document.getElementById('canvas');

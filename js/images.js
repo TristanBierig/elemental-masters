@@ -574,6 +574,7 @@ let allImages = {
                         'img/Character/Water/png/air_atk/air_atk_8.png'
                     ],
                     wAttack: [
+                        'img/Waterspell/w_spell/tile000.png',
                         'img/Waterspell/w_spell/tile001.png',
                         'img/Waterspell/w_spell/tile002.png',
                         'img/Waterspell/w_spell/tile003.png',
@@ -975,7 +976,7 @@ let allImages = {
                         'img/Character/Wind/png/death/death_17.png',
                         'img/Character/Wind/png/death/death_18.png',
                         'img/Character/Wind/png/death/death_19.png'
-             
+
 
                     ]
                 },
