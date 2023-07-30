@@ -92,17 +92,15 @@ class Endboss extends MovableObject {
                         world.statusBar.push(new StatusBar(350, 380, true));
                     }
                 }
-                // Attacks with random spell when in reach of the character
+                // Play animation when killed and stop Game
             } else if (this.lifePoints <= 0 && this.isTransformed) {
                 if (this.animationStatus != 'DEAD') {
                     this.currentImage = 0;
                     this.animationStatus = 'DEAD';
                     playerBackgroundBoss.pause();
-                    setTimeout(() => {
-                       
-                    }, 500);
                 }
                 this.playAnimation(this.IMAGES_DEAD_FINAL);
+                // Attacks with random spell when in reach of the character
             } else if (this.isTransformed && this.movementStatus == 'STAND') {
                 if (this.isNextAttack) {
                     this.nextAttack = Math.random() * 100;

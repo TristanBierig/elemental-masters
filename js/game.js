@@ -8,9 +8,44 @@ function init() {
 
 function startGame() {
     initLevel();
-    startScreen.classList.add('ingame-start-screen');
+    startScreen.classList.add('d-none');
+    sidebar.classList.remove('d-none');
     playerBackgroundIdle.playpause();
     world = new World(canvas, keyboard);
+}
+
+
+function GameOver(isVictory) {
+
+    if (isVictory) {
+        showVictoryScreen();
+    } else {
+        showLooseScreen();
+    }
+    endScreen.classList.remove('d-none');
+}
+
+
+function restartGame() {
+    location.reload();
+}
+
+
+function showVictoryScreen() {
+    endScreen.innerHTML = `
+    <p>VICTORY</p>
+        <span>You have defeated all enemy forces. Congratulations! </span>
+        <span onclick="restartGame()">Play again</span>
+    `;
+}
+
+
+function showLooseScreen() {
+    endScreen.innerHTML = `
+    <p>GAME OVER</p>
+        <span>You have been defeated!</span>
+        <span onclick="restartGame()">Try again</span>
+    `;
 }
 
 

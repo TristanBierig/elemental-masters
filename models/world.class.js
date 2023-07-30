@@ -321,6 +321,8 @@ class World {
             setTimeout(() => {
                 enemy.isKilled = true;
                 playerSoundsVictory.play();
+                GameOver(true);
+                world.character.isGameOver = true;
             }, 4000); // 4000
             enemy.offset.top = -500;
         }

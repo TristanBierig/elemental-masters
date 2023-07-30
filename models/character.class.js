@@ -3,6 +3,7 @@ class Character extends MovableObject {
     doubleJumpAvailable = true;
     isTransformed = false;
     isTransforming = false;
+    isGameOver = false;
 
     activeSpells = [];
     spellCooldownQ = false;
@@ -255,12 +256,21 @@ class Character extends MovableObject {
 
         // Just looping through ANIMATION frames (no movement here)            
         this.animateCharacterNormal();
+        this.gameOver();
     }
 
+    gameOver() {
+        setInterval(() => {
+            if (this.isGameOver) {
+                this.stopInterval(this.movementInterval);
+                this.stopInterval(this.animationIntervalNormal);
+                this.stopInterval(this.animationIntervalTransform);
+            }
+        }, 1000);
+    }
 
     animateCharacterNormal() {
         this.animationIntervalNormal = setInterval(() => {
-            // debugger
             if (this.isDead()) {
                 // Death Animation and stops Intervals
                 if (this.animationStatus != 'DEAD') {
@@ -272,6 +282,7 @@ class Character extends MovableObject {
                     playerBackgroundBoss.pause();
                     setTimeout(() => {
                         playerSoundsGameOverLoop.play();
+                        GameOver(false);
                     }, 1000);
                     this.stopInterval(this.movementInterval);
                 }
@@ -357,6 +368,7 @@ class Character extends MovableObject {
                     playerBackgroundBoss.pause();
                     setTimeout(() => {
                         playerSoundsGameOverLoop.play();
+                        GameOver(false);
                     }, 1000);
                     this.stopInterval(this.movementInterval);
                 }
