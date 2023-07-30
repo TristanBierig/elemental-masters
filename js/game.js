@@ -1,8 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let choosenCharacter;
-
+let charSelected;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -18,16 +17,16 @@ function chooseCharacter(character) {
     characterPanel.classList.add(`highlight${character}`);
 
     if (character == 1) {
-        choosenCharacter = 'Earth';
+        charSelected = 'Earth';
     }
     if (character == 2) {
-        choosenCharacter = 'Fire';
+        charSelected = 'Fire';
     }
     if (character == 3) {
-        choosenCharacter = 'Water';
+        charSelected = 'Water';
     }
     if (character == 4) {
-        choosenCharacter = 'Wind';
+        charSelected = 'Wind';
     }
 }
 
@@ -37,7 +36,7 @@ function startGame() {
     startScreen.classList.add('d-none');
     sidebar.classList.remove('d-none');
     playerBackgroundIdle.playpause();
-    world = new World(canvas, keyboard, choosenCharacter);
+    world = new World(canvas, keyboard, charSelected);
 }
 
 

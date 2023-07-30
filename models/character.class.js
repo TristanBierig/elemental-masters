@@ -21,28 +21,6 @@ class Character extends MovableObject {
     playRun = false;
     playAir = false;
 
-    IMAGES_IDLE = allImages.characters[`${this.choosenChar}`].normalForm.movements.idle;
-    IMAGES_WALKING = allImages.characters[`${this.choosenChar}`].normalForm.movements.move;
-    IMAGES_JUMPING_UP = allImages.characters[`${this.choosenChar}`].normalForm.movements.jumpUp;
-    IMAGES_JUMPING_DOWN = allImages.characters[`${this.choosenChar}`].normalForm.movements.jumpDown;
-    IMAGES_TAKING_HIT = allImages.characters[`${this.choosenChar}`].normalForm.movements.takingHit;
-    IMAGES_DEAD = allImages.characters[`${this.choosenChar}`].normalForm.movements.death;
-
-    IMAGES_ATTACK_Q = allImages.characters[`${this.choosenChar}`].normalForm.abilities.qAttack;
-    IMAGES_ATTACK_Q_AIR = allImages.characters[`${this.choosenChar}`].normalForm.abilities.qAttackAir;
-
-    IMAGES_TRANSFORM = allImages.characters[`${this.choosenChar}`].normalForm.transform;
-    IMAGES_TRANSFORM_IDLE = allImages.characters[`${this.choosenChar}`].evolvedForm.movements.idle;
-    IMAGES_TRANSFORM_MOVE = allImages.characters[`${this.choosenChar}`].evolvedForm.movements.move;
-    IMAGES_TRANSFORM_JUMPING_UP = allImages.characters[`${this.choosenChar}`].evolvedForm.movements.jumpUp;
-    IMAGES_TRANSFORM_JUMPING_DOWN = allImages.characters[`${this.choosenChar}`].evolvedForm.movements.jumpDown;
-    IMAGES_TRANSFORM_TAKING_HIT = allImages.characters[`${this.choosenChar}`].evolvedForm.movements.takingHit;
-    IMAGES_TRANSFORM_DEAD = allImages.characters[`${this.choosenChar}`].evolvedForm.movements.death;
-
-    IMAGES_TRANSFORM_ATTACK_Q = allImages.characters[`${this.choosenChar}`].evolvedForm.abilities.qAttack;
-    IMAGES_TRANSFORM_ATTACK_Q_AIR = allImages.characters[`${this.choosenChar}`].evolvedForm.abilities.qAttackAir;
-
-
     constructor(choosenChar) {
         super();
         this.choosenChar = choosenChar;
@@ -79,6 +57,7 @@ class Character extends MovableObject {
         };
         this.applyGravitiy();
     }
+
 
     updateCharacter() {
         // Move Horizontal + plays running sound
@@ -290,7 +269,7 @@ class Character extends MovableObject {
                     }, 1000);
                     this.stopInterval(this.movementInterval);
                 }
-                this.playAnimation(this.IMAGES_DEAD);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.movements.death);
                 if (this.currentImage == 18) {
                     this.stopInterval(this.animationIntervalNormal);
                 }
@@ -301,7 +280,7 @@ class Character extends MovableObject {
                     this.animationStatus = 'TRANSFORM';
                     this.transformAudio.play();
                 }
-                this.playAnimation(this.IMAGES_TRANSFORM);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.transform);
                 if (this.currentImage == 29) {
                     this.stopInterval(this.animationIntervalNormal);
                     this.animateCharacterTransform();
@@ -314,21 +293,21 @@ class Character extends MovableObject {
                     this.animationStatus = 'HIT';
                     this.gettingHurtAudio.play();
                 }
-                this.playAnimation(this.IMAGES_TAKING_HIT);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.movements.takingHit);
             } else if (this.spellCooldownQ && this.isAirborne()) {
                 // Q-Attack in Air
                 if (this.animationStatus != 'Q-ATTACK') {
                     this.currentImage = 0;
                     this.animationStatus = 'Q-ATTACK';
                 }
-                this.playAnimation(this.IMAGES_ATTACK_Q_AIR);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.abilities.qAttackAir);
             } else if (!this.isTakingHit && this.isAirborne() && this.speedY > 0) {
                 // Jumping up
-                this.playAnimation(this.IMAGES_JUMPING_UP);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.movements.jumpUp);
                 this.animationStatus = 'AIRBORNE';
             } else if (!this.isTakingHit && this.isAirborne() && this.speedY <= 0) {
                 // Falling Down
-                this.playAnimation(this.IMAGES_JUMPING_DOWN);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.movements.jumpDown);
                 this.animationStatus = 'AIRBORNE';
             } else if (this.spellCooldownQ) {
                 // Q-ATTACK
@@ -336,15 +315,15 @@ class Character extends MovableObject {
                     this.currentImage = 0;
                     this.animationStatus = 'Q-ATTACK';
                 }
-                this.playAnimation(this.IMAGES_ATTACK_Q);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.abilities.qAttack);
             } else if (!this.isTakingHit && world && world.keyboard.RIGHT || world.keyboard.LEFT) {
                 // Run Animation
-                this.playAnimation(this.IMAGES_WALKING);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.movements.move);
                 this.animationStatus = 'RUN';
             }
             else if (!this.isTakingHit) {
                 // Doing nothing
-                this.playAnimation(this.IMAGES_IDLE);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.movements.idle);
                 this.animationStatus = 'IDLE';
             }
         }, 100);
@@ -376,7 +355,7 @@ class Character extends MovableObject {
                     }, 1000);
                     this.stopInterval(this.movementInterval);
                 }
-                this.playAnimation(this.IMAGES_TRANSFORM_DEAD);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.death);
                 if (this.currentImage == 29) {
                     this.stopInterval(this.animationIntervalTransform);
                 }
@@ -386,21 +365,21 @@ class Character extends MovableObject {
                     this.currentImage = 0;
                     this.animationStatus = 'HIT';
                 }
-                this.playAnimation(this.IMAGES_TRANSFORM_TAKING_HIT);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.takingHit);
             } else if (this.spellCooldownQ && this.isAirborne()) {
                 // Q-Attack in Air
                 if (this.animationStatus != 'Q-ATTACK') {
                     this.currentImage = 0;
                     this.animationStatus = 'Q-ATTACK';
                 }
-                this.playAnimation(this.IMAGES_TRANSFORM_ATTACK_Q_AIR);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.abilities.qAttackAir);
             } else if (!this.isTakingHit && this.isAirborne() && this.speedY > 0) {
                 // Jumping up
-                this.playAnimation(this.IMAGES_TRANSFORM_JUMPING_UP);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.jumpUp);
                 this.animationStatus = 'AIRBORNE';
             } else if (!this.isTakingHit && this.isAirborne() && this.speedY <= 0) {
                 // Falling Down
-                this.playAnimation(this.IMAGES_TRANSFORM_JUMPING_DOWN);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.jumpDown);
                 this.animationStatus = 'AIRBORNE';
             } else if (this.spellCooldownQ) {
                 // Q-ATTACK
@@ -408,15 +387,15 @@ class Character extends MovableObject {
                     this.currentImage = 0;
                     this.animationStatus = 'Q-ATTACK';
                 }
-                this.playAnimation(this.IMAGES_TRANSFORM_ATTACK_Q);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.abilities.qAttack);
             } else if (!this.isTakingHit && world && world.keyboard.RIGHT || world.keyboard.LEFT) {
                 // Run Animation
-                this.playAnimation(this.IMAGES_TRANSFORM_MOVE);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.move);
                 this.animationStatus = 'RUN';
             }
             else if (!this.isTakingHit) {
                 // Doing nothing
-                this.playAnimation(this.IMAGES_TRANSFORM_IDLE);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.idle);
                 this.animationStatus = 'IDLE';
             }
         }, 100);

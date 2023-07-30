@@ -29,7 +29,6 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.character = new Character(choosenChar);
-        this.character.choosenChar = choosenChar;
         this.expandFloor();
         this.draw();
         this.spawnNewEnemies();
