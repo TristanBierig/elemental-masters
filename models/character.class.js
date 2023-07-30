@@ -266,11 +266,11 @@ class Character extends MovableObject {
                     setTimeout(() => {
                         playerSoundsGameOverLoop.play();
                         GameOver(false);
-                    }, 1000);
+                    }, 2000);
                     this.stopInterval(this.movementInterval);
                 }
                 this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.movements.death);
-                if (this.currentImage == 18) {
+                if (this.currentImage == allImages.characters[`${this.choosenChar}`].normalForm.movements.death.length) {
                     this.stopInterval(this.animationIntervalNormal);
                 }
             } else if (this.isTransforming) {
@@ -281,7 +281,7 @@ class Character extends MovableObject {
                     this.transformAudio.play();
                 }
                 this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.transform);
-                if (this.currentImage == 29) {
+                if (this.currentImage == allImages.characters[`${this.choosenChar}`].normalForm.transform.length) {
                     this.stopInterval(this.animationIntervalNormal);
                     this.animateCharacterTransform();
                     this.isTransforming = false;
@@ -352,11 +352,11 @@ class Character extends MovableObject {
                     setTimeout(() => {
                         playerSoundsGameOverLoop.play();
                         GameOver(false);
-                    }, 1000);
+                    }, 4000);
                     this.stopInterval(this.movementInterval);
                 }
                 this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.death);
-                if (this.currentImage == 29) {
+                if (this.currentImage == allImages.characters[`${this.choosenChar}`].evolvedForm.movements.death.length) {
                     this.stopInterval(this.animationIntervalTransform);
                 }
             } else if (this.isTakingHit) {

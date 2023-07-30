@@ -353,39 +353,39 @@ let allImages = {
                         'img/Character/Fire/png/projectile/01_fly/fly_2.png'
                     ],
                     eAttackHit: [
-                       'img/Character/Fire/png/projectile/02_explode/explode_1.png',
-                       'img/Character/Fire/png/projectile/02_explode/explode_2.png',
-                       'img/Character/Fire/png/projectile/02_explode/explode_3.png',
-                       'img/Character/Fire/png/projectile/02_explode/explode_4.png',
-                       'img/Character/Fire/png/projectile/02_explode/explode_5.png',
-                       'img/Character/Fire/png/projectile/02_explode/explode_6.png'
+                        'img/Character/Fire/png/projectile/02_explode/explode_1.png',
+                        'img/Character/Fire/png/projectile/02_explode/explode_2.png',
+                        'img/Character/Fire/png/projectile/02_explode/explode_3.png',
+                        'img/Character/Fire/png/projectile/02_explode/explode_4.png',
+                        'img/Character/Fire/png/projectile/02_explode/explode_5.png',
+                        'img/Character/Fire/png/projectile/02_explode/explode_6.png'
                     ]
                 },
                 transform: [
-                'img/Character/Fire/png/fire_knight/12_transform/transform_1.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_2.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_3.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_4.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_5.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_6.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_7.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_8.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_9.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_10.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_11.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_12.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_13.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_14.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_15.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_16.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_17.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_18.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_19.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_20.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_21.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_22.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_23.png',
-                'img/Character/Fire/png/fire_knight/12_transform/transform_24.png'
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_1.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_2.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_3.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_4.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_5.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_6.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_7.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_8.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_9.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_10.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_11.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_12.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_13.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_14.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_15.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_16.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_17.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_18.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_19.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_20.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_21.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_22.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_23.png',
+                    'img/Character/Fire/png/fire_knight/12_transform/transform_24.png'
                 ]
             },
             evolvedForm: {
@@ -401,22 +401,22 @@ let allImages = {
                         'img/Character/Fire/png/fire_knight/13_e_idle/e_idle_8.png'
                     ],
                     move: [
-                       'img/Character/Fire/png/fire_knight/14_e_run/e_run_1.png',
-                       'img/Character/Fire/png/fire_knight/14_e_run/e_run_2.png',
-                       'img/Character/Fire/png/fire_knight/14_e_run/e_run_3.png',
-                       'img/Character/Fire/png/fire_knight/14_e_run/e_run_4.png',
-                       'img/Character/Fire/png/fire_knight/14_e_run/e_run_5.png',
-                       'img/Character/Fire/png/fire_knight/14_e_run/e_run_6.png',
-                       'img/Character/Fire/png/fire_knight/14_e_run/e_run_7.png',
-                       'img/Character/Fire/png/fire_knight/14_e_run/e_run_8.png'
+                        'img/Character/Fire/png/fire_knight/14_e_run/e_run_1.png',
+                        'img/Character/Fire/png/fire_knight/14_e_run/e_run_2.png',
+                        'img/Character/Fire/png/fire_knight/14_e_run/e_run_3.png',
+                        'img/Character/Fire/png/fire_knight/14_e_run/e_run_4.png',
+                        'img/Character/Fire/png/fire_knight/14_e_run/e_run_5.png',
+                        'img/Character/Fire/png/fire_knight/14_e_run/e_run_6.png',
+                        'img/Character/Fire/png/fire_knight/14_e_run/e_run_7.png',
+                        'img/Character/Fire/png/fire_knight/14_e_run/e_run_8.png'
                     ],
                     jumpUp: [
-                       'img/Character/Fire/png/fire_knight/15_e_jump/e_jump_2.png',
-                       'img/Character/Fire/png/fire_knight/15_e_jump/e_jump_3.png',
-                       'img/Character/Fire/png/fire_knight/15_e_jump/e_jump_4.png',
-                       'img/Character/Fire/png/fire_knight/15_e_jump/e_jump_5.png',
-                       'img/Character/Fire/png/fire_knight/15_e_jump/e_jump_6.png',
-                       'img/Character/Fire/png/fire_knight/15_e_jump/e_jump_7.png'
+                        'img/Character/Fire/png/fire_knight/15_e_jump/e_jump_2.png',
+                        'img/Character/Fire/png/fire_knight/15_e_jump/e_jump_3.png',
+                        'img/Character/Fire/png/fire_knight/15_e_jump/e_jump_4.png',
+                        'img/Character/Fire/png/fire_knight/15_e_jump/e_jump_5.png',
+                        'img/Character/Fire/png/fire_knight/15_e_jump/e_jump_6.png',
+                        'img/Character/Fire/png/fire_knight/15_e_jump/e_jump_7.png'
                     ],
                     jumpDown: [
                         'img/Character/Fire/png/fire_knight/15_e_jump/e_jump_11.png',
@@ -469,15 +469,15 @@ let allImages = {
                 },
                 abilities: {
                     qAttack: [
-                       'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_1.png',
-                       'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_2.png',
-                       'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_3.png',
-                       'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_4.png',
-                       'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_5.png',
-                       'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_6.png',
-                       'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_7.png',
-                       'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_8.png',
-                       'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_9.png'
+                        'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_1.png',
+                        'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_2.png',
+                        'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_3.png',
+                        'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_4.png',
+                        'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_5.png',
+                        'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_6.png',
+                        'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_7.png',
+                        'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_8.png',
+                        'img/Character/Fire/png/fire_knight/17_e_1_atk/e_1_atk_9.png'
                     ],
                     qAttackAir: [
                         'img/Character/Fire/png/fire_knight/e_air_atk/e_air_atk_1.png',
@@ -491,7 +491,518 @@ let allImages = {
                     ]
                 }
             }
-        }
+        },
+        Water: {
+            normalForm: {
+                movements: {
+                    idle: [
+                        'img/Character/Water/png/01_idle/idle_1.png',
+                        'img/Character/Water/png/01_idle/idle_2.png',
+                        'img/Character/Water/png/01_idle/idle_3.png',
+                        'img/Character/Water/png/01_idle/idle_4.png',
+                        'img/Character/Water/png/01_idle/idle_5.png',
+                        'img/Character/Water/png/01_idle/idle_6.png',
+                        'img/Character/Water/png/01_idle/idle_7.png',
+                        'img/Character/Water/png/01_idle/idle_8.png'
+                    ],
+                    move: [
+                        'img/Character/Water/png/03_surf/surf_1.png',
+                        'img/Character/Water/png/03_surf/surf_2.png',
+                        'img/Character/Water/png/03_surf/surf_3.png',
+                        'img/Character/Water/png/03_surf/surf_4.png',
+                        'img/Character/Water/png/03_surf/surf_5.png',
+                        'img/Character/Water/png/03_surf/surf_6.png',
+                        'img/Character/Water/png/03_surf/surf_7.png',
+                        'img/Character/Water/png/03_surf/surf_8.png'
+                    ],
+                    jumpUp: [
+                        'img/Character/Water/png/04_j_up/j_up_1.png',
+                        'img/Character/Water/png/04_j_up/j_up_2.png',
+                        'img/Character/Water/png/04_j_up/j_up_3.png'
+                    ],
+                    jumpDown: [
+                        'img/Character/Water/png/05_j_down/j_down_1.png',
+                        'img/Character/Water/png/05_j_down/j_down_2.png',
+                        'img/Character/Water/png/05_j_down/j_down_3.png'
+                    ],
+                    takingHit: [
+                        'img/Character/Water/png/13_take_hit/take_hit_1.png',
+                        'img/Character/Water/png/13_take_hit/take_hit_2.png',
+                        'img/Character/Water/png/13_take_hit/take_hit_3.png',
+                        'img/Character/Water/png/13_take_hit/take_hit_4.png',
+                        'img/Character/Water/png/13_take_hit/take_hit_5.png',
+                        'img/Character/Water/png/13_take_hit/take_hit_6.png',
+                        'img/Character/Water/png/13_take_hit/take_hit_7.png'
+                    ],
+                    death: [
+                        'img/Character/Water/png/14_death/death_1.png',
+                        'img/Character/Water/png/14_death/death_2.png',
+                        'img/Character/Water/png/14_death/death_3.png',
+                        'img/Character/Water/png/14_death/death_4.png',
+                        'img/Character/Water/png/14_death/death_5.png',
+                        'img/Character/Water/png/14_death/death_6.png',
+                        'img/Character/Water/png/14_death/death_7.png',
+                        'img/Character/Water/png/14_death/death_8.png',
+                        'img/Character/Water/png/14_death/death_9.png',
+                        'img/Character/Water/png/14_death/death_10.png',
+                        'img/Character/Water/png/14_death/death_11.png',
+                        'img/Character/Water/png/14_death/death_12.png',
+                        'img/Character/Water/png/14_death/death_13.png',
+                        'img/Character/Water/png/14_death/death_14.png',
+                        'img/Character/Water/png/14_death/death_15.png',
+                        'img/Character/Water/png/14_death/death_16.png'
+                    ]
+                },
+                abilities: {
+                    qAttack: [
+                        'img/Character/Water/png/07_1_atk/1_atk_1.png',
+                        'img/Character/Water/png/07_1_atk/1_atk_2.png',
+                        'img/Character/Water/png/07_1_atk/1_atk_3.png',
+                        'img/Character/Water/png/07_1_atk/1_atk_4.png',
+                        'img/Character/Water/png/07_1_atk/1_atk_5.png',
+                        'img/Character/Water/png/07_1_atk/1_atk_6.png',
+                        'img/Character/Water/png/07_1_atk/1_atk_7.png'
+                    ],
+                    qAttackAir: [
+                        'img/Character/Water/png/air_atk/air_atk_1.png',
+                        'img/Character/Water/png/air_atk/air_atk_2.png',
+                        'img/Character/Water/png/air_atk/air_atk_3.png',
+                        'img/Character/Water/png/air_atk/air_atk_4.png',
+                        'img/Character/Water/png/air_atk/air_atk_5.png',
+                        'img/Character/Water/png/air_atk/air_atk_6.png',
+                        'img/Character/Water/png/air_atk/air_atk_7.png',
+                        'img/Character/Water/png/air_atk/air_atk_8.png'
+                    ],
+                    wAttack: [
+                        'img/Waterspell/w_spell/tile001.png',
+                        'img/Waterspell/w_spell/tile002.png',
+                        'img/Waterspell/w_spell/tile003.png',
+                        'img/Waterspell/w_spell/tile004.png',
+                        'img/Waterspell/w_spell/tile005.png',
+                        'img/Waterspell/w_spell/tile006.png',
+                        'img/Waterspell/w_spell/tile007.png',
+                        'img/Waterspell/w_spell/tile008.png',
+                        'img/Waterspell/w_spell/tile009.png',
+                        'img/Waterspell/w_spell/tile010.png',
+                        'img/Waterspell/w_spell/tile011.png',
+                        'img/Waterspell/w_spell/tile012.png',
+                        'img/Waterspell/w_spell/tile013.png',
+                        'img/Waterspell/w_spell/tile014.png'
+                    ],
+                    eAttackFlying: [
+                        'img/Waterspell/flying/tile004.png',
+                        'img/Waterspell/flying/tile005.png',
+                        'img/Waterspell/flying/tile006.png',
+                        'img/Waterspell/flying/tile007.png',
+                        'img/Waterspell/flying/tile008.png',
+                        'img/Waterspell/flying/tile009.png',
+                        'img/Waterspell/flying/tile010.png',
+                        'img/Waterspell/flying/tile011.png',
+                        'img/Waterspell/flying/tile012.png',
+                        'img/Waterspell/flying/tile013.png',
+                        'img/Waterspell/flying/tile014.png',
+                        'img/Waterspell/flying/tile015.png',
+                        'img/Waterspell/flying/tile016.png',
+                        'img/Waterspell/flying/tile017.png',
+                        'img/Waterspell/flying/tile018.png',
+                        'img/Waterspell/flying/tile019.png',
+                        'img/Waterspell/flying/tile020.png'
+                    ],
+                    eAttackHit: [
+                        'img/Waterspell/hit/tile000.png',
+                        'img/Waterspell/hit/tile001.png',
+                        'img/Waterspell/hit/tile002.png',
+                        'img/Waterspell/hit/tile003.png',
+                        'img/Waterspell/hit/tile004.png',
+                        'img/Waterspell/hit/tile005.png',
+                        'img/Waterspell/hit/tile006.png',
+                        'img/Waterspell/hit/tile007.png',
+                        'img/Waterspell/hit/tile008.png',
+                        'img/Waterspell/hit/tile009.png',
+                        'img/Waterspell/hit/tile010.png',
+                        'img/Waterspell/hit/tile011.png',
+                        'img/Waterspell/hit/tile012.png',
+                        'img/Waterspell/hit/tile013.png',
+                        'img/Waterspell/hit/tile014.png'
+                    ]
+                },
+                transform: [
+                    'img/Character/Water/png/15_transform/transform_1.png',
+                    'img/Character/Water/png/15_transform/transform_2.png',
+                    'img/Character/Water/png/15_transform/transform_3.png',
+                    'img/Character/Water/png/15_transform/transform_4.png',
+                    'img/Character/Water/png/15_transform/transform_5.png',
+                    'img/Character/Water/png/15_transform/transform_6.png',
+                    'img/Character/Water/png/15_transform/transform_7.png',
+                    'img/Character/Water/png/15_transform/transform_8.png',
+                    'img/Character/Water/png/15_transform/transform_9.png',
+                    'img/Character/Water/png/15_transform/transform_10.png',
+                    'img/Character/Water/png/15_transform/transform_11.png',
+                    'img/Character/Water/png/15_transform/transform_12.png',
+                    'img/Character/Water/png/15_transform/transform_13.png',
+                    'img/Character/Water/png/15_transform/transform_14.png',
+                    'img/Character/Water/png/15_transform/transform_15.png',
+                    'img/Character/Water/png/15_transform/transform_16.png',
+                    'img/Character/Water/png/15_transform/transform_17.png',
+                    'img/Character/Water/png/15_transform/transform_18.png',
+                    'img/Character/Water/png/15_transform/transform_19.png',
+                    'img/Character/Water/png/15_transform/transform_20.png',
+                    'img/Character/Water/png/15_transform/transform_21.png',
+                    'img/Character/Water/png/15_transform/transform_22.png',
+                    'img/Character/Water/png/15_transform/transform_23.png',
+                    'img/Character/Water/png/15_transform/transform_24.png',
+                    'img/Character/Water/png/15_transform/transform_25.png',
+                    'img/Character/Water/png/15_transform/transform_26.png',
+                    'img/Character/Water/png/15_transform/transform_27.png',
+                    'img/Character/Water/png/15_transform/transform_28.png',
+                    'img/Character/Water/png/15_transform/transform_29.png',
+                    'img/Character/Water/png/15_transform/transform_30.png',
+                    'img/Character/Water/png/15_transform/transform_31.png',
+                    'img/Character/Water/png/15_transform/transform_32.png',
+                    'img/Character/Water/png/15_transform/transform_33.png',
+                    'img/Character/Water/png/15_transform/transform_34.png',
+                    'img/Character/Water/png/15_transform/transform_35.png',
+                    'img/Character/Water/png/15_transform/transform_36.png',
+                    'img/Character/Water/png/15_transform/transform_37.png',
+                    'img/Character/Water/png/15_transform/transform_38.png',
+                    'img/Character/Water/png/15_transform/transform_39.png',
+                    'img/Character/Water/png/15_transform/transform_40.png',
+                    'img/Character/Water/png/15_transform/transform_41.png'
+                ]
+            },
+            evolvedForm: {
+                movements: {
+                    idle: [
+                        'img/Character/Water/png/16_e_idle/e_idle_1.png',
+                        'img/Character/Water/png/16_e_idle/e_idle_2.png',
+                        'img/Character/Water/png/16_e_idle/e_idle_3.png',
+                        'img/Character/Water/png/16_e_idle/e_idle_4.png',
+                        'img/Character/Water/png/16_e_idle/e_idle_5.png',
+                        'img/Character/Water/png/16_e_idle/e_idle_6.png',
+                        'img/Character/Water/png/16_e_idle/e_idle_7.png',
+                        'img/Character/Water/png/16_e_idle/e_idle_8.png',
+                        'img/Character/Water/png/16_e_idle/e_idle_9.png',
+                        'img/Character/Water/png/16_e_idle/e_idle_10.png',
+                        'img/Character/Water/png/16_e_idle/e_idle_11.png',
+                        'img/Character/Water/png/16_e_idle/e_idle_12.png'
+                    ],
+                    move: [
+                        'img/Character/Water/png/17_e_move/e_move_1.png',
+                        'img/Character/Water/png/17_e_move/e_move_2.png',
+                        'img/Character/Water/png/17_e_move/e_move_3.png',
+                        'img/Character/Water/png/17_e_move/e_move_4.png',
+                        'img/Character/Water/png/17_e_move/e_move_5.png',
+                        'img/Character/Water/png/17_e_move/e_move_6.png'
+                    ],
+                    jumpUp: [
+                        'img/Character/Water/png/18_e_j_up/e_j_up_1.png',
+                        'img/Character/Water/png/18_e_j_up/e_j_up_2.png',
+                        'img/Character/Water/png/18_e_j_up/e_j_up_3.png'
+
+                    ],
+                    jumpDown: [
+                        'img/Character/Water/png/19_e_j_down/e_j_down_1.png',
+                        'img/Character/Water/png/19_e_j_down/e_j_down_2.png',
+                        'img/Character/Water/png/19_e_j_down/e_j_down_3.png'
+                    ],
+                    takingHit: [
+                        'img/Character/Water/png/24_e_take_hit/e_take_hit_1.png',
+                        'img/Character/Water/png/24_e_take_hit/e_take_hit_2.png',
+                        'img/Character/Water/png/24_e_take_hit/e_take_hit_3.png',
+                        'img/Character/Water/png/24_e_take_hit/e_take_hit_4.png',
+                        'img/Character/Water/png/24_e_take_hit/e_take_hit_5.png',
+                        'img/Character/Water/png/24_e_take_hit/e_take_hit_6.png'
+                    ],
+                    death: [
+                        'img/Character/Water/png/25_back2human/back2human_1.png',
+                        'img/Character/Water/png/25_back2human/back2human_2.png',
+                        'img/Character/Water/png/25_back2human/back2human_3.png',
+                        'img/Character/Water/png/25_back2human/back2human_4.png',
+                        'img/Character/Water/png/25_back2human/back2human_5.png',
+                        'img/Character/Water/png/25_back2human/back2human_6.png',
+                        'img/Character/Water/png/25_back2human/back2human_7.png',
+                        'img/Character/Water/png/14_death/death_1.png',
+                        'img/Character/Water/png/14_death/death_2.png',
+                        'img/Character/Water/png/14_death/death_3.png',
+                        'img/Character/Water/png/14_death/death_4.png',
+                        'img/Character/Water/png/14_death/death_5.png',
+                        'img/Character/Water/png/14_death/death_6.png',
+                        'img/Character/Water/png/14_death/death_7.png',
+                        'img/Character/Water/png/14_death/death_8.png',
+                        'img/Character/Water/png/14_death/death_9.png',
+                        'img/Character/Water/png/14_death/death_10.png',
+                        'img/Character/Water/png/14_death/death_11.png',
+                        'img/Character/Water/png/14_death/death_12.png',
+                        'img/Character/Water/png/14_death/death_13.png',
+                        'img/Character/Water/png/14_death/death_14.png',
+                        'img/Character/Water/png/14_death/death_15.png',
+                        'img/Character/Water/png/14_death/death_16.png'
+
+                    ]
+                },
+                abilities: {
+                    qAttack: [
+                        'img/Character/Water/png/20_e_1_atk/e_1_atk_1.png',
+                        'img/Character/Water/png/20_e_1_atk/e_1_atk_2.png',
+                        'img/Character/Water/png/20_e_1_atk/e_1_atk_3.png',
+                        'img/Character/Water/png/20_e_1_atk/e_1_atk_4.png',
+                        'img/Character/Water/png/20_e_1_atk/e_1_atk_5.png',
+                        'img/Character/Water/png/20_e_1_atk/e_1_atk_6.png'
+                    ],
+                    qAttackAir: [
+                        'img/Character/Water/png/e_air_atk/e_air_atk_1.png',
+                        'img/Character/Water/png/e_air_atk/e_air_atk_2.png',
+                        'img/Character/Water/png/e_air_atk/e_air_atk_3.png',
+                        'img/Character/Water/png/e_air_atk/e_air_atk_4.png',
+                        'img/Character/Water/png/e_air_atk/e_air_atk_5.png',
+                        'img/Character/Water/png/e_air_atk/e_air_atk_6.png',
+                        'img/Character/Water/png/e_air_atk/e_air_atk_7.png',
+                        'img/Character/Water/png/e_air_atk/e_air_atk_8.png'
+                    ]
+                }
+            }
+        },
+        Wind: {
+            normalForm: {
+                movements: {
+                    idle: [
+                        'img/Character/Wind/png/idle/idle_1.png',
+                        'img/Character/Wind/png/idle/idle_2.png',
+                        'img/Character/Wind/png/idle/idle_3.png',
+                        'img/Character/Wind/png/idle/idle_4.png',
+                        'img/Character/Wind/png/idle/idle_5.png',
+                        'img/Character/Wind/png/idle/idle_6.png',
+                        'img/Character/Wind/png/idle/idle_7.png',
+                        'img/Character/Wind/png/idle/idle_8.png'
+                    ],
+                    move: [
+                        'img/Character/Wind/png/run/run_1.png',
+                        'img/Character/Wind/png/run/run_2.png',
+                        'img/Character/Wind/png/run/run_3.png',
+                        'img/Character/Wind/png/run/run_4.png',
+                        'img/Character/Wind/png/run/run_5.png',
+                        'img/Character/Wind/png/run/run_6.png',
+                        'img/Character/Wind/png/run/run_7.png',
+                        'img/Character/Wind/png/run/run_8.png'
+                    ],
+                    jumpUp: [
+                        'img/Character/Wind/png/j_up/j_up_1.png',
+                        'img/Character/Wind/png/j_up/j_up_2.png',
+                        'img/Character/Wind/png/j_up/j_up_3.png'
+                    ],
+                    jumpDown: [
+                        'img/Character/Wind/png/j_down/j_down_1.png',
+                        'img/Character/Wind/png/j_down/j_down_2.png',
+                        'img/Character/Wind/png/j_down/j_down_3.png'
+                    ],
+                    takingHit: [
+                        'img/Character/Wind/png/take_hit/take_hit_1.png',
+                        'img/Character/Wind/png/take_hit/take_hit_2.png',
+                        'img/Character/Wind/png/take_hit/take_hit_3.png',
+                        'img/Character/Wind/png/take_hit/take_hit_4.png',
+                        'img/Character/Wind/png/take_hit/take_hit_5.png',
+                        'img/Character/Wind/png/take_hit/take_hit_6.png'
+
+                    ],
+                    death: [
+                        'img/Character/Wind/png/death/death_1.png',
+                        'img/Character/Wind/png/death/death_2.png',
+                        'img/Character/Wind/png/death/death_3.png',
+                        'img/Character/Wind/png/death/death_4.png',
+                        'img/Character/Wind/png/death/death_5.png',
+                        'img/Character/Wind/png/death/death_6.png',
+                        'img/Character/Wind/png/death/death_7.png',
+                        'img/Character/Wind/png/death/death_8.png',
+                        'img/Character/Wind/png/death/death_9.png',
+                        'img/Character/Wind/png/death/death_10.png',
+                        'img/Character/Wind/png/death/death_11.png',
+                        'img/Character/Wind/png/death/death_12.png',
+                        'img/Character/Wind/png/death/death_13.png',
+                        'img/Character/Wind/png/death/death_14.png',
+                        'img/Character/Wind/png/death/death_15.png',
+                        'img/Character/Wind/png/death/death_16.png',
+                        'img/Character/Wind/png/death/death_17.png',
+                        'img/Character/Wind/png/death/death_18.png',
+                        'img/Character/Wind/png/death/death_19.png'
+                    ]
+                },
+                abilities: {
+                    qAttack: [
+                        'img/Character/Wind/png/1_atk/1_atk_1.png',
+                        'img/Character/Wind/png/1_atk/1_atk_2.png',
+                        'img/Character/Wind/png/1_atk/1_atk_3.png',
+                        'img/Character/Wind/png/1_atk/1_atk_4.png',
+                        'img/Character/Wind/png/1_atk/1_atk_5.png',
+                        'img/Character/Wind/png/1_atk/1_atk_6.png',
+                        'img/Character/Wind/png/1_atk/1_atk_7.png',
+                        'img/Character/Wind/png/1_atk/1_atk_8.png'
+                    ],
+                    qAttackAir: [
+                        'img/Character/Wind/png/air_atk/air_atk_1.png',
+                        'img/Character/Wind/png/air_atk/air_atk_2.png',
+                        'img/Character/Wind/png/air_atk/air_atk_3.png',
+                        'img/Character/Wind/png/air_atk/air_atk_4.png',
+                        'img/Character/Wind/png/air_atk/air_atk_5.png',
+                        'img/Character/Wind/png/air_atk/air_atk_6.png',
+                        'img/Character/Wind/png/air_atk/air_atk_7.png'
+                    ],
+                    wAttack: [
+                        'img/Windspell/wAttack/tile001.png',
+                        'img/Windspell/wAttack/tile002.png',
+                        'img/Windspell/wAttack/tile003.png',
+                        'img/Windspell/wAttack/tile004.png',
+                        'img/Windspell/wAttack/tile005.png',
+                        'img/Windspell/wAttack/tile006.png',
+                        'img/Windspell/wAttack/tile007.png',
+                        'img/Windspell/wAttack/tile008.png',
+                        'img/Windspell/wAttack/tile009.png',
+                        'img/Windspell/wAttack/tile010.png',
+                        'img/Windspell/wAttack/tile011.png'
+
+                    ],
+                    eAttackFlying: [
+                        'img/Windspell/eFlying/tile000.png',
+                        'img/Windspell/eFlying/tile001.png',
+                        'img/Windspell/eFlying/tile002.png',
+                        'img/Windspell/eFlying/tile003.png',
+                        'img/Windspell/eFlying/tile004.png',
+                        'img/Windspell/eFlying/tile005.png'
+                    ],
+                    eAttackHit: [
+                        'img/Windspell/eHit/tile000.png',
+                        'img/Windspell/eHit/tile001.png',
+                        'img/Windspell/eHit/tile002.png',
+                        'img/Windspell/eHit/tile003.png',
+                        'img/Windspell/eHit/tile004.png'
+
+                    ]
+                },
+                transform: [
+                    'img/Character/Wind/png/transform/transform_1.png',
+                    'img/Character/Wind/png/transform/transform_2.png',
+                    'img/Character/Wind/png/transform/transform_3.png',
+                    'img/Character/Wind/png/transform/transform_4.png',
+                    'img/Character/Wind/png/transform/transform_5.png',
+                    'img/Character/Wind/png/transform/transform_6.png',
+                    'img/Character/Wind/png/transform/transform_7.png',
+                    'img/Character/Wind/png/transform/transform_8.png',
+                    'img/Character/Wind/png/transform/transform_9.png',
+                    'img/Character/Wind/png/transform/transform_10.png',
+                    'img/Character/Wind/png/transform/transform_11.png',
+                    'img/Character/Wind/png/transform/transform_12.png',
+                    'img/Character/Wind/png/transform/transform_13.png',
+                    'img/Character/Wind/png/transform/transform_14.png',
+                    'img/Character/Wind/png/transform/transform_15.png',
+                    'img/Character/Wind/png/transform/transform_16.png',
+                    'img/Character/Wind/png/transform/transform_17.png',
+                    'img/Character/Wind/png/transform/transform_18.png',
+                    'img/Character/Wind/png/transform/transform_19.png',
+                    'img/Character/Wind/png/transform/transform_20.png',
+                    'img/Character/Wind/png/transform/transform_21.png',
+                    'img/Character/Wind/png/transform/transform_22.png',
+                    'img/Character/Wind/png/transform/transform_23.png',
+                    'img/Character/Wind/png/transform/transform_24.png',
+                    'img/Character/Wind/png/transform/transform_25.png'
+                ]
+            },
+            evolvedForm: {
+                movements: {
+                    idle: [
+                        'img/Character/Wind/png/e_idle/e_idle_1.png',
+                        'img/Character/Wind/png/e_idle/e_idle_2.png',
+                        'img/Character/Wind/png/e_idle/e_idle_3.png',
+                        'img/Character/Wind/png/e_idle/e_idle_4.png',
+                        'img/Character/Wind/png/e_idle/e_idle_5.png',
+                        'img/Character/Wind/png/e_idle/e_idle_6.png',
+                        'img/Character/Wind/png/e_idle/e_idle_7.png',
+                        'img/Character/Wind/png/e_idle/e_idle_8.png'
+
+                    ],
+                    move: [
+                        'img/Character/Wind/png/e_float_fwd/e_float_fwd_1.png',
+                        'img/Character/Wind/png/e_float_fwd/e_float_fwd_2.png',
+                        'img/Character/Wind/png/e_float_fwd/e_float_fwd_3.png',
+                        'img/Character/Wind/png/e_float_fwd/e_float_fwd_4.png',
+                        'img/Character/Wind/png/e_float_fwd/e_float_fwd_5.png',
+                        'img/Character/Wind/png/e_float_fwd/e_float_fwd_6.png'
+                    ],
+                    jumpUp: [
+                        'img/Character/Wind/png/e_fly_up/e_fly_up_1.png',
+                        'img/Character/Wind/png/e_fly_up/e_fly_up_2.png',
+                        'img/Character/Wind/png/e_fly_up/e_fly_up_3.png',
+                        'img/Character/Wind/png/e_fly_up/e_fly_up_4.png'
+                    ],
+                    jumpDown: [
+                        'img/Character/Wind/png/e_fall/e_fall_1.png',
+                        'img/Character/Wind/png/e_fall/e_fall_2.png',
+                        'img/Character/Wind/png/e_fall/e_fall_3.png',
+                        'img/Character/Wind/png/e_fall/e_fall_4.png'
+                    ],
+                    takingHit: [
+                        'img/Character/Wind/png/e_take_hit/e_take_hit_1.png',
+                        'img/Character/Wind/png/e_take_hit/e_take_hit_2.png',
+                        'img/Character/Wind/png/e_take_hit/e_take_hit_3.png',
+                        'img/Character/Wind/png/e_take_hit/e_take_hit_4.png',
+                        'img/Character/Wind/png/e_take_hit/e_take_hit_5.png',
+                        'img/Character/Wind/png/e_take_hit/e_take_hit_6.png'
+                    ],
+                    death: [
+                        'img/Character/Wind/png/back2human/back2human_1.png',
+                        'img/Character/Wind/png/back2human/back2human_2.png',
+                        'img/Character/Wind/png/back2human/back2human_3.png',
+                        'img/Character/Wind/png/back2human/back2human_4.png',
+                        'img/Character/Wind/png/back2human/back2human_5.png',
+                        'img/Character/Wind/png/back2human/back2human_6.png',
+                        'img/Character/Wind/png/back2human/back2human_7.png',
+                        'img/Character/Wind/png/back2human/back2human_8.png',
+                        'img/Character/Wind/png/back2human/back2human_9.png',
+                        'img/Character/Wind/png/death/death_1.png',
+                        'img/Character/Wind/png/death/death_2.png',
+                        'img/Character/Wind/png/death/death_3.png',
+                        'img/Character/Wind/png/death/death_4.png',
+                        'img/Character/Wind/png/death/death_5.png',
+                        'img/Character/Wind/png/death/death_6.png',
+                        'img/Character/Wind/png/death/death_7.png',
+                        'img/Character/Wind/png/death/death_8.png',
+                        'img/Character/Wind/png/death/death_9.png',
+                        'img/Character/Wind/png/death/death_10.png',
+                        'img/Character/Wind/png/death/death_11.png',
+                        'img/Character/Wind/png/death/death_12.png',
+                        'img/Character/Wind/png/death/death_13.png',
+                        'img/Character/Wind/png/death/death_14.png',
+                        'img/Character/Wind/png/death/death_15.png',
+                        'img/Character/Wind/png/death/death_16.png',
+                        'img/Character/Wind/png/death/death_17.png',
+                        'img/Character/Wind/png/death/death_18.png',
+                        'img/Character/Wind/png/death/death_19.png'
+             
+
+                    ]
+                },
+                abilities: {
+                    qAttack: [
+                        'img/Character/Wind/png/e_1_atk/e_1_atk_1.png',
+                        'img/Character/Wind/png/e_1_atk/e_1_atk_2.png',
+                        'img/Character/Wind/png/e_1_atk/e_1_atk_3.png',
+                        'img/Character/Wind/png/e_1_atk/e_1_atk_4.png',
+                        'img/Character/Wind/png/e_1_atk/e_1_atk_5.png',
+                        'img/Character/Wind/png/e_1_atk/e_1_atk_6.png',
+                        'img/Character/Wind/png/e_1_atk/e_1_atk_7.png',
+                        'img/Character/Wind/png/e_1_atk/e_1_atk_8.png'
+                    ],
+                    qAttackAir: [
+                        'img/Character/Wind/png/e_air_atk/e_air_atk_1.png',
+                        'img/Character/Wind/png/e_air_atk/e_air_atk_2.png',
+                        'img/Character/Wind/png/e_air_atk/e_air_atk_3.png',
+                        'img/Character/Wind/png/e_air_atk/e_air_atk_4.png',
+                        'img/Character/Wind/png/e_air_atk/e_air_atk_5.png',
+                        'img/Character/Wind/png/e_air_atk/e_air_atk_6.png',
+                        'img/Character/Wind/png/e_air_atk/e_air_atk_7.png',
+                        'img/Character/Wind/png/e_air_atk/e_air_atk_8.png'
+                    ]
+                }
+            }
+        },
     },
     enemies: {
         slimes: {
