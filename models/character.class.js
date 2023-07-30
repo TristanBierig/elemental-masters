@@ -4,6 +4,7 @@ class Character extends MovableObject {
     isTransformed = false;
     isTransforming = false;
     isGameOver = false;
+    choosenChar;
 
     activeSpells = [];
     spellCooldownQ = false;
@@ -20,46 +21,49 @@ class Character extends MovableObject {
     playRun = false;
     playAir = false;
 
-    IMAGES_IDLE = allImages.characters.characterEarth.normalForm.movements.idle;
-    IMAGES_WALKING = allImages.characters.characterEarth.normalForm.movements.move;
-    IMAGES_JUMPING_UP = allImages.characters.characterEarth.normalForm.movements.jumpUp;
-    IMAGES_JUMPING_DOWN = allImages.characters.characterEarth.normalForm.movements.jumpDown;
-    IMAGES_TAKING_HIT = allImages.characters.characterEarth.normalForm.movements.takingHit;
-    IMAGES_DEAD = allImages.characters.characterEarth.normalForm.movements.death;
+    IMAGES_IDLE = allImages.characters[`${this.choosenChar}`].normalForm.movements.idle;
+    IMAGES_WALKING = allImages.characters[`${this.choosenChar}`].normalForm.movements.move;
+    IMAGES_JUMPING_UP = allImages.characters[`${this.choosenChar}`].normalForm.movements.jumpUp;
+    IMAGES_JUMPING_DOWN = allImages.characters[`${this.choosenChar}`].normalForm.movements.jumpDown;
+    IMAGES_TAKING_HIT = allImages.characters[`${this.choosenChar}`].normalForm.movements.takingHit;
+    IMAGES_DEAD = allImages.characters[`${this.choosenChar}`].normalForm.movements.death;
 
-    IMAGES_ATTACK_Q = allImages.characters.characterEarth.normalForm.abilities.qAttack;
-    IMAGES_ATTACK_Q_AIR = allImages.characters.characterEarth.normalForm.abilities.qAttackAir;
+    IMAGES_ATTACK_Q = allImages.characters[`${this.choosenChar}`].normalForm.abilities.qAttack;
+    IMAGES_ATTACK_Q_AIR = allImages.characters[`${this.choosenChar}`].normalForm.abilities.qAttackAir;
 
-    IMAGES_TRANSFORM = allImages.characters.characterEarth.normalForm.transform;
-    IMAGES_TRANSFORM_IDLE = allImages.characters.characterEarth.evolvedForm.movements.idle;
-    IMAGES_TRANSFORM_MOVE = allImages.characters.characterEarth.evolvedForm.movements.move;
-    IMAGES_TRANSFORM_JUMPING_UP = allImages.characters.characterEarth.evolvedForm.movements.jumpUp;
-    IMAGES_TRANSFORM_JUMPING_DOWN = allImages.characters.characterEarth.evolvedForm.movements.jumpDown;
-    IMAGES_TRANSFORM_TAKING_HIT = allImages.characters.characterEarth.evolvedForm.movements.takingHit;
-    IMAGES_TRANSFORM_DEAD = allImages.characters.characterEarth.evolvedForm.movements.death;
+    IMAGES_TRANSFORM = allImages.characters[`${this.choosenChar}`].normalForm.transform;
+    IMAGES_TRANSFORM_IDLE = allImages.characters[`${this.choosenChar}`].evolvedForm.movements.idle;
+    IMAGES_TRANSFORM_MOVE = allImages.characters[`${this.choosenChar}`].evolvedForm.movements.move;
+    IMAGES_TRANSFORM_JUMPING_UP = allImages.characters[`${this.choosenChar}`].evolvedForm.movements.jumpUp;
+    IMAGES_TRANSFORM_JUMPING_DOWN = allImages.characters[`${this.choosenChar}`].evolvedForm.movements.jumpDown;
+    IMAGES_TRANSFORM_TAKING_HIT = allImages.characters[`${this.choosenChar}`].evolvedForm.movements.takingHit;
+    IMAGES_TRANSFORM_DEAD = allImages.characters[`${this.choosenChar}`].evolvedForm.movements.death;
 
-    IMAGES_TRANSFORM_ATTACK_Q = allImages.characters.characterEarth.evolvedForm.abilities.qAttack;
-    IMAGES_TRANSFORM_ATTACK_Q_AIR = allImages.characters.characterEarth.evolvedForm.abilities.qAttackAir;
+    IMAGES_TRANSFORM_ATTACK_Q = allImages.characters[`${this.choosenChar}`].evolvedForm.abilities.qAttack;
+    IMAGES_TRANSFORM_ATTACK_Q_AIR = allImages.characters[`${this.choosenChar}`].evolvedForm.abilities.qAttackAir;
 
-    constructor() {
-        super().loadImage('img/Character/Earth/png/run/run_1.png');
-        this.loadImages(this.IMAGES_WALKING);
-        this.loadImages(this.IMAGES_JUMPING_UP);
-        this.loadImages(this.IMAGES_JUMPING_DOWN);
-        this.loadImages(this.IMAGES_IDLE);
-        this.loadImages(this.IMAGES_TAKING_HIT);
-        this.loadImages(this.IMAGES_DEAD);
-        this.loadImages(this.IMAGES_ATTACK_Q);
-        this.loadImages(this.IMAGES_ATTACK_Q_AIR);
-        this.loadImages(this.IMAGES_TRANSFORM);
-        this.loadImages(this.IMAGES_TRANSFORM_IDLE);
-        this.loadImages(this.IMAGES_TRANSFORM_MOVE);
-        this.loadImages(this.IMAGES_TRANSFORM_JUMPING_UP);
-        this.loadImages(this.IMAGES_TRANSFORM_JUMPING_DOWN);
-        this.loadImages(this.IMAGES_TRANSFORM_TAKING_HIT);
-        this.loadImages(this.IMAGES_TRANSFORM_DEAD);
-        this.loadImages(this.IMAGES_TRANSFORM_ATTACK_Q);
-        this.loadImages(this.IMAGES_TRANSFORM_ATTACK_Q_AIR);
+
+    constructor(choosenChar) {
+        super();
+        this.choosenChar = choosenChar;
+        this.loadImage(allImages.characters[`${choosenChar}`].normalForm.movements.idle[0]);
+        this.loadImages(allImages.characters[`${choosenChar}`].normalForm.movements.move);
+        this.loadImages(allImages.characters[`${choosenChar}`].normalForm.movements.jumpUp);
+        this.loadImages(allImages.characters[`${choosenChar}`].normalForm.movements.jumpDown);
+        this.loadImages(allImages.characters[`${choosenChar}`].normalForm.movements.idle);
+        this.loadImages(allImages.characters[`${choosenChar}`].normalForm.movements.takingHit);
+        this.loadImages(allImages.characters[`${choosenChar}`].normalForm.movements.death);
+        this.loadImages(allImages.characters[`${choosenChar}`].normalForm.abilities.qAttack);
+        this.loadImages(allImages.characters[`${choosenChar}`].normalForm.abilities.qAttackAir);
+        this.loadImages(allImages.characters[`${choosenChar}`].normalForm.transform);
+        this.loadImages(allImages.characters[`${choosenChar}`].evolvedForm.movements.idle);
+        this.loadImages(allImages.characters[`${choosenChar}`].evolvedForm.movements.move);
+        this.loadImages(allImages.characters[`${choosenChar}`].evolvedForm.movements.jumpUp);
+        this.loadImages(allImages.characters[`${choosenChar}`].evolvedForm.movements.jumpDown);
+        this.loadImages(allImages.characters[`${choosenChar}`].evolvedForm.movements.takingHit);
+        this.loadImages(allImages.characters[`${choosenChar}`].evolvedForm.movements.death);
+        this.loadImages(allImages.characters[`${choosenChar}`].evolvedForm.abilities.qAttack);
+        this.loadImages(allImages.characters[`${choosenChar}`].evolvedForm.abilities.qAttackAir);
         this.updateCharacter();
         this.height = 256;
         this.width = 576;

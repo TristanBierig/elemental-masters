@@ -1,5 +1,5 @@
 class World {
-    character = new Character();
+    character;
     level = level1; // ground on Y-axis 440
     floor = [];
     statusBar = [
@@ -23,11 +23,13 @@ class World {
     slimeKillAudio = playerSoundsKillSlime;
     rockShatterAudio = playerSoundsEarthSpell;
     collectItemsAudio = playerSoundsCollectLoot;
-   
-    constructor(canvas, keyboard) {
+
+    constructor(canvas, keyboard, choosenChar) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.character = new Character(choosenChar);
+        this.character.choosenChar = choosenChar;
         this.expandFloor();
         this.draw();
         this.spawnNewEnemies();
@@ -119,7 +121,7 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.floor);
         this.addObjectsToMap(this.level.foregroundObjects);
-       
+
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
         if (this.character.activeSpells.length > 0) {
@@ -131,7 +133,7 @@ class World {
         this.addObjectsToMap(this.level.clouds);
 
         this.ctx.translate(-this.camera_x, 0); // Back
-      
+
         this.addObjectsToMap(this.statusBar);
         this.addFrameToMap(this.statusBar);
         this.ctx.translate(this.camera_x, 0); // Forwards

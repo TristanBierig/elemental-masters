@@ -1,6 +1,6 @@
 let allImages = {
     characters: {
-        characterEarth: {
+        Earth: {
             normalForm: {
                 movements: {
                     idle: [
