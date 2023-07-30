@@ -42,7 +42,7 @@ h1 {
 
 /* ===== Start Screen general ===== */
 .h1-wrapper {
-    margin-top: 200px;
+    margin-top: 60px;
     padding: 16px;
     background-image: linear-gradient(180deg,
             var(--earth-color),
@@ -55,9 +55,7 @@ h1 {
     transition: 825ms ease;
 }
 
-.ingame-title {
-    margin-top: 24.120px;
-}
+
 
 .ingame-start-screen {
     display: none;
@@ -71,11 +69,11 @@ h1 {
     left: 50%;
     transform: translate(-50%, -50%);
     background-image: linear-gradient(120deg,
-            rgba(138, 172, 161, 0.8),
-            rgba(127, 140, 129, 0.5),
-            rgba(145, 180, 154, 0.6),
-            rgba(152, 149, 136, 0.6),
-            rgba(126, 132, 130, 0.5));
+            rgba(138, 172, 161, 0.9),
+            rgba(127, 140, 129, 0.9),
+            rgba(145, 180, 154, 0.9),
+            rgba(152, 149, 136, 0.9),
+            rgba(126, 132, 130, 0.9));
 }
 
 /* ===== Mobile UI ===== */
@@ -200,4 +198,40 @@ h1 {
             rgba(145, 180, 154, 0.8),
             rgba(152, 149, 136, 0.8),
             rgba(126, 132, 130, 0.8));
+}
+
+
+/* ===== How to play ===== */
+.how-to-play {
+    padding-left: 20px;
+    display: flex;
+    gap: 16px;
+    color: black;
+}
+
+.commands {
+    min-width: 35%;
+}
+
+.commands p {
+    font-size: 20px;
+}
+
+.commands div {
+    padding: 6px;
+}
+
+.commands span {
+    padding: 4px;
+    border: 1px solid black;
+    border-radius: 3px;
+    margin-right: 6px;
+}
+
+.explain {
+    line-height: 1.5;
+}
+
+.explain p:first-child {
+    font-size: 20px;
 }

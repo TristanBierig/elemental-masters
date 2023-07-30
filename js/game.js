@@ -8,7 +8,6 @@ function init() {
 
 function startGame() {
     initLevel();
-    gameTitle.classList.add('ingame-title');
     startScreen.classList.add('ingame-start-screen');
     playerBackgroundIdle.playpause();
     world = new World(canvas, keyboard);
