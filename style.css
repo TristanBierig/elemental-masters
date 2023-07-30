@@ -194,6 +194,26 @@ h1 {
     text-shadow: 1px 1px white;
 }
 
+.highlight1 {
+    background-color: var(--earth-color);
+    text-shadow: 1px 1px white;
+}
+
+.highlight2 {
+    background-color: var(--fire-color);
+    text-shadow: 1px 1px white;
+}
+
+.highlight3 {
+    background-color: var(--water-color);
+    text-shadow: 1px 1px white;
+}
+
+.highlight4 {
+    background-color: var(--wind-color);
+    text-shadow: 1px 1px white;
+}
+
 .selection-wrapper div:nth-child(1):hover {
     background-color: var(--earth-color);
 }

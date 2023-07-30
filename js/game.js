@@ -1,22 +1,51 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let choosenCharacter;
+
 
 function init() {
     canvas = document.getElementById('canvas');
 }
+
+
+function chooseCharacter(character) {
+    let characterPanel = document.getElementById(`character${character}`);
+    for (let i = 1; i <= 4; i++) {
+        const panel = document.getElementById(`character${i}`);
+        panel.classList.remove(`highlight${i}`);
+    }
+    characterPanel.classList.add(`highlight${character}`);
+
+    if (character == 1) {
+        choosenCharacter = 'Earth';
+    }
+    if (character == 2) {
+        choosenCharacter = 'Fire';
+    }
+    if (character == 3) {
+        choosenCharacter = 'Water';
+    }
+    if (character == 4) {
+        choosenCharacter = 'Wind';
+    }
+}
+
 
 function startGame() {
     initLevel();
     startScreen.classList.add('d-none');
     sidebar.classList.remove('d-none');
     playerBackgroundIdle.playpause();
-    world = new World(canvas, keyboard);
+    world = new World(canvas, keyboard, choosenCharacter);
 }
 
 
+/**
+ * 
+ * @param {boolean} isVictory - Just given by the gameover function when its a win and then is always true 
+ */
 function GameOver(isVictory) {
-
     if (isVictory) {
         showVictoryScreen();
     } else {

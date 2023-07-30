@@ -30,6 +30,7 @@
     <script src="models/world.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="node_modules/@regosen/gapless-5/gapless5.js" language="JavaScript" type="text/javascript"></script>
+    <!-- <script src="js/character-selection.js"></script> -->
     <script src="js/sound.js"></script>
     <script src="js/images.js"></script>
     <script src="js/game.js"></script>
@@ -94,19 +95,19 @@
         <section class="character-selection-container">
             <span class="sub-header-selection">Choose your Character!</span>
             <div class="selection-wrapper">
-                <div>
+                <div id="character1" onclick="chooseCharacter(1)">
                     <img src="img/Character/Earth/ground_monk.png" alt="">
                     <span>EARTH</span>
                 </div>
-                <div>
+                <div id="character2" onclick="chooseCharacter(2)">
                     <img src="img/Character/Fire/fire_knight.png" alt="">
                     <span>FIRE</span>
                 </div>
-                <div>
+                <div id="character3" onclick="chooseCharacter(3)">
                     <img src="img/Character/Water/water_priestess.png" alt="">
                     <span>WATER</span>
                 </div>
-                <div>
+                <div id="character4" onclick="chooseCharacter(4)">
                     <img src="img/Character/Wind/wind_hashashin.png" alt="">
                     <span>WIND</span>
                 </div>
