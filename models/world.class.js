@@ -28,13 +28,13 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.character = new Character(choosenChar);
+        this.updateGame();
+        this.spawnClouds();
         this.expandFloor();
+        this.character = new Character(choosenChar);
         this.draw();
         this.spawnNewEnemies();
-        this.updateGame();
         this.killEnemy();
-        this.spawnClouds();
     }
 
 
