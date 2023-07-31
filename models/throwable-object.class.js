@@ -2,17 +2,15 @@ class ThrowableObject extends MovableObject {
     hit = false;
     category;
     index;
+    choosenChar = world.character.choosenChar;
 
-    IMAGES_FLYING_E = allImages.characters.characterEarth.normalForm.abilities.eAttackFlying;
-    IMAGES_HITTING_E = allImages.characters.characterEarth.normalForm.abilities.eAttackHit;
-    IMAGES_HITTING_W = allImages.characters.characterEarth.normalForm.abilities.wAttack;
 
     constructor(x, y, status, category, index) {
         // Empty png on first load
         super().loadImage('img/Enemies/Slime/BlueSlime/death/death_8.png');
-        this.loadImages(this.IMAGES_FLYING_E);
-        this.loadImages(this.IMAGES_HITTING_E);
-        this.loadImages(this.IMAGES_HITTING_W);
+        this.loadImages(allImages.characters[`${this.choosenChar}`].normalForm.abilities.eAttackFlying);
+        this.loadImages(allImages.characters[`${this.choosenChar}`].normalForm.abilities.eAttackHit);
+        this.loadImages(allImages.characters[`${this.choosenChar}`].normalForm.abilities.wAttack);
         this.width = 96;
         this.height = 96;
         this.x = x;
@@ -84,12 +82,12 @@ class ThrowableObject extends MovableObject {
                         this.stopInterval(this.movementInterval);
                     }, 1200);
                 }
-                this.playAnimation(this.IMAGES_HITTING_E);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.abilities.eAttackHit);
                 if (this.currentImage == 9) {
                     this.stopInterval(this.animationInterval);
                 }
             } else {
-                this.playAnimation(this.IMAGES_FLYING_E);
+                this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.abilities.eAttackFlying);
             }
         }, 1000 / 25);
     }
@@ -107,7 +105,7 @@ class ThrowableObject extends MovableObject {
                 this.currentImage = 0;
                 this.animationStatus = 'ONCE';
             }
-            this.playAnimation(this.IMAGES_HITTING_W);
+            this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.abilities.wAttack);
 
             if (this.currentImage >= 20) {
                 this.stopInterval(this.animationInterval);
