@@ -121,7 +121,6 @@ class MovableObject extends DrawableObject {
      * @param {Array} images - Expects an array with all the paths to a particual animation 
      */
     playAnimation(images) {
-        // debugger
         let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imageCache[path];

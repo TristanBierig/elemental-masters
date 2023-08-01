@@ -31,7 +31,20 @@ class World {
         this.updateGame();
         this.spawnClouds();
         this.expandFloor();
-        this.character = new Character(choosenChar);
+        switch (choosenChar) {
+            case 'Earth':
+            this.character = new CharacterEarth();
+                break;
+            case 'Fire':
+                this.character = new CharacterFire();
+                break;
+            case 'Water':
+                this.character = new CharacterWater();
+                break;
+            case 'Wind':
+                this.character = new CharacterWind();
+                break;
+        }
         this.draw();
         // this.spawnNewEnemies();
         this.killEnemy();
@@ -174,7 +187,7 @@ class World {
         if (mo.otherDirection) {
             this.flipImage(mo);
         }
-        
+
         mo.draw(this.ctx);
         mo.drawHitbox(this.ctx);
 
@@ -264,7 +277,7 @@ class World {
 
     checkMeleeAttack(enemy, index) {
         if (this.character.isColliding(enemy) && this.character.spellCooldownQ && !this.character.isHitting) {
-            this.character.isHitting= true;
+            this.character.isHitting = true;
             this.damageEnemy(enemy, index, 50);
         }
     }
@@ -300,7 +313,7 @@ class World {
                 world.statusBar[3].percentage = 0;
             }
         }
-   
+
         if (enemy.lifePoints <= 0 && enemy instanceof Slime) {
             // Shrinks hitbox to prevent enemy interaction while death animation is playing
             // Handles normal enemy Kills
