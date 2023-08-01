@@ -47,11 +47,12 @@
     </div>
 
     
-    <section class="canvas-container">
+    <section id="canvasContainer" class="canvas-container">
         <canvas id="canvas" width="720" height="480"></canvas>
 
         <aside id="sidebar" class="sidebar d-none">
-            <img src="img/icons/maximize.png" alt="">
+            <img onclick="fullscreen('enter')" id="enterFullscreen" src="img/icons/maximize.png" alt="">
+            <img onclick="fullscreen('exit')" id="exitFullscreen" class="d-none" src="img/icons/minimize.png" alt="">
             <img src="img/icons/role-playing-game.png" alt="">
             <img src="img/icons/volume.png" alt="">
             <img src="img/icons/music.png" alt="">

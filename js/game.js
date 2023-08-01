@@ -77,6 +77,47 @@ function showLooseScreen() {
 }
 
 
+function fullscreen(state) {
+    let fullscreen = document.getElementById('canvasContainer');
+    if (state == 'enter') {
+        enterFullscreen(fullscreen);
+    }
+    if (state == 'exit') {
+        exitFullscreen(fullscreen);
+    }
+}
+
+
+function enterFullscreen(element) {
+    let enterBtn = document.getElementById('enterFullscreen');
+    let exitBtn = document.getElementById('exitFullscreen');
+
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
+        element.msRequestFullscreen();
+    } else if (element.webkitRequestFullscreen) {  // iOS Safari
+        element.webkitRequestFullscreen();
+    }
+    enterBtn.classList.add('d-none');
+    exitBtn.classList.remove('d-none');
+}
+
+
+function exitFullscreen() {
+    let enterBtn = document.getElementById('enterFullscreen');
+    let exitBtn = document.getElementById('exitFullscreen');
+
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    }
+    exitBtn.classList.add('d-none');
+    enterBtn.classList.remove('d-none');
+}
+
+
 window.addEventListener("keydown", function (e) {
     if (e.code == 'Escape') {
         keyboard.ESCAPE = true;
