@@ -28,6 +28,8 @@ class ThrowableObject extends MovableObject {
                 break;
 
             case 'Fire':
+                this.finishCounterW = 13;
+                this.finishCounterE = 6;
                 this.IMAGES_W = allImages.characters.Fire.normalForm.abilities.wAttack;
                 this.IMAGES_E_FLY = allImages.characters.Fire.normalForm.abilities.eAttackFlying;
                 this.IMAGES_E_HIT = allImages.characters.Fire.normalForm.abilities.eAttackHit;
@@ -37,6 +39,8 @@ class ThrowableObject extends MovableObject {
                 break;
 
             case 'Water':
+                this.finishCounterW = 20;
+                this.finishCounterE = 15;
                 this.IMAGES_W = allImages.characters.Water.normalForm.abilities.wAttack;
                 this.IMAGES_E_FLY = allImages.characters.Water.normalForm.abilities.eAttackFlying;
                 this.IMAGES_E_HIT = allImages.characters.Water.normalForm.abilities.eAttackHit;
@@ -46,6 +50,8 @@ class ThrowableObject extends MovableObject {
                 break;
 
             case 'Wind':
+                this.finishCounterW = 11;
+                this.finishCounterE = 5;
                 this.IMAGES_W = allImages.characters.Wind.normalForm.abilities.wAttack;
                 this.IMAGES_E_FLY = allImages.characters.Wind.normalForm.abilities.eAttackFlying;
                 this.IMAGES_E_HIT = allImages.characters.Wind.normalForm.abilities.eAttackHit;
@@ -54,11 +60,6 @@ class ThrowableObject extends MovableObject {
                 this.loadImages(this.IMAGES_E_HIT);
                 break;
         }
-
-        this.width = 96;
-        this.height = 96;
-        this.x = x;
-        this.y = y - 20;
         this.index = index;
         this.category = category;
         this.animationStatus = 'FLY';
@@ -73,6 +74,10 @@ class ThrowableObject extends MovableObject {
             this.animateE();
             switch (element) {
                 case 'Earth':
+                    this.width = 96;
+                    this.height = 96;
+                    this.x = x;
+                    this.y = y - 20;
                     if (this.movementStatus == 'RIGHT' || undefined) {
                         this.offset = {
                             top: 30,
@@ -91,6 +96,10 @@ class ThrowableObject extends MovableObject {
                     break;
 
                 case 'Fire':
+                    this.width = 96;
+                    this.height = 96;
+                    this.x = x;
+                    this.y = y - 20;
                     if (this.movementStatus == 'RIGHT' || undefined) {
                         this.offset = {
                             top: 30,
@@ -109,6 +118,10 @@ class ThrowableObject extends MovableObject {
                     break;
 
                 case 'Water':
+                    this.width = 96;
+                    this.height = 96;
+                    this.x = x;
+                    this.y = y - 20;
                     if (this.movementStatus == 'RIGHT' || undefined) {
                         this.offset = {
                             top: 30,
@@ -151,6 +164,10 @@ class ThrowableObject extends MovableObject {
             this.y += 2;
             switch (element) {
                 case 'Earth':
+                    this.width = 96;
+                    this.height = 96;
+                    this.x = x;
+                    this.y = y - 20;
                     this.offset = {
                         top: 30,
                         bottom: 30,
@@ -159,6 +176,10 @@ class ThrowableObject extends MovableObject {
                     };
                     break;
                 case 'Fire':
+                    this.width = 96;
+                    this.height = 192;
+                    this.x = x;
+                    this.y = y - 85;
                     this.offset = {
                         top: 30,
                         bottom: 30,
@@ -167,6 +188,10 @@ class ThrowableObject extends MovableObject {
                     };
                     break;
                 case 'Water':
+                    this.width = 96;
+                    this.height = 192;
+                    this.x = x;
+                    this.y = y - 85;
                     this.offset = {
                         top: 30,
                         bottom: 30,
@@ -175,6 +200,10 @@ class ThrowableObject extends MovableObject {
                     };
                     break;
                 case 'Wind':
+                    this.width = 96;
+                    this.height = 192;
+                    this.x = x;
+                    this.y = y - 85;
                     this.offset = {
                         top: 30,
                         bottom: 30,

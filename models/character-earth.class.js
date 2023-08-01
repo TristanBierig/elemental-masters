@@ -19,6 +19,48 @@ class CharacterEarth extends Character {
         IMAGES_TRANSFORM_ATTACK_Q_AIR: allImages.characters.Earth.evolvedForm.abilities.qAttackAir,
     }
 
+    hitboxes = {
+        normalForm: {
+            idle: {
+                top: 172,
+                bottom: 185,
+                left: 275,
+                right: 550
+            },
+            qRight: {
+                top: 172,
+                bottom: 185,
+                left: 275,
+                right: 510
+            },
+            qLeft: {
+                top: 172,
+                bottom: 185,
+                left: 235,
+                right: 550
+            }
+        },
+        evolvedForm: {
+            idle: {
+                top: 120,
+                bottom: 132,
+                left: 265,
+                right: 520
+            },
+            qRight: {
+                top: 120,
+                bottom: 132,
+                left: 275,
+                right: 400
+            },
+            qLeft: {
+                top: 120,
+                bottom: 132,
+                left: 150,
+                right: 550
+            }
+        }
+    }
 
     constructor() {
         super();
@@ -32,14 +74,9 @@ class CharacterEarth extends Character {
         this.y = 150; // 205 Ground value
         this.speed = 2.5;
         // Normal hitbox
-        this.offset = {
-            top: 172,
-            bottom: 185,
-            left: 275,
-            right: 550
-        };
+        this.offset = this.hitboxes.normalForm.idle;
         this.updateCharacter();
-        this.applyGravitiy(undefined, 'Earth');          
+        this.applyGravitiy(undefined, 'Earth');
         this.animateCharacterNormal();
         this.gameOver();
     }
@@ -149,14 +186,8 @@ class CharacterEarth extends Character {
 
     // Handles animations in evolved Transform
     animateCharacterTransform() {
+        this.offset = this.hitboxes.evolvedForm.idle;
         this.animationIntervalTransform = setInterval(() => {
-            // Transform hitbox
-            this.offset = {
-                top: 120,
-                bottom: 132,
-                left: 250,
-                right: 500
-            };
             if (this.isDead()) {
                 // Death Animation and stops Intervals
                 if (this.animationStatus != 'DEAD') {
@@ -172,8 +203,8 @@ class CharacterEarth extends Character {
                     }, 4000);
                     this.stopInterval(this.movementInterval);
                 }
-                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.death);
-                if (this.currentImage == allImages.characters[`${this.choosenChar}`].evolvedForm.movements.death.length) {
+                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_DEAD);
+                if (this.currentImage == this.imageCollection.IMAGES_TRANSFORM_DEAD.length) {
                     this.stopInterval(this.animationIntervalTransform);
                 }
             } else if (this.isTakingHit) {
@@ -182,21 +213,21 @@ class CharacterEarth extends Character {
                     this.currentImage = 0;
                     this.animationStatus = 'HIT';
                 }
-                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.takingHit);
+                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_TAKING_HIT);
             } else if (this.spellCooldownQ && this.y < 205) {
                 // Q-Attack in Air
                 if (this.animationStatus != 'Q-ATTACK') {
                     this.currentImage = 0;
                     this.animationStatus = 'Q-ATTACK';
                 }
-                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.abilities.qAttackAir);
+                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_ATTACK_Q_AIR);
             } else if (!this.isTakingHit && this.y < 205 && this.speedY > 0) {
                 // Jumping up
-                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.jumpUp);
+                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_JUMPING_UP);
                 this.animationStatus = 'AIRBORNE';
             } else if (!this.isTakingHit && this.y < 205 && this.speedY <= 0) {
                 // Falling Down
-                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.jumpDown);
+                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_JUMPING_DOWN);
                 this.animationStatus = 'AIRBORNE';
             } else if (this.spellCooldownQ) {
                 // Q-ATTACK
@@ -204,15 +235,15 @@ class CharacterEarth extends Character {
                     this.currentImage = 0;
                     this.animationStatus = 'Q-ATTACK';
                 }
-                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.abilities.qAttack);
+                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_ATTACK_Q);
             } else if (!this.isTakingHit && world && world.keyboard.RIGHT || world.keyboard.LEFT) {
                 // Run Animation
-                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.move);
+                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_MOVE);
                 this.animationStatus = 'RUN';
             }
             else if (!this.isTakingHit) {
                 // Doing nothing
-                this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.idle);
+                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_IDLE);
                 this.animationStatus = 'IDLE';
             }
         }, 100);

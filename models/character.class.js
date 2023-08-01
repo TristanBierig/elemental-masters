@@ -86,23 +86,13 @@ class Character extends MovableObject {
             if (this.movementStatus == 'RIGHT' || this.movementStatus == undefined) {
                 if (!this.isTransformed) {
                     setTimeout(() => {
-                        this.offset = {
-                            top: 172,
-                            bottom: 185,
-                            left: 275,
-                            right: 510
-                        }
+                        this.offset = this.hitboxes.normalForm.qRight;
                         this.punch_sound.playpause();
                     }, 200);
                 } else {
                     // Handles Transformed punch hitbox
                     setTimeout(() => {
-                        this.offset = {
-                            top: 120,
-                            bottom: 132,
-                            left: 275,
-                            right: 400
-                        }
+                        this.offset = this.hitboxes.evolvedForm.qRight;
                         this.punch_sound.playpause();
                     }, 200);
                 }
@@ -110,26 +100,15 @@ class Character extends MovableObject {
 
             // Expands hitbox to left synched with animation
             if (this.movementStatus == 'LEFT') {
-
                 if (!this.isTransformed) {
                     setTimeout(() => {
-                        this.offset = {
-                            top: 172,
-                            bottom: 185,
-                            left: 235,
-                            right: 550
-                        }
+                        this.offset = this.hitboxes.normalForm.qLeft;
                         this.punch_sound.playpause();
                     }, 200);
                 } else {
                     // Handles Transformed punch hitbox
                     setTimeout(() => {
-                        this.offset = {
-                            top: 120,
-                            bottom: 132,
-                            left: 150,
-                            right: 550
-                        }
+                        this.offset = this.hitboxes.evolvedForm.qLeft;
                         this.punch_sound.playpause();
                     }, 200);
                 }
@@ -139,24 +118,14 @@ class Character extends MovableObject {
             if (!this.isTransformed) {
                 setTimeout(() => {
                     this.spellCooldownQ = false;
-                    this.offset = {
-                        top: 172,
-                        bottom: 185,
-                        left: 275,
-                        right: 550
-                    };
+                    this.offset = this.hitboxes.normalForm.idle;
                     this.isHitting = false;
                 }, 500);
             } else {
                 // Handles Transformed punch hitbox reset
                 setTimeout(() => {
                     this.spellCooldownQ = false;
-                    this.offset = {
-                        top: 120,
-                        bottom: 132,
-                        left: 250,
-                        right: 500
-                    };
+                    this.offset = this.hitboxes.evolvedForm.idle;
                     this.isHitting = false;
                 }, 500);
             }
@@ -197,8 +166,8 @@ class Character extends MovableObject {
             this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
                 this.y + this.offset.top,
                 this.movementStatus,
-                 'E',
-                  this.activeSpells.length, element));
+                'E',
+                this.activeSpells.length, element));
             this.spellCooldownE = true;
             world.statusBar[1].percentage -= 10;
             setTimeout(() => {
@@ -212,6 +181,7 @@ class Character extends MovableObject {
         // Evolves into ultimate Form
         if (world && world.keyboard.R == true && world.statusBar[2].percentage >= 100 && !this.isTransformed) {
             this.isTransforming = true;
+            this.isTransformed = true;
         }
     }
 
