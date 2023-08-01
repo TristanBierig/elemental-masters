@@ -17,8 +17,6 @@ class ThrowableObject extends MovableObject {
         super().loadImage('img/Enemies/Slime/BlueSlime/death/death_8.png');
         switch (element) {
             case 'Earth':
-                this.finishCounterW = 20;
-                this.finishCounterE = 9;
                 this.IMAGES_W = allImages.characters.Earth.normalForm.abilities.wAttack;
                 this.IMAGES_E_FLY = allImages.characters.Earth.normalForm.abilities.eAttackFlying;
                 this.IMAGES_E_HIT = allImages.characters.Earth.normalForm.abilities.eAttackHit;
@@ -28,8 +26,6 @@ class ThrowableObject extends MovableObject {
                 break;
 
             case 'Fire':
-                this.finishCounterW = 13;
-                this.finishCounterE = 6;
                 this.IMAGES_W = allImages.characters.Fire.normalForm.abilities.wAttack;
                 this.IMAGES_E_FLY = allImages.characters.Fire.normalForm.abilities.eAttackFlying;
                 this.IMAGES_E_HIT = allImages.characters.Fire.normalForm.abilities.eAttackHit;
@@ -39,8 +35,6 @@ class ThrowableObject extends MovableObject {
                 break;
 
             case 'Water':
-                this.finishCounterW = 20;
-                this.finishCounterE = 15;
                 this.IMAGES_W = allImages.characters.Water.normalForm.abilities.wAttack;
                 this.IMAGES_E_FLY = allImages.characters.Water.normalForm.abilities.eAttackFlying;
                 this.IMAGES_E_HIT = allImages.characters.Water.normalForm.abilities.eAttackHit;
@@ -50,8 +44,6 @@ class ThrowableObject extends MovableObject {
                 break;
 
             case 'Wind':
-                this.finishCounterW = 11;
-                this.finishCounterE = 5;
                 this.IMAGES_W = allImages.characters.Wind.normalForm.abilities.wAttack;
                 this.IMAGES_E_FLY = allImages.characters.Wind.normalForm.abilities.eAttackFlying;
                 this.IMAGES_E_HIT = allImages.characters.Wind.normalForm.abilities.eAttackHit;
@@ -63,9 +55,10 @@ class ThrowableObject extends MovableObject {
         this.index = index;
         this.category = category;
         this.animationStatus = 'FLY';
+        this.movementStatus = status;
 
+        // Handles E Spell
         if (category == 'E') {
-            this.movementStatus = status;
             this.x -= 56;
             this.speed = 8; // 8 default
             this.speedY = 15; // 15 default
@@ -98,23 +91,14 @@ class ThrowableObject extends MovableObject {
                 case 'Fire':
                     this.width = 96;
                     this.height = 96;
-                    this.x = x;
+                    this.x = x - 50;
                     this.y = y - 20;
-                    if (this.movementStatus == 'RIGHT' || undefined) {
-                        this.offset = {
-                            top: 30,
-                            bottom: 62,
-                            left: 12,
-                            right: 68
-                        };
-                    } else {
-                        this.offset = {
-                            top: 30,
-                            bottom: 62,
-                            left: 55,
-                            right: 68
-                        };
-                    }
+                    this.offset = {
+                        top: 38,
+                        bottom: 78,
+                        left: 40,
+                        right: 70
+                    };
                     break;
 
                 case 'Water':
@@ -122,44 +106,31 @@ class ThrowableObject extends MovableObject {
                     this.height = 96;
                     this.x = x;
                     this.y = y - 20;
-                    if (this.movementStatus == 'RIGHT' || undefined) {
-                        this.offset = {
-                            top: 30,
-                            bottom: 62,
-                            left: 12,
-                            right: 68
-                        };
-                    } else {
-                        this.offset = {
-                            top: 30,
-                            bottom: 62,
-                            left: 55,
-                            right: 68
-                        };
-                    }
+                    this.offset = {
+                        top: 30,
+                        bottom: 62,
+                        left: 12,
+                        right: 24
+                    };
                     break;
 
                 case 'Wind':
-                    if (this.movementStatus == 'RIGHT' || undefined) {
-                        this.offset = {
-                            top: 30,
-                            bottom: 62,
-                            left: 12,
-                            right: 68
-                        };
-                    } else {
-                        this.offset = {
-                            top: 30,
-                            bottom: 62,
-                            left: 55,
-                            right: 68
-                        };
-                    }
+                    this.width = 96;
+                    this.height = 96;
+                    this.x = x;
+                    this.y = y - 20;
+                    this.offset = {
+                        top: 12,
+                        bottom: 28,
+                        left: 24,
+                        right: 48
+                    };
                     break;
             }
 
         }
 
+        // Handles W Spell
         if (category == 'W') {
             this.y += 2;
             switch (element) {
@@ -176,10 +147,14 @@ class ThrowableObject extends MovableObject {
                     };
                     break;
                 case 'Fire':
-                    this.width = 96;
-                    this.height = 192;
-                    this.x = x;
-                    this.y = y - 85;
+                    this.width = 160;
+                    this.height = 160;
+                    if (this.movementStatus == 'RIGHT' || undefined) {
+                        this.x = x;
+                    } else {
+                        this.x = x - 100;
+                    }
+                    this.y = y - 30;
                     this.offset = {
                         top: 30,
                         bottom: 30,
@@ -189,9 +164,9 @@ class ThrowableObject extends MovableObject {
                     break;
                 case 'Water':
                     this.width = 96;
-                    this.height = 192;
+                    this.height = 240;
                     this.x = x;
-                    this.y = y - 85;
+                    this.y = y - 135;
                     this.offset = {
                         top: 30,
                         bottom: 30,
@@ -200,10 +175,14 @@ class ThrowableObject extends MovableObject {
                     };
                     break;
                 case 'Wind':
-                    this.width = 96;
-                    this.height = 192;
-                    this.x = x;
-                    this.y = y - 85;
+                    this.width = 200;
+                    this.height = 100;
+                    if (this.movementStatus == 'RIGHT' || undefined) {
+                        this.x = x;
+                    } else {
+                        this.x = x - 100;
+                    }
+                    this.y = y - 20;
                     this.offset = {
                         top: 30,
                         bottom: 30,
@@ -242,13 +221,13 @@ class ThrowableObject extends MovableObject {
                     }, 1200);
                 }
                 this.playAnimation(this.IMAGES_E_HIT);
-                if (this.currentImage == this.finishCounterE) {
+                if (this.currentImage >= this.IMAGES_E_HIT.length) {
                     this.stopInterval(this.animationInterval);
                 }
             } else {
                 this.playAnimation(this.IMAGES_E_FLY);
             }
-        }, 1000 / 25);
+        }, 1000 / 10);
     }
 
 
@@ -266,7 +245,7 @@ class ThrowableObject extends MovableObject {
             }
             this.playAnimation(this.IMAGES_W);
 
-            if (this.currentImage >= this.finishCounterW) {
+            if (this.currentImage >= this.IMAGES_W.length) {
                 this.stopInterval(this.animationInterval);
                 world.character.activeSpells.splice(this.index, 1);
             }
