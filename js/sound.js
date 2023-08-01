@@ -1,6 +1,6 @@
 // Background OST
 const playerBackgroundIdle = new Gapless5({
-    tracks: ['audio/background_loops/Overworld.wav'],
+    tracks: ['audio/background_loops/Overworld.mp3'],
     loop: true,
     singleMode: true,
     volume: 0.05,
@@ -9,11 +9,29 @@ const playerBackgroundIdle = new Gapless5({
 
 // Endboss Music
 const playerBackgroundBoss = new Gapless5({
-    tracks: ['audio/background_loops/Battle_Theme 2.wav'],
+    tracks: ['audio/background_loops/Battle_Theme_2.mp3'],
     loop: true,
     singleMode: true,
     volume: 0.05,
     loadLimit: 2,
+});
+
+// GameOver Screen Loop
+const playerSoundsGameOverLoop = new Gapless5({
+    tracks: ['audio/background_loops/Gameover.mp3'],
+    loop: true,
+    singleMode: true,
+    loadLimit: 1,
+    volume: 0.05,
+});
+
+// Victory Screen Loop
+const playerSoundsVictory = new Gapless5({
+    tracks: ['audio/background_loops/Victory.mp3'],
+    loop: true,
+    singleMode: true,
+    loadLimit: 1,
+    volume: 0.05,
 });
 
 // Character runs on grass
@@ -94,24 +112,6 @@ const playerSoundsGameOver = new Gapless5({
     singleMode: true,
     loadLimit: 1,
     volume: 0.4,
-});
-
-// GameOver Screen Loop
-const playerSoundsGameOverLoop = new Gapless5({
-    tracks: ['audio/background_loops/Gameover.wav'],
-    loop: true,
-    singleMode: true,
-    loadLimit: 1,
-    volume: 0.05,
-});
-
-// Victory Screen Loop
-const playerSoundsVictory = new Gapless5({
-    tracks: ['audio/background_loops/Victory.wav'],
-    loop: true,
-    singleMode: true,
-    loadLimit: 1,
-    volume: 0.05,
 });
 
 // Endboss death

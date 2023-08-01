@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="font.css">
     <link rel="stylesheet" href="style.css">
-
+    
     <script src="models/drawable-objects.js"></script>
     <script src="models/movable-object.class.js"></script>
     <script src="models/throwable-object.class.js"></script>
@@ -20,6 +20,10 @@
     <script src="models/status-bar-frame.class.js"></script>
     <script src="models/status-bar-icon.class.js"></script>
     <script src="models/character.class.js"></script>
+    <script src="models/character-earth.class.js"></script>
+    <script src="models/character-fire.class.js"></script>
+    <script src="models/character-water.class.js"></script>
+    <script src="models/character-wind.class.js"></script>
     <script src="models/cloud.class.js"></script>
     <script src="models/slime.class.js"></script>
     <script src="models/endboss.class.js"></script>
@@ -30,10 +34,9 @@
     <script src="models/world.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="node_modules/@regosen/gapless-5/gapless5.js" language="JavaScript" type="text/javascript"></script>
-    <!-- <script src="js/character-selection.js"></script> -->
     <script src="js/sound.js"></script>
     <script src="js/images.js"></script>
-    <script src="js/game.js"></script>
+    
 </head>
 
 <body onload="init()">
@@ -95,7 +98,7 @@
         <section class="character-selection-container">
             <span class="sub-header-selection">Choose your Character!</span>
             <div class="selection-wrapper">
-                <div id="character1" onclick="chooseCharacter(1)">
+                <div id="character1" onclick="chooseCharacter(1)" class="highlight1">
                     <img src="img/Character/Earth/ground_monk.png" alt="">
                     <span>EARTH</span>
                 </div>
@@ -122,7 +125,7 @@
     <div id="endScreen" class="end-screen d-none">
         
     </div>
-
+    <script defer src="js/game.js"></script>
 </body>
 
 </html>
