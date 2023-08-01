@@ -4,6 +4,7 @@ class Character extends MovableObject {
     isTransformed = false;
     isTransforming = false;
     isGameOver = false;
+    isHitting = false;
     choosenChar;
 
     activeSpells = [];
@@ -177,6 +178,7 @@ class Character extends MovableObject {
                             left: 275,
                             right: 550
                         };
+                        this.isHitting = false;
                     }, 500);
                 } else {
                     // Handles Transformed punch hitbox reset
@@ -188,6 +190,7 @@ class Character extends MovableObject {
                             left: 250,
                             right: 500
                         };
+                        this.isHitting = false;
                     }, 500);
                 }
             }

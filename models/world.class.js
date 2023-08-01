@@ -33,7 +33,7 @@ class World {
         this.expandFloor();
         this.character = new Character(choosenChar);
         this.draw();
-        this.spawnNewEnemies();
+        // this.spawnNewEnemies();
         this.killEnemy();
     }
 
@@ -44,7 +44,7 @@ class World {
                 this.checkJumpOnEnemy(enemy, index);
                 this.checkMeleeAttack(enemy, index);
                 this.checkSpellAttack(enemy, index);
-                this.killEnemyOutOfSight(enemy, index);
+                // this.killEnemyOutOfSight(enemy, index);
                 this.checkGettingHit(enemy);
                 this.collectLoot();
 
@@ -174,11 +174,10 @@ class World {
         if (mo.otherDirection) {
             this.flipImage(mo);
         }
+        
         mo.draw(this.ctx);
-        if (mo.drawHitbox(this.ctx)) {
-
-        }
         mo.drawHitbox(this.ctx);
+
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
@@ -264,9 +263,9 @@ class World {
 
 
     checkMeleeAttack(enemy, index) {
-        if (this.character.isColliding(enemy) && this.character.spellCooldownQ) {
+        if (this.character.isColliding(enemy) && this.character.spellCooldownQ && !this.character.isHitting) {
+            this.character.isHitting= true;
             this.damageEnemy(enemy, index, 50);
-
         }
     }
 
@@ -280,7 +279,7 @@ class World {
                     setTimeout(() => {
                         spell.isKilled = true;
                     }, 400);
-                    this.damageEnemy(enemy, spell, 50);
+                    this.damageEnemy(enemy, spell, 100);
                 }
             })
         }
@@ -301,12 +300,7 @@ class World {
                 world.statusBar[3].percentage = 0;
             }
         }
-        this.character.offset = this.offset = {
-            top: 172,
-            bottom: 185,
-            left: 275,
-            right: 550
-        };
+   
         if (enemy.lifePoints <= 0 && enemy instanceof Slime) {
             // Shrinks hitbox to prevent enemy interaction while death animation is playing
             // Handles normal enemy Kills
@@ -405,7 +399,7 @@ class World {
 
 
     checkGettingHit(enemy) {
-        if (this.character.isColliding(enemy)) {
+        if (this.character.isColliding(enemy) && !this.character.spellCooldownQ) {
             enemy.isHitting = true;
             this.character.isTakingHit = true;
             this.character.gettingHit();

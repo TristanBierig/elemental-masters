@@ -22,12 +22,11 @@ class ThrowableObject extends MovableObject {
         if (category == 'E') {
             this.movementStatus = status;
             this.x -= 56;
-            this.animateE();
-            this.speed = 8; // 4 default
+            this.speed = 0; // 8 default
             this.speedY = 15; // 15 default
             this.accelertion = 1; // 1 default
-            this.applyGravitiy(true);
-            if (!this.otherDirection) {
+            this.animateE();
+            if (this.movementStatus = ('RIGHT' || undefined)) {
                 this.offset = {
                     top: 30,
                     bottom: 62,
@@ -38,13 +37,14 @@ class ThrowableObject extends MovableObject {
                 this.offset = {
                     top: 30,
                     bottom: 62,
-                    left: 68,
-                    right: 12
+                    left: 12,
+                    right: 68
                 };
             }
         }
 
         if (category == 'W') {
+            this.applyGravitiy(true);
             this.y += 2;
             this.offset = {
                 top: 30,

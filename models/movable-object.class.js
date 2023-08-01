@@ -47,8 +47,8 @@ class MovableObject extends DrawableObject {
                         this.y = 205
                     }
                     // Throttles Speed at a point where collision with enemy is still triggered (no infinite acceleration on falling)
-                    if (this.speedY < - 18) {
-                        this.speedY = -18;
+                    if (this.speedY < - 17) {
+                        this.speedY = -17;
                     }
                 }
             }, 1000 / 25);
@@ -101,7 +101,7 @@ class MovableObject extends DrawableObject {
 
 
     jump() {
-        this.speedY = 15; // default 17
+        this.speedY = 15; // default 15
     }
 
 
