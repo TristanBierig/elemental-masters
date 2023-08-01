@@ -118,7 +118,9 @@ function exitFullscreen() {
 }
 
 
-window.addEventListener("keydown", function (e) {
+
+/* ========== EventListener ========== */
+window.addEventListener("keydown", (e) => {
     if (e.code == 'Escape') {
         keyboard.ESCAPE = true;
     }
@@ -145,7 +147,7 @@ window.addEventListener("keydown", function (e) {
     }
 });
 
-window.addEventListener("keyup", function (e) {
+window.addEventListener("keyup", (e) => {
     if (e.code == 'Escape') {
         keyboard.ESCAPE = false;
     }
@@ -171,3 +173,64 @@ window.addEventListener("keyup", function (e) {
         keyboard.SPACE = false;
     }
 });
+
+
+document.getElementById('btnRight').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.RIGHT = true;
+})
+document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.LEFT = true;
+})
+document.getElementById('btnQ').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.Q = true;
+})
+document.getElementById('btnW').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.W = true;
+})
+document.getElementById('btnE').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.E = true;
+})
+document.getElementById('btnR').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.R = true;
+})
+document.getElementById('btnSpace').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.SPACE = true;
+})
+
+
+document.getElementById('btnRight').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.RIGHT = false;
+})
+document.getElementById('btnLeft').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.LEFT = false;
+})
+document.getElementById('btnQ').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.Q = false;
+})
+document.getElementById('btnW').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.W = false;
+})
+document.getElementById('btnE').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.E = false;
+})
+document.getElementById('btnR').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.R = false;
+})
+document.getElementById('btnSpace').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.SPACE = false;
+})
+

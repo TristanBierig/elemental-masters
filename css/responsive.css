@@ -3,7 +3,7 @@
         display: none;
     }
 
-    
+
 }
 
 @media only screen and (max-width: 720px) {
@@ -27,6 +27,14 @@
 @media only screen and (max-height: 480px) {
     #gameTitle {
         display: none;
+    }
+
+    #movementPanel {
+        display: flex !important;
+    }
+
+    #abilityPanel {
+        display: flex !important;
     }
 
     .canvas-container,
