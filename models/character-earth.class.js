@@ -6,10 +6,8 @@ class CharacterEarth extends Character {
         IMAGES_JUMPING_DOWN: allImages.characters.Earth.normalForm.movements.jumpDown,
         IMAGES_TAKING_HIT: allImages.characters.Earth.normalForm.movements.takingHit,
         IMAGES_DEAD: allImages.characters.Earth.normalForm.movements.death,
-
         IMAGES_ATTACK_Q: allImages.characters.Earth.normalForm.abilities.qAttack,
         IMAGES_ATTACK_Q_AIR: allImages.characters.Earth.normalForm.abilities.qAttackAir,
-
         IMAGES_TRANSFORM: allImages.characters.Earth.normalForm.transform,
         IMAGES_TRANSFORM_IDLE: allImages.characters.Earth.evolvedForm.movements.idle,
         IMAGES_TRANSFORM_MOVE: allImages.characters.Earth.evolvedForm.movements.move,
@@ -17,7 +15,6 @@ class CharacterEarth extends Character {
         IMAGES_TRANSFORM_JUMPING_DOWN: allImages.characters.Earth.evolvedForm.movements.jumpDown,
         IMAGES_TRANSFORM_TAKING_HIT: allImages.characters.Earth.evolvedForm.movements.takingHit,
         IMAGES_TRANSFORM_DEAD: allImages.characters.Earth.evolvedForm.movements.death,
-
         IMAGES_TRANSFORM_ATTACK_Q: allImages.characters.Earth.evolvedForm.abilities.qAttack,
         IMAGES_TRANSFORM_ATTACK_Q_AIR: allImages.characters.Earth.evolvedForm.abilities.qAttackAir,
     }
@@ -42,7 +39,7 @@ class CharacterEarth extends Character {
             right: 550
         };
         this.updateCharacter();
-        this.applyGravitiy();          
+        this.applyGravitiy(undefined, 'Earth');          
         this.animateCharacterNormal();
         this.gameOver();
     }
@@ -114,18 +111,18 @@ class CharacterEarth extends Character {
                     this.gettingHurt_sound.play();
                 }
                 this.playAnimation(this.imageCollection.IMAGES_TAKING_HIT);
-            } else if (this.spellCooldownQ && this.isAirborne()) {
+            } else if (this.spellCooldownQ && this.y < 205) {
                 // Q-Attack in Air
                 if (this.animationStatus != 'Q-ATTACK') {
                     this.currentImage = 0;
                     this.animationStatus = 'Q-ATTACK';
                 }
                 this.playAnimation(this.imageCollection.IMAGES_ATTACK_Q_AIR);
-            } else if (!this.isTakingHit && this.isAirborne() && this.speedY > 0) {
+            } else if (!this.isTakingHit && this.y < 205 && this.speedY > 0) {
                 // Jumping up
                 this.playAnimation(this.imageCollection.IMAGES_JUMPING_UP);
                 this.animationStatus = 'AIRBORNE';
-            } else if (!this.isTakingHit && this.isAirborne() && this.speedY <= 0) {
+            } else if (!this.isTakingHit && this.y < 205 && this.speedY <= 0) {
                 // Falling Down
                 this.playAnimation(this.imageCollection.IMAGES_JUMPING_DOWN);
                 this.animationStatus = 'AIRBORNE';
@@ -186,18 +183,18 @@ class CharacterEarth extends Character {
                     this.animationStatus = 'HIT';
                 }
                 this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.takingHit);
-            } else if (this.spellCooldownQ && this.isAirborne()) {
+            } else if (this.spellCooldownQ && this.y < 205) {
                 // Q-Attack in Air
                 if (this.animationStatus != 'Q-ATTACK') {
                     this.currentImage = 0;
                     this.animationStatus = 'Q-ATTACK';
                 }
                 this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.abilities.qAttackAir);
-            } else if (!this.isTakingHit && this.isAirborne() && this.speedY > 0) {
+            } else if (!this.isTakingHit && this.y < 205 && this.speedY > 0) {
                 // Jumping up
                 this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.jumpUp);
                 this.animationStatus = 'AIRBORNE';
-            } else if (!this.isTakingHit && this.isAirborne() && this.speedY <= 0) {
+            } else if (!this.isTakingHit && this.y < 205 && this.speedY <= 0) {
                 // Falling Down
                 this.playAnimation(allImages.characters[`${this.choosenChar}`].evolvedForm.movements.jumpDown);
                 this.animationStatus = 'AIRBORNE';

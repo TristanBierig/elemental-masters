@@ -197,8 +197,8 @@ class Character extends MovableObject {
             this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
                 this.y + this.offset.top,
                 this.movementStatus,
-                'E',
-                this.activeSpells.length, element));
+                 'E',
+                  this.activeSpells.length, element));
             this.spellCooldownE = true;
             world.statusBar[1].percentage -= 10;
             setTimeout(() => {

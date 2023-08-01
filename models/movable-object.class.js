@@ -26,10 +26,10 @@ class MovableObject extends DrawableObject {
      * 
      * @param {boolean} spellCasted -This param is always true and only given from a throwableObject
      */
-    applyGravitiy(spellCasted) {
+    applyGravitiy(spellCasted, element) {
         // Applys Gravitiy just for character
         if (!spellCasted) {
-        this.gravityForCharacter();
+        this.gravityForCharacter(element);
         } else{
         // Lets projectiles fall underneath ground level
         this.gravityForSpells();
@@ -37,14 +37,17 @@ class MovableObject extends DrawableObject {
     }
 
 
-    gravityForCharacter() {
+    gravityForCharacter(element) {
             setInterval(() => {
-                if (this.isAirborne() || this.speedY > 0) {
+                if (this.y < 205 || this.speedY > 0) {
                     this.y -= this.speedY;
                     this.speedY -= this.accelertion;
                     // Prevents Character from falling to low underneath ground level
-                    if (this.y > 205) {
+                    if (this.y > 205 && element == 'Earth') {
                         this.y = 205
+                    }
+                    if (this.y > 192 && element != 'Earth') {
+                        this.y = 192
                     }
                     // Throttles Speed at a point where collision with enemy is still triggered (no infinite acceleration on falling)
                     if (this.speedY < - 17) {
@@ -64,7 +67,7 @@ class MovableObject extends DrawableObject {
 
 
     isAirborne() {
-        return this.y < 205;
+        return this.y < 192;
     }
 
     isColliding(mo) {

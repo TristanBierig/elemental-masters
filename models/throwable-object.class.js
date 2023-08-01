@@ -8,12 +8,17 @@ class ThrowableObject extends MovableObject {
     IMAGES_E_FLY;
     IMAGES_E_HIT;
 
+    finishCounterW;
+    finishCounterE;
+
 
     constructor(x, y, status, category, index, element) {
         // Empty png on first load
         super().loadImage('img/Enemies/Slime/BlueSlime/death/death_8.png');
         switch (element) {
             case 'Earth':
+                this.finishCounterW = 20;
+                this.finishCounterE = 9;
                 this.IMAGES_W = allImages.characters.Earth.normalForm.abilities.wAttack;
                 this.IMAGES_E_FLY = allImages.characters.Earth.normalForm.abilities.eAttackFlying;
                 this.IMAGES_E_HIT = allImages.characters.Earth.normalForm.abilities.eAttackHit;
@@ -58,7 +63,7 @@ class ThrowableObject extends MovableObject {
         this.category = category;
         this.animationStatus = 'FLY';
 
-        if (category == 'E' && element == 'Earth') {
+        if (category == 'E') {
             this.movementStatus = status;
             this.x -= 56;
             this.speed = 8; // 8 default
@@ -66,31 +71,118 @@ class ThrowableObject extends MovableObject {
             this.accelertion = 1; // 1 default
             this.applyGravitiy(true);
             this.animateE();
-            if (this.movementStatus == 'RIGHT' || undefined) {
-                this.offset = {
-                    top: 30,
-                    bottom: 62,
-                    left: 12,
-                    right: 68
-                };
-            } else {
-                this.offset = {
-                    top: 30,
-                    bottom: 62,
-                    left: 55,
-                    right: 68
-                };
+            switch (element) {
+                case 'Earth':
+                    if (this.movementStatus == 'RIGHT' || undefined) {
+                        this.offset = {
+                            top: 30,
+                            bottom: 62,
+                            left: 12,
+                            right: 68
+                        };
+                    } else {
+                        this.offset = {
+                            top: 30,
+                            bottom: 62,
+                            left: 55,
+                            right: 68
+                        };
+                    }
+                    break;
+
+                case 'Fire':
+                    if (this.movementStatus == 'RIGHT' || undefined) {
+                        this.offset = {
+                            top: 30,
+                            bottom: 62,
+                            left: 12,
+                            right: 68
+                        };
+                    } else {
+                        this.offset = {
+                            top: 30,
+                            bottom: 62,
+                            left: 55,
+                            right: 68
+                        };
+                    }
+                    break;
+
+                case 'Water':
+                    if (this.movementStatus == 'RIGHT' || undefined) {
+                        this.offset = {
+                            top: 30,
+                            bottom: 62,
+                            left: 12,
+                            right: 68
+                        };
+                    } else {
+                        this.offset = {
+                            top: 30,
+                            bottom: 62,
+                            left: 55,
+                            right: 68
+                        };
+                    }
+                    break;
+
+                case 'Wind':
+                    if (this.movementStatus == 'RIGHT' || undefined) {
+                        this.offset = {
+                            top: 30,
+                            bottom: 62,
+                            left: 12,
+                            right: 68
+                        };
+                    } else {
+                        this.offset = {
+                            top: 30,
+                            bottom: 62,
+                            left: 55,
+                            right: 68
+                        };
+                    }
+                    break;
             }
+
         }
 
         if (category == 'W') {
             this.y += 2;
-            this.offset = {
-                top: 30,
-                bottom: 30,
-                left: 12,
-                right: 40
-            };
+            switch (element) {
+                case 'Earth':
+                    this.offset = {
+                        top: 30,
+                        bottom: 30,
+                        left: 12,
+                        right: 40
+                    };
+                    break;
+                case 'Fire':
+                    this.offset = {
+                        top: 30,
+                        bottom: 30,
+                        left: 12,
+                        right: 40
+                    };
+                    break;
+                case 'Water':
+                    this.offset = {
+                        top: 30,
+                        bottom: 30,
+                        left: 12,
+                        right: 40
+                    };
+                    break;
+                case 'Wind':
+                    this.offset = {
+                        top: 30,
+                        bottom: 30,
+                        left: 12,
+                        right: 40
+                    };
+                    break;
+            }
             this.animateW();
             this.movementStatus = status;
             if (this.movementStatus == 'LEFT') {
@@ -105,7 +197,6 @@ class ThrowableObject extends MovableObject {
             if (this.movementStatus == 'RIGHT' || this.movementStatus == undefined) {
                 this.moveRight();
             }
-
             if (this.movementStatus == 'LEFT') {
                 this.moveLeft();
             }
@@ -122,7 +213,7 @@ class ThrowableObject extends MovableObject {
                     }, 1200);
                 }
                 this.playAnimation(this.IMAGES_E_HIT);
-                if (this.currentImage == 9) {
+                if (this.currentImage == this.finishCounterE) {
                     this.stopInterval(this.animationInterval);
                 }
             } else {
@@ -146,7 +237,7 @@ class ThrowableObject extends MovableObject {
             }
             this.playAnimation(this.IMAGES_W);
 
-            if (this.currentImage >= 20) {
+            if (this.currentImage >= this.finishCounterW) {
                 this.stopInterval(this.animationInterval);
                 world.character.activeSpells.splice(this.index, 1);
             }
