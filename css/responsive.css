@@ -1,0 +1,38 @@
+@media only screen and (max-height: 850px) {
+    #gameTitle {
+        display: none;
+    }
+
+    
+}
+
+@media only screen and (max-width: 720px) {
+    #gameTitle {
+        display: none;
+    }
+
+    .canvas-container,
+    .end-screen,
+    .start-screen,
+    canvas {
+        width: 100% !important;
+    }
+
+    .canvas-container {
+        border: none !important;
+    }
+}
+
+
+@media only screen and (max-height: 480px) {
+    #gameTitle {
+        display: none;
+    }
+
+    .canvas-container,
+    .end-screen,
+    .start-screen,
+    canvas {
+        height: 100vh !important;
+    }
+}
