@@ -75,8 +75,8 @@ class CharacterEarth extends Character {
         this.speed = 2.5;
         // Normal hitbox
         this.offset = this.hitboxes.normalForm.idle;
-        this.updateCharacter();
         this.applyGravitiy(undefined, 'Earth');
+        this.updateCharacter();
         this.animateCharacterNormal();
         this.gameOver();
     }
