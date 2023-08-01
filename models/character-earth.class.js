@@ -53,8 +53,8 @@ class CharacterEarth extends Character {
             this.characterMove();
             this.characterJump();
             this.characterAttackQ();
-            this.characterAttackW();
-            this.characterAttackE();
+            this.characterAttackW('Earth');
+            this.characterAttackE('Earth');
             this.characterTransform();
             this.moveCamera();
         }, 1000 / 60);
@@ -98,7 +98,7 @@ class CharacterEarth extends Character {
                 if (this.animationStatus != 'TRANSFORM') {
                     this.currentImage = 0;
                     this.animationStatus = 'TRANSFORM';
-                    this.transformAudio.play();
+                    this.transform_sound.play();
                 }
                 this.playAnimation(this.imageCollection.IMAGES_TRANSFORM);
                 if (this.currentImage == this.imageCollection.IMAGES_TRANSFORM.length) {
@@ -111,7 +111,7 @@ class CharacterEarth extends Character {
                 if (this.animationStatus != 'HIT') {
                     this.currentImage = 0;
                     this.animationStatus = 'HIT';
-                    this.gettingHurtAudio.play();
+                    this.gettingHurt_sound.play();
                 }
                 this.playAnimation(this.imageCollection.IMAGES_TAKING_HIT);
             } else if (this.spellCooldownQ && this.isAirborne()) {

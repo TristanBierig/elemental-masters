@@ -14,9 +14,9 @@ class Character extends MovableObject {
     walking_sound = playerSoundsRun;
     airborne_sound = playerSoundsFlying;
     punch_sound = playerSoundsPunch;
-    gettingHurtAudio = playerSoundsHurt;
-    transformAudio = playerSoundsTransform;
-    GameOverAudio = playerSoundsGameOver;
+    gettingHurt_sound = playerSoundsHurt;
+    transform_sound = playerSoundsTransform;
+    gameOver_sound = playerSoundsGameOver;
 
     playRun = false;
     playAir = false;
@@ -164,7 +164,7 @@ class Character extends MovableObject {
     }
 
 
-    characterAttackW() {
+    characterAttackW(element) {
         // Cast W-Spell only when having mana and the cooldown is up
         if (world && world.keyboard.W == true && !this.spellCooldownW && !this.isAirborne() && world.statusBar[1].percentage >= 10 && !this.isTransforming) {
             world.rockShatterAudio.play();
@@ -173,13 +173,13 @@ class Character extends MovableObject {
                     this.y + this.offset.top,
                     this.movementStatus,
                     'W',
-                    this.activeSpells.length));
+                    this.activeSpells.length, element));
             } else {
                 this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
                     this.y + this.offset.top + 52,
                     this.movementStatus,
                     'W',
-                    this.activeSpells.length));
+                    this.activeSpells.length, element));
             }
 
             this.spellCooldownW = true;
@@ -191,12 +191,14 @@ class Character extends MovableObject {
     }
 
 
-    characterAttackE() {
+    characterAttackE(element) {
         // Casts E-Spell only when having mana and the cooldown is up
         if (world && world.keyboard.E == true && !this.spellCooldownE && world.statusBar[1].percentage >= 10 && !this.isTransforming) {
             this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
                 this.y + this.offset.top,
-                this.movementStatus, 'E', this.activeSpells.length));
+                this.movementStatus,
+                'E',
+                this.activeSpells.length, element));
             this.spellCooldownE = true;
             world.statusBar[1].percentage -= 10;
             setTimeout(() => {

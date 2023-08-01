@@ -33,7 +33,7 @@ class World {
         this.expandFloor();
         switch (choosenChar) {
             case 'Earth':
-            this.character = new CharacterEarth();
+                this.character = new CharacterEarth();
                 break;
             case 'Fire':
                 this.character = new CharacterFire();
@@ -47,7 +47,7 @@ class World {
         }
         this.draw();
         // this.spawnNewEnemies();
-        this.killEnemy();
+        this.checkKillEnemy();
     }
 
 
@@ -57,7 +57,7 @@ class World {
                 this.checkJumpOnEnemy(enemy, index);
                 this.checkMeleeAttack(enemy, index);
                 this.checkSpellAttack(enemy, index);
-                // this.killEnemyOutOfSight(enemy, index);
+                // this.checkKillEnemyOutOfSight(enemy, index);
                 this.checkGettingHit(enemy);
                 this.collectLoot();
 
@@ -265,8 +265,9 @@ class World {
 
 
     checkJumpOnEnemy(enemy, index) {
+        // Cant damage Endboss with jump
         if (enemy instanceof Slime || !enemy.isTransformed) {
-            if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne()) {
+            if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne() && !this.character.spellCooldownQ) {
                 this.character.jump();
                 this.slimeKillAudio.play();
                 this.damageEnemy(enemy, index, 100);
@@ -299,6 +300,22 @@ class World {
     }
 
 
+    checkGettingHit(enemy) {
+        if (this.character.isColliding(enemy) && !this.character.spellCooldownQ && (this.character.speedY <= 0 || this.character.isAirborne())) {
+            enemy.isHitting = true;
+            this.character.isTakingHit = true;
+            this.character.gettingHit();
+            this.statusBar[0].percentage = this.character.lifePoints;
+        }
+
+        // Stops hit animation from char when he is not being hit anymore
+        if (!this.character.isColliding(enemy) && enemy.isHitting) {
+            enemy.isHitting = false;
+            this.character.isTakingHit = false;
+        }
+    }
+
+
     damageEnemy(enemy, spell, damage) {
         if (enemy instanceof Slime || !enemy.isTransformed) {
             enemy.lifePoints -= damage;
@@ -320,9 +337,10 @@ class World {
             setTimeout(() => {
                 this.dropLoot(enemy);
                 enemy.isKilled = true;
-            }, 1200); // 1200
+            }, 1200); // 1200 default
             enemy.offset.top = -500;
         }
+        // Shrinks hitbox to prevent enemy interaction while death animation is playing
         // Handles Endboss Kill
         if (enemy.lifePoints <= 0 && enemy.isTransformed) {
             playerSoundsEndbossDeath.play();
@@ -331,13 +349,13 @@ class World {
                 playerSoundsVictory.play();
                 GameOver(true);
                 world.character.isGameOver = true;
-            }, 4000); // 4000
+            }, 4000); // 4000 default
             enemy.offset.top = -500;
         }
     }
 
 
-    killEnemy() {
+    checkKillEnemy() {
         setInterval(() => {
             for (let i = world.level.enemies.length - 1; i >= 0; i--) {
                 const enemy = world.level.enemies[i];
@@ -411,20 +429,7 @@ class World {
     }
 
 
-    checkGettingHit(enemy) {
-        if (this.character.isColliding(enemy) && !this.character.spellCooldownQ) {
-            enemy.isHitting = true;
-            this.character.isTakingHit = true;
-            this.character.gettingHit();
-            this.statusBar[0].percentage = this.character.lifePoints;
-        }
 
-        // Stops hit animation from char when he is not being hit anymore
-        if (!this.character.isColliding(enemy) && enemy.isHitting) {
-            enemy.isHitting = false;
-            this.character.isTakingHit = false;
-        }
-    }
 
 
     /**
@@ -433,7 +438,7 @@ class World {
      * 
      * @param {object} enemy 
      */
-    killEnemyOutOfSight(enemy) {
+    checkKillEnemyOutOfSight(enemy) {
         if ((this.character.x - 720) > enemy.x && enemy.x < this.character.x) {
             enemy.isKilled = true;
         }
