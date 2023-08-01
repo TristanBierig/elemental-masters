@@ -280,3 +280,53 @@ canvas {
 .explain p:first-child {
     font-size: 20px;
 }
+
+
+/* ===== Animations ===== */
+
+.fadeIn {
+    animation-name: fadeIn;
+    animation-fill-mode: forwards;
+    animation-duration: 800ms;
+}
+
+.fadeOut {
+    animation: fadeOut;
+    animation-fill-mode: forwards;
+    animation-duration: 800ms;
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 50%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
+
+@keyframes fadeOut {
+    0% {
+
+        opacity: 100%;
+    }
+
+    50% {
+        opacity: 50%;
+    }
+
+    99% {
+        opacity: 1%;
+    }
+
+    100% {
+        opacity: 0%;
+    }
+}

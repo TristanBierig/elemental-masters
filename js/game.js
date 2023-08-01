@@ -118,6 +118,31 @@ function exitFullscreen() {
 }
 
 
+function nextSlide() {
+    howTo.classList.add('fadeOut');
+    setTimeout(() => {
+        nextBtnMobile.classList.add('d-none');
+        charSelection.classList.remove('fadeOut');
+        prevBtnMobile.classList.remove('fadeOut');
+        charSelection.style = 'display: flex';
+        prevBtnMobile.style = 'display: flex';
+        charSelection.classList.add('fadeIn');
+        prevBtnMobile.classList.add('fadeIn');
+    }, 750);
+}
+
+
+function prevSlide() {
+    charSelection.classList.add('fadeOut');
+    prevBtnMobile.classList.add('fadeOut');
+    setTimeout(() => {
+        prevBtnMobile.style = 'display: none';
+        nextBtnMobile.classList.remove('d-none');
+        howTo.classList.remove('fadeOut');
+        howTo.classList.add('fadeIn');
+    }, 750);
+}
+
 
 /* ========== EventListener ========== */
 window.addEventListener("keydown", (e) => {
@@ -233,4 +258,3 @@ document.getElementById('btnSpace').addEventListener('touchend', (e) => {
     e.preventDefault();
     keyboard.SPACE = false;
 })
-

@@ -75,7 +75,7 @@
     </section>
 
     <div id="startScreen" class="start-screen">
-        <section class="how-to-play">
+        <section id="howTo" class="how-to-play">
             <div class="commands">
                 <p>How to play</p>
                 <div><span> <- </span>Move left</div>
@@ -95,9 +95,16 @@
                     Collect Stars to transform and unleash the true power <br> of the Elements!
                 </p>
             </div>
+            <button id="nextBtnMobile" onclick="nextSlide()" class="start-btn">
+                Next
+            </button>
         </section>
 
-        <section class="character-selection-container">
+        <button id="prevBtnMobile" onclick="prevSlide()" class="start-btn">
+            Back
+        </button>
+
+        <section id="charSelection" class="character-selection-container">
             <span class="sub-header-selection">Choose your Character!</span>
             <div class="selection-wrapper">
                 <div id="character1" onclick="chooseCharacter(1)" class="highlight1">

@@ -1,3 +1,17 @@
+#nextBtnMobile {
+    display: none;
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+}
+
+#prevBtnMobile {
+    display: none;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+}
+
 @media only screen and (max-height: 850px) {
     #gameTitle {
         display: none;
@@ -11,6 +25,10 @@
         display: none;
     }
 
+    #nextBtnMobile {
+        display: block;
+    }
+
     .canvas-container,
     .end-screen,
     .start-screen,
@@ -21,6 +39,10 @@
     .canvas-container {
         border: none !important;
     }
+
+    #charSelection {
+        display: none;
+    }
 }
 
 
@@ -29,13 +51,17 @@
         display: none;
     }
 
-    #movementPanel {
+    #nextBtnMobile {
+        display: block;
+    }
+
+    /* #movementPanel {
         display: flex !important;
     }
 
     #abilityPanel {
         display: flex !important;
-    }
+    } */
 
     .canvas-container,
     .end-screen,
