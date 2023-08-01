@@ -31,10 +31,23 @@ class World {
         this.updateGame();
         this.spawnClouds();
         this.expandFloor();
-        this.character = new Character(choosenChar);
+        switch (choosenChar) {
+            case 'Earth':
+                this.character = new CharacterEarth();
+                break;
+            case 'Fire':
+                this.character = new CharacterFire();
+                break;
+            case 'Water':
+                this.character = new CharacterWater();
+                break;
+            case 'Wind':
+                this.character = new CharacterWind();
+                break;
+        }
         this.draw();
-        this.spawnNewEnemies();
-        this.killEnemy();
+        // this.spawnNewEnemies();
+        this.checkKillEnemy();
     }
 
 
@@ -44,7 +57,7 @@ class World {
                 this.checkJumpOnEnemy(enemy, index);
                 this.checkMeleeAttack(enemy, index);
                 this.checkSpellAttack(enemy, index);
-                this.killEnemyOutOfSight(enemy, index);
+                // this.checkKillEnemyOutOfSight(enemy, index);
                 this.checkGettingHit(enemy);
                 this.collectLoot();
 
@@ -174,11 +187,10 @@ class World {
         if (mo.otherDirection) {
             this.flipImage(mo);
         }
-        mo.draw(this.ctx);
-        if (mo.drawHitbox(this.ctx)) {
 
-        }
+        mo.draw(this.ctx);
         mo.drawHitbox(this.ctx);
+
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
@@ -253,8 +265,9 @@ class World {
 
 
     checkJumpOnEnemy(enemy, index) {
+        // Cant damage Endboss with jump
         if (enemy instanceof Slime || !enemy.isTransformed) {
-            if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne()) {
+            if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne() && !this.character.spellCooldownQ) {
                 this.character.jump();
                 this.slimeKillAudio.play();
                 this.damageEnemy(enemy, index, 100);
@@ -264,9 +277,9 @@ class World {
 
 
     checkMeleeAttack(enemy, index) {
-        if (this.character.isColliding(enemy) && this.character.spellCooldownQ) {
+        if (this.character.isColliding(enemy) && this.character.spellCooldownQ && !this.character.isHitting) {
+            this.character.isHitting = true;
             this.damageEnemy(enemy, index, 50);
-
         }
     }
 
@@ -280,9 +293,25 @@ class World {
                     setTimeout(() => {
                         spell.isKilled = true;
                     }, 400);
-                    this.damageEnemy(enemy, spell, 50);
+                    this.damageEnemy(enemy, spell, 100);
                 }
             })
+        }
+    }
+
+
+    checkGettingHit(enemy) {
+        if (this.character.isColliding(enemy) && !this.character.spellCooldownQ && (this.character.speedY <= 0 || this.character.isAirborne())) {
+            enemy.isHitting = true;
+            this.character.isTakingHit = true;
+            this.character.gettingHit();
+            this.statusBar[0].percentage = this.character.lifePoints;
+        }
+
+        // Stops hit animation from char when he is not being hit anymore
+        if (!this.character.isColliding(enemy) && enemy.isHitting) {
+            enemy.isHitting = false;
+            this.character.isTakingHit = false;
         }
     }
 
@@ -301,21 +330,17 @@ class World {
                 world.statusBar[3].percentage = 0;
             }
         }
-        this.character.offset = this.offset = {
-            top: 172,
-            bottom: 185,
-            left: 275,
-            right: 550
-        };
+
         if (enemy.lifePoints <= 0 && enemy instanceof Slime) {
             // Shrinks hitbox to prevent enemy interaction while death animation is playing
             // Handles normal enemy Kills
             setTimeout(() => {
                 this.dropLoot(enemy);
                 enemy.isKilled = true;
-            }, 1200); // 1200
+            }, 1200); // 1200 default
             enemy.offset.top = -500;
         }
+        // Shrinks hitbox to prevent enemy interaction while death animation is playing
         // Handles Endboss Kill
         if (enemy.lifePoints <= 0 && enemy.isTransformed) {
             playerSoundsEndbossDeath.play();
@@ -324,13 +349,13 @@ class World {
                 playerSoundsVictory.play();
                 GameOver(true);
                 world.character.isGameOver = true;
-            }, 4000); // 4000
+            }, 4000); // 4000 default
             enemy.offset.top = -500;
         }
     }
 
 
-    killEnemy() {
+    checkKillEnemy() {
         setInterval(() => {
             for (let i = world.level.enemies.length - 1; i >= 0; i--) {
                 const enemy = world.level.enemies[i];
@@ -404,20 +429,7 @@ class World {
     }
 
 
-    checkGettingHit(enemy) {
-        if (this.character.isColliding(enemy)) {
-            enemy.isHitting = true;
-            this.character.isTakingHit = true;
-            this.character.gettingHit();
-            this.statusBar[0].percentage = this.character.lifePoints;
-        }
 
-        // Stops hit animation from char when he is not being hit anymore
-        if (!this.character.isColliding(enemy) && enemy.isHitting) {
-            enemy.isHitting = false;
-            this.character.isTakingHit = false;
-        }
-    }
 
 
     /**
@@ -426,7 +438,7 @@ class World {
      * 
      * @param {object} enemy 
      */
-    killEnemyOutOfSight(enemy) {
+    checkKillEnemyOutOfSight(enemy) {
         if ((this.character.x - 720) > enemy.x && enemy.x < this.character.x) {
             enemy.isKilled = true;
         }

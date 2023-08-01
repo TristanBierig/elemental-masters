@@ -4,54 +4,193 @@ class ThrowableObject extends MovableObject {
     index;
     choosenChar = world.character.choosenChar;
 
+    IMAGES_W;
+    IMAGES_E_FLY;
+    IMAGES_E_HIT;
 
-    constructor(x, y, status, category, index) {
+    finishCounterW;
+    finishCounterE;
+
+
+    constructor(x, y, status, category, index, element) {
         // Empty png on first load
         super().loadImage('img/Enemies/Slime/BlueSlime/death/death_8.png');
-        this.loadImages(allImages.characters[`${this.choosenChar}`].normalForm.abilities.eAttackFlying);
-        this.loadImages(allImages.characters[`${this.choosenChar}`].normalForm.abilities.eAttackHit);
-        this.loadImages(allImages.characters[`${this.choosenChar}`].normalForm.abilities.wAttack);
-        this.width = 96;
-        this.height = 96;
-        this.x = x;
-        this.y = y - 20;
+        switch (element) {
+            case 'Earth':
+                this.IMAGES_W = allImages.characters.Earth.normalForm.abilities.wAttack;
+                this.IMAGES_E_FLY = allImages.characters.Earth.normalForm.abilities.eAttackFlying;
+                this.IMAGES_E_HIT = allImages.characters.Earth.normalForm.abilities.eAttackHit;
+                this.loadImages(this.IMAGES_W);
+                this.loadImages(this.IMAGES_E_FLY);
+                this.loadImages(this.IMAGES_E_HIT);
+                break;
+
+            case 'Fire':
+                this.IMAGES_W = allImages.characters.Fire.normalForm.abilities.wAttack;
+                this.IMAGES_E_FLY = allImages.characters.Fire.normalForm.abilities.eAttackFlying;
+                this.IMAGES_E_HIT = allImages.characters.Fire.normalForm.abilities.eAttackHit;
+                this.loadImages(this.IMAGES_W);
+                this.loadImages(this.IMAGES_E_FLY);
+                this.loadImages(this.IMAGES_E_HIT);
+                break;
+
+            case 'Water':
+                this.IMAGES_W = allImages.characters.Water.normalForm.abilities.wAttack;
+                this.IMAGES_E_FLY = allImages.characters.Water.normalForm.abilities.eAttackFlying;
+                this.IMAGES_E_HIT = allImages.characters.Water.normalForm.abilities.eAttackHit;
+                this.loadImages(this.IMAGES_W);
+                this.loadImages(this.IMAGES_E_FLY);
+                this.loadImages(this.IMAGES_E_HIT);
+                break;
+
+            case 'Wind':
+                this.IMAGES_W = allImages.characters.Wind.normalForm.abilities.wAttack;
+                this.IMAGES_E_FLY = allImages.characters.Wind.normalForm.abilities.eAttackFlying;
+                this.IMAGES_E_HIT = allImages.characters.Wind.normalForm.abilities.eAttackHit;
+                this.loadImages(this.IMAGES_W);
+                this.loadImages(this.IMAGES_E_FLY);
+                this.loadImages(this.IMAGES_E_HIT);
+                break;
+        }
         this.index = index;
         this.category = category;
         this.animationStatus = 'FLY';
+        this.movementStatus = status;
 
+        // Handles E Spell
         if (category == 'E') {
-            this.movementStatus = status;
             this.x -= 56;
-            this.animateE();
-            this.speed = 8; // 4 default
+            this.speed = 8; // 8 default
             this.speedY = 15; // 15 default
             this.accelertion = 1; // 1 default
             this.applyGravitiy(true);
-            if (!this.otherDirection) {
-                this.offset = {
-                    top: 30,
-                    bottom: 62,
-                    left: 12,
-                    right: 68
-                };
-            } else {
-                this.offset = {
-                    top: 30,
-                    bottom: 62,
-                    left: 68,
-                    right: 12
-                };
+            this.animateE();
+            switch (element) {
+                case 'Earth':
+                    this.width = 96;
+                    this.height = 96;
+                    this.x = x;
+                    this.y = y - 20;
+                    if (this.movementStatus == 'RIGHT' || undefined) {
+                        this.offset = {
+                            top: 30,
+                            bottom: 62,
+                            left: 12,
+                            right: 68
+                        };
+                    } else {
+                        this.offset = {
+                            top: 30,
+                            bottom: 62,
+                            left: 55,
+                            right: 68
+                        };
+                    }
+                    break;
+
+                case 'Fire':
+                    this.width = 96;
+                    this.height = 96;
+                    this.x = x - 50;
+                    this.y = y - 20;
+                    this.offset = {
+                        top: 38,
+                        bottom: 78,
+                        left: 40,
+                        right: 70
+                    };
+                    break;
+
+                case 'Water':
+                    this.width = 96;
+                    this.height = 96;
+                    this.x = x;
+                    this.y = y - 20;
+                    this.offset = {
+                        top: 30,
+                        bottom: 62,
+                        left: 12,
+                        right: 24
+                    };
+                    break;
+
+                case 'Wind':
+                    this.width = 96;
+                    this.height = 96;
+                    this.x = x;
+                    this.y = y - 20;
+                    this.offset = {
+                        top: 12,
+                        bottom: 28,
+                        left: 24,
+                        right: 48
+                    };
+                    break;
             }
+
         }
 
+        // Handles W Spell
         if (category == 'W') {
             this.y += 2;
-            this.offset = {
-                top: 30,
-                bottom: 30,
-                left: 12,
-                right: 40
-            };
+            switch (element) {
+                case 'Earth':
+                    this.width = 96;
+                    this.height = 96;
+                    this.x = x;
+                    this.y = y - 20;
+                    this.offset = {
+                        top: 30,
+                        bottom: 30,
+                        left: 12,
+                        right: 40
+                    };
+                    break;
+                case 'Fire':
+                    this.width = 160;
+                    this.height = 160;
+                    if (this.movementStatus == 'RIGHT' || undefined) {
+                        this.x = x;
+                    } else {
+                        this.x = x - 100;
+                    }
+                    this.y = y - 30;
+                    this.offset = {
+                        top: 30,
+                        bottom: 30,
+                        left: 12,
+                        right: 40
+                    };
+                    break;
+                case 'Water':
+                    this.width = 96;
+                    this.height = 240;
+                    this.x = x;
+                    this.y = y - 135;
+                    this.offset = {
+                        top: 30,
+                        bottom: 30,
+                        left: 12,
+                        right: 40
+                    };
+                    break;
+                case 'Wind':
+                    this.width = 200;
+                    this.height = 100;
+                    if (this.movementStatus == 'RIGHT' || undefined) {
+                        this.x = x;
+                    } else {
+                        this.x = x - 100;
+                    }
+                    this.y = y - 20;
+                    this.offset = {
+                        top: 30,
+                        bottom: 30,
+                        left: 12,
+                        right: 40
+                    };
+                    break;
+            }
             this.animateW();
             this.movementStatus = status;
             if (this.movementStatus == 'LEFT') {
@@ -66,7 +205,6 @@ class ThrowableObject extends MovableObject {
             if (this.movementStatus == 'RIGHT' || this.movementStatus == undefined) {
                 this.moveRight();
             }
-
             if (this.movementStatus == 'LEFT') {
                 this.moveLeft();
             }
@@ -82,14 +220,14 @@ class ThrowableObject extends MovableObject {
                         this.stopInterval(this.movementInterval);
                     }, 1200);
                 }
-                this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.abilities.eAttackHit);
-                if (this.currentImage == 9) {
+                this.playAnimation(this.IMAGES_E_HIT);
+                if (this.currentImage >= this.IMAGES_E_HIT.length) {
                     this.stopInterval(this.animationInterval);
                 }
             } else {
-                this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.abilities.eAttackFlying);
+                this.playAnimation(this.IMAGES_E_FLY);
             }
-        }, 1000 / 25);
+        }, 1000 / 10);
     }
 
 
@@ -105,9 +243,9 @@ class ThrowableObject extends MovableObject {
                 this.currentImage = 0;
                 this.animationStatus = 'ONCE';
             }
-            this.playAnimation(allImages.characters[`${this.choosenChar}`].normalForm.abilities.wAttack);
+            this.playAnimation(this.IMAGES_W);
 
-            if (this.currentImage >= 20) {
+            if (this.currentImage >= this.IMAGES_W.length) {
                 this.stopInterval(this.animationInterval);
                 world.character.activeSpells.splice(this.index, 1);
             }
