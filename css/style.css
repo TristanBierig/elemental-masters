@@ -47,7 +47,8 @@ canvas {
 
 /* ===== Start Screen general ===== */
 .h1-wrapper {
-    margin-top: 60px;
+    position: absolute;
+    top: 100px;
     padding: 16px;
     background-image: linear-gradient(180deg,
             var(--earth-color),
