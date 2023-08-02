@@ -2,6 +2,7 @@ class Slime extends MovableObject {
     isHitting = false;
     category;
     movingInterval;
+    lifeBar;
 
     IMAGES_WALKING = allImages.enemies.slimes.normalSlime.move;
     IMAGES_DEAD = allImages.enemies.slimes.normalSlime.death;
@@ -51,6 +52,7 @@ class Slime extends MovableObject {
             this.speed = 0.25
             this.y = 388;
         }
+        this.lifeBar = new StatusBar(this.x, this.width, false, true, this.y, this.speed);
         this.animate();
     }
 
@@ -58,6 +60,7 @@ class Slime extends MovableObject {
     animate() {
         this.movementInterval = setInterval(() => {
             this.moveLeft();
+            this.lifeBar.x = this.x;
         }, 1000 / 60);
 
         if (this.category == 'normal') {

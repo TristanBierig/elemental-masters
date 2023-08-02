@@ -1,14 +1,14 @@
-class StatusBar extends DrawableObject {
+class StatusBar extends MovableObject {
     percentage = 100;
     statusbarFrame;
     StatusbarIcon;
     bossBar;
+    slimeBar;
 
     ICONS = allImages.ingameUI.icons.healthPot;
     IMAGES_BAR = allImages.ingameUI.statusbar.health;
 
-    constructor(x, width, bossBar) {
-
+    constructor(x, width, bossBar, slimeBar, y, speed) {
         super().loadImage(this.IMAGES_BAR[0]);
         this.loadImages(this.IMAGES_BAR);
         this.x = 20;
@@ -16,12 +16,22 @@ class StatusBar extends DrawableObject {
         this.height = 32;
         this.width = 200;
         this.bossBar = bossBar
-        if (x && width && this.bossBar) {
+        this.slimeBar = slimeBar;
+        if (this.bossBar) {
             this.x = x;
             this.width = width;
             this.otherDirection = true;
             this.percentage = 2000;
         }
+
+        if (this.slimeBar) {
+            this.speed = speed;
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            
+        }
+
         this.statusbarFrame = new StatusbarFrame(this.x, this.y, this.height, this.width, 'img/UI/ingame_bars/frames/frame_grey.png');
         this.statusbarIcon = new StatusbarIcon(0, this.y, 'LIFE');
 
