@@ -46,7 +46,7 @@ class World {
                 break;
         }
         this.draw();
-        // this.spawnNewEnemies();
+        this.spawnNewEnemies();
         this.checkKillEnemy();
     }
 
@@ -57,7 +57,7 @@ class World {
                 this.checkJumpOnEnemy(enemy, index);
                 this.checkMeleeAttack(enemy, index);
                 this.checkSpellAttack(enemy, index);
-                // this.checkKillEnemyOutOfSight(enemy, index);
+                this.checkKillEnemyOutOfSight(enemy, index);
                 this.checkGettingHit(enemy);
                 this.collectLoot();
 
@@ -189,7 +189,7 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawHitbox(this.ctx);
+        // mo.drawHitbox(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
@@ -427,9 +427,6 @@ class World {
             })
         }
     }
-
-
-
 
 
     /**

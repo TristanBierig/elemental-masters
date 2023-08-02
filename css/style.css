@@ -140,6 +140,7 @@ canvas {
 .ability-wrapper img,
 .movement-wrapper img {
     height: 40px;
+    cursor: pointer;
 }
 
 

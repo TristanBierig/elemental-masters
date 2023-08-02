@@ -16,8 +16,6 @@
     #gameTitle {
         display: none;
     }
-
-
 }
 
 @media only screen and (max-width: 720px) {
@@ -45,7 +43,6 @@
     }
 }
 
-
 @media only screen and (max-height: 480px) {
     #gameTitle {
         display: none;
@@ -55,13 +52,13 @@
         display: block;
     }
 
-    /* #movementPanel {
+    #movementPanel {
         display: flex !important;
     }
 
     #abilityPanel {
         display: flex !important;
-    } */
+    }
 
     .canvas-container,
     .end-screen,
