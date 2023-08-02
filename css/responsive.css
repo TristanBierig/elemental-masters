@@ -87,18 +87,26 @@
         display: block;
     }
 
-    /* #movementPanel {
-        display: flex !important;
-    }
-
-    #abilityPanel {
-        display: flex !important;
-    } */
-
     .canvas-container,
     .end-screen,
     .start-screen,
     canvas {
         height: 100vh !important;
+    }
+
+    #howToCommandsIngame {
+        font-size: 14px;
+        display: flex !important;
+        flex-wrap: wrap;
+    }
+
+    #enterFullscreen {
+        display: none;
+    }
+}
+
+@media only screen and (max-height: 320px) {
+    .how-to-play {
+        font-size: 14px;
     }
 }
