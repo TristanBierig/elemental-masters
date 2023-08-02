@@ -23,7 +23,7 @@ class CharacterFire extends Character {
         normalForm: {
             idle: {
                 top: 170,
-                bottom: 172,
+                bottom: 165,
                 left: 275,
                 right: 540
             },

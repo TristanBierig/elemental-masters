@@ -33,6 +33,10 @@ function chooseCharacter(character) {
 
 function startGame() {
     initLevel();
+    if (screen.height < 480) {
+        movementPanel.classList.remove('d-none');
+        abilityPanel.classList.remove('d-none');
+    }
     startScreen.classList.add('d-none');
     sidebar.classList.remove('d-none');
     playerBackgroundIdle.playpause();

@@ -23,7 +23,7 @@ class CharacterWind extends Character {
         normalForm: {
             idle: {
                 top: 180,
-                bottom: 182,
+                bottom: 175,
                 left: 270,
                 right: 540
             },

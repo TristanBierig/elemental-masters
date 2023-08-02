@@ -11,7 +11,7 @@ class Foreground extends MovableObject {
             this.y = 225;
             return
         }
-        this.x = Math.random() * 2160;
+        this.x = Math.random() * 6000;
         this.y = 265;
 
     }

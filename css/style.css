@@ -11,11 +11,14 @@
 }
 
 body {
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url('../img/wallpaperbetter.jpg');
+    background-image: url('../img/background.jpg');
     background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
 }
 
 .d-none {
@@ -31,7 +34,7 @@ h1 {
 .canvas-container {
     width: 720px;
     height: 480px;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -61,7 +64,7 @@ canvas {
 .start-screen {
     height: 500px;
     width: 750px;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -80,7 +83,7 @@ canvas {
     flex-direction: column;
     height: 500px;
     width: 750px;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

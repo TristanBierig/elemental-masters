@@ -23,7 +23,7 @@ class CharacterWater extends Character {
         normalForm: {
             idle: {
                 top: 180,
-                bottom: 182,
+                bottom: 175,
                 left: 275,
                 right: 540
             },

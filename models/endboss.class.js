@@ -32,7 +32,7 @@ class Endboss extends MovableObject {
         this.y = 130;
         this.width = 576; // 576 default
         this.height = 320; // 320 default
-        this.speed = 0.2; // 0.2 default
+        this.speed = 0.5; // 0.5 default
 
         // Defines the Hitbox in small Form
         this.offset = {

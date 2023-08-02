@@ -267,7 +267,7 @@ class World {
     checkJumpOnEnemy(enemy, index) {
         // Cant damage Endboss with jump
         if (enemy instanceof Slime || !enemy.isTransformed) {
-            if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.y < 205 && !this.character.spellCooldownQ) {
+            if (this.character.isColliding(enemy) && this.character.speedY < 0 && (this.character.isAirborne() || (this.character instanceof CharacterEarth && this.character.y < 205)) && !this.character.spellCooldownQ) {
                 this.character.jump();
                 this.slimeKillAudio.play();
                 this.damageEnemy(enemy, index, 100);
@@ -307,7 +307,6 @@ class World {
             this.character.gettingHit();
             this.statusBar[0].percentage = this.character.lifePoints;
         }
-
         // Stops hit animation from char when he is not being hit anymore
         if (!this.character.isColliding(enemy) && enemy.isHitting) {
             enemy.isHitting = false;

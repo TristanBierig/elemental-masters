@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/font.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/style.css">
-    
+
     <script src="models/drawable-objects.js"></script>
     <script src="models/movable-object.class.js"></script>
     <script src="models/throwable-object.class.js"></script>
@@ -37,7 +37,7 @@
     <script src="node_modules/@regosen/gapless-5/gapless5.js" language="JavaScript" type="text/javascript"></script>
     <script src="js/sound.js"></script>
     <script src="js/images.js"></script>
-    
+    <script defer src="js/game.js"></script>
 </head>
 
 <body onload="init()">
@@ -46,7 +46,7 @@
         <h1>Elemental Masters</h1>
     </div>
 
-    
+
     <section id="canvasContainer" class="canvas-container">
         <canvas id="canvas" width="720" height="480"></canvas>
 
@@ -131,10 +131,11 @@
 
     </div>
 
-    <div id="endScreen" class="end-screen d-none">
-        
-    </div>
-    <script defer src="js/game.js"></script>
+    <div id="endScreen" class="end-screen d-none"></div>
+
+    <section class="turnDevice">
+        <span>Please turn your phone to start playing!</span>
+    </section>
 </body>
 
 </html>

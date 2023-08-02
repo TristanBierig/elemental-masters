@@ -23,7 +23,7 @@ class CharacterEarth extends Character {
         normalForm: {
             idle: {
                 top: 172,
-                bottom: 180,
+                bottom: 175,
                 left: 275,
                 right: 550
             },
@@ -101,6 +101,7 @@ class CharacterEarth extends Character {
                 this.stopInterval(this.movementInterval);
                 this.stopInterval(this.animationIntervalNormal);
                 this.stopInterval(this.animationIntervalTransform);
+                
             }
         }, 1000);
     }
