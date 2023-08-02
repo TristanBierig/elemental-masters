@@ -162,9 +162,6 @@ function enterFullscreen(element) {
 
 
 function exitFullscreen() {
-    let enterBtn = document.getElementById('enterFullscreen');
-    let exitBtn = document.getElementById('exitFullscreen');
-
     if (document.exitFullscreen) {
         document.exitFullscreen();
     } else if (document.webkitExitFullscreen) {

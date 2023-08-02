@@ -66,7 +66,7 @@
     .end-screen,
     .start-screen,
     canvas {
-        width: 100% !important;
+        width: 100dvw !important;
     }
 
     .canvas-container {
@@ -91,7 +91,7 @@
     .end-screen,
     .start-screen,
     canvas {
-        height: 100vh !important;
+        height: 100dvh !important;
     }
 
     #howToCommandsIngame {
