@@ -151,9 +151,6 @@ function fullscreen(state) {
 
 
 function enterFullscreen(element) {
-    let enterBtn = document.getElementById('enterFullscreen');
-    let exitBtn = document.getElementById('exitFullscreen');
-
     if (element.requestFullscreen) {
         element.requestFullscreen();
     } else if (element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
@@ -161,8 +158,6 @@ function enterFullscreen(element) {
     } else if (element.webkitRequestFullscreen) {  // iOS Safari
         element.webkitRequestFullscreen();
     }
-    enterBtn.classList.add('d-none');
-    exitBtn.classList.remove('d-none');
 }
 
 
@@ -175,8 +170,6 @@ function exitFullscreen() {
     } else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
     }
-    exitBtn.classList.add('d-none');
-    enterBtn.classList.remove('d-none');
 }
 
 
@@ -225,6 +218,19 @@ function showLooseScreen() {
 
 
 /* ========== EventListener ========== */
+window.addEventListener('fullscreenchange', (e) => {
+    let enterBtn = document.getElementById('enterFullscreen');
+    let exitBtn = document.getElementById('exitFullscreen');
+
+    if (!document.fullscreenElement) {
+        exitBtn.classList.add('d-none');
+        enterBtn.classList.remove('d-none');
+    } else {
+        enterBtn.classList.add('d-none');
+        exitBtn.classList.remove('d-none');
+    }
+})
+
 window.addEventListener("keydown", (e) => {
     if (e.code == 'Escape') {
         keyboard.ESCAPE = true;

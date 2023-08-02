@@ -54,6 +54,7 @@ class MovableObject extends DrawableObject {
                         this.speedY = -17;
                     }
                 }
+                console.log(this.speedY);
             }, 1000 / 25);
         }
 

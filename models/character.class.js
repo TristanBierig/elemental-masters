@@ -87,13 +87,11 @@ class Character extends MovableObject {
                 if (!this.isTransformed) {
                     setTimeout(() => {
                         this.offset = this.hitboxes.normalForm.qRight;
-                        this.punch_sound.playpause();
                     }, 200);
                 } else {
                     // Handles Transformed punch hitbox
                     setTimeout(() => {
                         this.offset = this.hitboxes.evolvedForm.qRight;
-                        this.punch_sound.playpause();
                     }, 200);
                 }
             }
@@ -103,13 +101,13 @@ class Character extends MovableObject {
                 if (!this.isTransformed) {
                     setTimeout(() => {
                         this.offset = this.hitboxes.normalForm.qLeft;
-                        this.punch_sound.playpause();
+
                     }, 200);
                 } else {
                     // Handles Transformed punch hitbox
                     setTimeout(() => {
                         this.offset = this.hitboxes.evolvedForm.qLeft;
-                        this.punch_sound.playpause();
+
                     }, 200);
                 }
             }

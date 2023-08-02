@@ -23,7 +23,7 @@ class CharacterEarth extends Character {
         normalForm: {
             idle: {
                 top: 172,
-                bottom: 175,
+                bottom: 170,
                 left: 275,
                 right: 550
             },

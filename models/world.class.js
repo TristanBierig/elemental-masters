@@ -280,6 +280,7 @@ class World {
         if (this.character.isColliding(enemy) && this.character.spellCooldownQ && !this.character.isHitting) {
             this.character.isHitting = true;
             this.damageEnemy(enemy, index, 50);
+            this.character.punch_sound.playpause();
         }
     }
 
@@ -301,7 +302,7 @@ class World {
 
 
     checkGettingHit(enemy) {
-        if (this.character.isColliding(enemy) && !this.character.spellCooldownQ && (this.character.speedY <= 0 || this.character.isAirborne())) {
+        if (this.character.isColliding(enemy) && !this.character.spellCooldownQ) {
             enemy.isHitting = true;
             this.character.isTakingHit = true;
             this.character.gettingHit();
