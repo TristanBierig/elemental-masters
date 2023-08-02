@@ -269,6 +269,7 @@ canvas {
 
 .commands div {
     padding: 6px;
+    line-height: 1.5;
 }
 
 .commands span {
@@ -284,6 +285,18 @@ canvas {
 
 .explain p:first-child {
     font-size: 20px;
+}
+
+
+.ingame-commands {
+    display: block !important;
+    position: absolute;
+    right: 64px;
+    top: 64px;
+    background-color: antiquewhite;
+    border-radius: 20px;
+    padding: 8px;
+    z-index: 999;
 }
 
 

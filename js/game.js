@@ -2,6 +2,8 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let charSelected = 'Earth';
+let isMusicOn = true;
+let isSoundOn = true;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -63,26 +65,82 @@ function restartGame() {
 }
 
 
-function showVictoryScreen() {
-    endScreen.innerHTML = `
-    <p>VICTORY</p>
-        <span>You have defeated all enemy forces. Congratulations! </span>
-        <span onclick="restartGame()">Play again</span>
-    `;
+function toggleMusic() {
+    if (isMusicOn) {
+        muteMusic();
+    } else {
+        playMusic();
+    }
 }
 
 
-function showLooseScreen() {
-    endScreen.innerHTML = `
-    <p>GAME OVER</p>
-        <span>You have been defeated!</span>
-        <span onclick="restartGame()">Try again</span>
-    `;
+function toggleSound() {
+    if (isSoundOn) {
+        muteSound();
+    } else {
+        playSound();
+    }
 }
 
+
+function showTutorial() {
+    howToCommandsIngame.classList.toggle('ingame-commands');
+}
+
+
+function muteMusic() {
+    playerBackgroundIdle.volume = 0;
+    playerBackgroundBoss.volume = 0;
+    playerSoundsGameOverLoop.volume = 0;
+    playerSoundsVictory.volume = 0;
+    musicBtn.src = 'img/icons/no-music.png';
+    isMusicOn = false;
+}
+
+
+function playMusic() {
+    playerBackgroundIdle.volume = 0.05;
+    playerBackgroundBoss.volume = 0.05;
+    playerSoundsGameOverLoop.volume = 0.05;
+    playerSoundsVictory.volume = 0.05;
+    musicBtn.src = 'img/icons/music.png';
+    isMusicOn = true;
+}
+
+
+function muteSound() {
+    playerSoundsRun.volume = 0;
+    playerSoundsFlying.volume = 0;
+    playerSoundsHurt.volume = 0;
+    playerSoundsKillSlime.volume = 0;
+    playerSoundsCollectLoot.volume = 0;
+    playerSoundsEarthSpell.volume = 0;
+    playerSoundsPunch.volume = 0;
+    playerSoundsTransform.volume = 0;
+    playerSoundsGameOver.volume = 0;
+    playerSoundsEndbossDeath.volume = 0;
+    soundBtn.src = 'img/icons/mute.png';
+    isSoundOn = false;
+}
+
+
+function playSound() {
+    playerSoundsRun.volume = 0.5;
+    playerSoundsFlying.volume = 0.1;
+    playerSoundsHurt.volume = 0.4;
+    playerSoundsKillSlime.volume = 0.2;
+    playerSoundsCollectLoot.volume = 0.5;
+    playerSoundsEarthSpell.volume = 0.4;
+    playerSoundsPunch.volume = 0.4;
+    playerSoundsTransform.volume = 0.4;
+    playerSoundsGameOver.volume = 0.4;
+    playerSoundsEndbossDeath.volume = 0.3;
+    soundBtn.src = 'img/icons/volume.png';
+    isSoundOn = true;
+}
 
 function fullscreen(state) {
-    let fullscreen = document.getElementById('canvasContainer');
+    let fullscreen = document.getElementById('canvas');
     if (state == 'enter') {
         enterFullscreen(fullscreen);
     }
@@ -145,6 +203,24 @@ function prevSlide() {
         howTo.classList.remove('fadeOut');
         howTo.classList.add('fadeIn');
     }, 750);
+}
+
+
+function showVictoryScreen() {
+    endScreen.innerHTML = `
+    <p>VICTORY</p>
+        <span>You have defeated all enemy forces. Congratulations! </span>
+        <span onclick="restartGame()">Play again</span>
+    `;
+}
+
+
+function showLooseScreen() {
+    endScreen.innerHTML = `
+    <p>GAME OVER</p>
+        <span>You have been defeated!</span>
+        <span onclick="restartGame()">Try again</span>
+    `;
 }
 
 
