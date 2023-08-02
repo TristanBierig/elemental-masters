@@ -23,7 +23,7 @@ class CharacterEarth extends Character {
         normalForm: {
             idle: {
                 top: 172,
-                bottom: 185,
+                bottom: 180,
                 left: 275,
                 right: 550
             },
@@ -43,7 +43,7 @@ class CharacterEarth extends Character {
         evolvedForm: {
             idle: {
                 top: 120,
-                bottom: 132,
+                bottom: 128,
                 left: 265,
                 right: 520
             },

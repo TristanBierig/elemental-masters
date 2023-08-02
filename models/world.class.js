@@ -189,7 +189,7 @@ class World {
         }
 
         mo.draw(this.ctx);
-        // mo.drawHitbox(this.ctx);
+        mo.drawHitbox(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
@@ -267,7 +267,7 @@ class World {
     checkJumpOnEnemy(enemy, index) {
         // Cant damage Endboss with jump
         if (enemy instanceof Slime || !enemy.isTransformed) {
-            if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAirborne() && !this.character.spellCooldownQ) {
+            if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.y < 205 && !this.character.spellCooldownQ) {
                 this.character.jump();
                 this.slimeKillAudio.play();
                 this.damageEnemy(enemy, index, 100);
