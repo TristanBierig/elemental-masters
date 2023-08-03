@@ -212,6 +212,7 @@ class CharacterFire extends Character {
                 if (this.animationStatus != 'HIT') {
                     this.currentImage = 0;
                     this.animationStatus = 'HIT';
+                    this.gettingHurt_sound.play();
                 }
                 this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_TAKING_HIT);
             } else if (this.spellCooldownQ && this.isAirborne()) {
