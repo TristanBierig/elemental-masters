@@ -7,7 +7,6 @@ class StatusBarMana extends DrawableObject {
     IMAGES_BAR = allImages.ingameUI.statusbar.mana;
 
     constructor() {
-        // debugger
         super();
         this.loadImage(this.IMAGES_BAR[0]);
         this.loadImages(this.IMAGES_BAR);

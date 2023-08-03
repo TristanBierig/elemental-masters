@@ -8,7 +8,6 @@ class StatusBar extends DrawableObject {
     IMAGES_BAR = allImages.ingameUI.statusbar.health;
 
     constructor(x, width, bossBar) {
-
         super().loadImage(this.IMAGES_BAR[0]);
         this.loadImages(this.IMAGES_BAR);
         this.x = 20;
@@ -25,7 +24,7 @@ class StatusBar extends DrawableObject {
         this.statusbarFrame = new StatusbarFrame(this.x, this.y, this.height, this.width, 'img/UI/ingame_bars/frames/frame_grey.png');
         this.statusbarIcon = new StatusbarIcon(0, this.y, 'LIFE');
 
-        
+
         setInterval(() => {
             this.setPercentage();
         }, 100);
@@ -33,27 +32,34 @@ class StatusBar extends DrawableObject {
 
 
     setPercentage() {
-        let path = this.IMAGES_BAR[this.resolveImageIndex()];
-        this.img = this.imageCache[path];
+        if (!this.bossBar) {
+            let path = this.IMAGES_BAR[this.resolveCharacterBarIndex()];
+            this.img = this.imageCache[path];
+        } else {
+            let path = this.IMAGES_BAR[this.resolveBossBarIndex()];
+            this.img = this.imageCache[path];
+        }
     }
 
 
-    resolveImageIndex() {
-       if (!this.bossBar) {
-         if (this.percentage > 80) {
-             return 5;
-         } else if (this.percentage > 60) {
-             return 4;
-         } else if (this.percentage > 40) {
-             return 3;
-         } else if (this.percentage > 20) {
-             return 2;
-         } else if (this.percentage > 0) {
-             return 1;
-         } else if (this.percentage == 0) {
-             return 0;
-         }
-       } else {
+    resolveCharacterBarIndex() {
+        if (this.percentage > 80) {
+            return 5;
+        } else if (this.percentage > 60) {
+            return 4;
+        } else if (this.percentage > 40) {
+            return 3;
+        } else if (this.percentage > 20) {
+            return 2;
+        } else if (this.percentage > 0) {
+            return 1;
+        } else if (this.percentage == 0) {
+            return 0;
+        }
+    }
+
+
+    resolveBossBarIndex() {
         if (this.percentage > 1600) {
             return 5;
         } else if (this.percentage > 1200) {
@@ -67,7 +73,5 @@ class StatusBar extends DrawableObject {
         } else if (this.percentage == 0) {
             return 0;
         }
-       }
-
     }
 }

@@ -11,13 +11,7 @@ class StatusbarIcon extends MovableObject {
         this.loadImages(this.ICONS_LIFE);
         this.loadImages(this.ICONS_MANA);
         this.loadImages(this.ICONS_STAR);
-        if (icons == 'LIFE') {
-            this.icons = this.ICONS_LIFE;
-        } else if (icons == 'MANA') {
-            this.icons = this.ICONS_MANA;
-        } else if (icons == 'STAR') {
-            this.icons = this.ICONS_STAR;
-        }
+        this.setType(icons);
         this.category = icons;
         this.x = x;
         this.y = y;
@@ -32,6 +26,17 @@ class StatusbarIcon extends MovableObject {
         };
         this.animate();
     }
+
+    setType(icons) {
+        if (icons == 'LIFE') {
+            this.icons = this.ICONS_LIFE;
+        } else if (icons == 'MANA') {
+            this.icons = this.ICONS_MANA;
+        } else if (icons == 'STAR') {
+            this.icons = this.ICONS_STAR;
+        }
+    }
+
 
     animate() {
         setInterval(() => {

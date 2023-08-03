@@ -7,7 +7,6 @@ class StatusBarStars extends DrawableObject {
     IMAGES_BAR = allImages.ingameUI.statusbar.stars ;
 
     constructor() {
-        // debugger
         super();
         this.loadImage(this.IMAGES_BAR[0]);
         this.loadImages(this.IMAGES_BAR);
