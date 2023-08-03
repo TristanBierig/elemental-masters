@@ -133,24 +133,19 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.floor);
         this.addObjectsToMap(this.level.foregroundObjects);
-        this.addObjectsToMap(this.level.enemies);
-        this.level.enemies.forEach(enemy => {
-            if (enemy instanceof Slime) {
-                this.addToMap(enemy.lifeBar);
-            }
-        });
-        this.addToMap(this.character);
 
+        this.addObjectsToMap(this.level.enemies);
+        this.addToMap(this.character);
         if (this.character.activeSpells.length > 0) {
             this.addObjectsToMap(this.character.activeSpells);
         }
         if (this.collectableItems.length > 0) {
             this.addObjectsToMap(this.collectableItems);
         }
-
         this.addObjectsToMap(this.level.clouds);
 
         this.ctx.translate(-this.camera_x, 0); // Back
+
         this.addObjectsToMap(this.statusBar);
         this.addFrameToMap(this.statusBar);
         this.ctx.translate(this.camera_x, 0); // Forwards
@@ -165,7 +160,6 @@ class World {
             this.expandBackground();
         }
 
-        console.log(this.level.enemies[0].lifeBar.x);
         // draw() wird immer wieder aufgerufen
         let self = this;
         requestAnimationFrame(function () {
@@ -308,7 +302,7 @@ class World {
 
 
     checkGettingHit(enemy) {
-        if (this.character.isColliding(enemy) && !this.character.spellCooldownQ && !this.character.isAirborne()) {
+        if (this.character.isColliding(enemy) && !this.character.spellCooldownQ) {
             enemy.isHitting = true;
             this.character.isTakingHit = true;
             this.character.gettingHit();
