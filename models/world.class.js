@@ -302,7 +302,7 @@ class World {
 
 
     checkGettingHit(enemy) {
-        if (this.character.isColliding(enemy) && !this.character.spellCooldownQ) {
+        if (this.character.isColliding(enemy) && !this.character.spellCooldownQ && !this.character.isAirborne()) {
             enemy.isHitting = true;
             this.character.isTakingHit = true;
             this.character.gettingHit();
