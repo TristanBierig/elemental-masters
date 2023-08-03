@@ -31,6 +31,14 @@ class World {
         this.updateGame();
         this.spawnClouds();
         this.expandFloor();
+        this.chooseCharacter(choosenChar);
+        this.draw();
+        this.spawnNewEnemies();
+        this.checkKillEnemy();
+    }
+
+
+    chooseCharacter(choosenChar) {
         switch (choosenChar) {
             case 'Earth':
                 this.character = new CharacterEarth();
@@ -45,9 +53,6 @@ class World {
                 this.character = new CharacterWind();
                 break;
         }
-        this.draw();
-        this.spawnNewEnemies();
-        this.checkKillEnemy();
     }
 
 
@@ -127,13 +132,11 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         // Prevents upscaling Pixelart to be smushy
         this.ctx.imageSmoothingEnabled = false;
-
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.floor);
         this.addObjectsToMap(this.level.foregroundObjects);
-
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
         if (this.character.activeSpells.length > 0) {
@@ -143,15 +146,11 @@ class World {
             this.addObjectsToMap(this.collectableItems);
         }
         this.addObjectsToMap(this.level.clouds);
-
         this.ctx.translate(-this.camera_x, 0); // Back
-
         this.addObjectsToMap(this.statusBar);
         this.addFrameToMap(this.statusBar);
         this.ctx.translate(this.camera_x, 0); // Forwards
-
         this.ctx.translate(-this.camera_x, 0);
-
         // Generate infinite World on moving right
         if (this.floor[this.floor.length - 1].x - this.character.x < 800) {
             this.expandFloor(true);
@@ -159,7 +158,6 @@ class World {
         if (this.backgroundStartX < this.character.x || this.character.x + 720 > this.backgroundStartX) {
             this.expandBackground();
         }
-
         // draw() wird immer wieder aufgerufen
         let self = this;
         requestAnimationFrame(function () {
@@ -189,6 +187,8 @@ class World {
         }
 
         mo.draw(this.ctx);
+    
+        // Is just need to adjust Hitboxes with e.g. new Spells
         // mo.drawHitbox(this.ctx);
 
         if (mo.otherDirection) {
@@ -226,7 +226,6 @@ class World {
                 this.spawnTinySlime();
                 this.spawnFlyingSlime();
             }
-
             if (this.endbossSpawned) {
                 clearInterval(this.spawnInterval);
             }
@@ -285,9 +284,9 @@ class World {
     }
 
 
-    checkSpellAttack(enemy, index) {
+    checkSpellAttack(enemy) {
         if (this.character.activeSpells.length > 0) {
-            this.character.activeSpells.forEach((spell, i) => {
+            this.character.activeSpells.forEach((spell) => {
                 if (spell.isColliding(enemy)) {
                     this.rockShatterAudio.play();
                     spell.lifePoints = 0;
@@ -316,7 +315,7 @@ class World {
     }
 
 
-    damageEnemy(enemy, spell, damage) {
+    damageEnemy(enemy, damage) {
         if (enemy instanceof Slime || !enemy.isTransformed) {
             enemy.lifePoints -= damage;
         } else if (enemy.isTransformed && enemy.Status != 'STAND') {
