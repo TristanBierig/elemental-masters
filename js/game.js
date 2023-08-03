@@ -139,6 +139,7 @@ function playSound() {
     isSoundOn = true;
 }
 
+
 function fullscreen(state) {
     let fullscreen = document.getElementById('canvas');
     if (state == 'enter') {

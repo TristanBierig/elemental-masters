@@ -24,23 +24,9 @@ class Character extends MovableObject {
 
     // Move Horizontal + plays running sound
     characterMove() {
-        if (world && world.keyboard.RIGHT == true && !this.isTransforming) {
-            this.moveRight();
-            if (!this.playRun) {
-                this.walking_sound.playpause();
-                this.playRun = true;
-            }
-            this.movementStatus = 'RIGHT';
-        }
+        this.moveRight();
+        this.moveLeft();
 
-        if (world && world.keyboard.LEFT == true && this.x > -550 && !this.isTransforming) {
-            this.moveLeft();
-            if (!this.playRun) {
-                this.walking_sound.playpause();
-                this.playRun = true;
-            }
-            this.movementStatus = 'LEFT';
-        }
 
         // Mutes running sound when standing or jumping
         if (world && (!world.keyboard.LEFT && !world.keyboard.RIGHT) || this.isAirborne()) {
@@ -186,5 +172,193 @@ class Character extends MovableObject {
 
     moveCamera() {
         world.camera_x = -this.x + 60; // 60 default
+    }
+
+
+    moveRight() {
+        if (world && world.keyboard.RIGHT == true && !this.isTransforming) {
+            this.moveRight();
+            if (!this.playRun) {
+                this.walking_sound.playpause();
+                this.playRun = true;
+            }
+            this.movementStatus = 'RIGHT';
+        }
+    }
+
+
+    moveLeft() {
+        if (world && world.keyboard.LEFT == true && this.x > -550 && !this.isTransforming) {
+            this.moveLeft();
+            if (!this.playRun) {
+                this.walking_sound.playpause();
+                this.playRun = true;
+            }
+            this.movementStatus = 'LEFT';
+        }
+    }
+
+
+    animateCharacter() {
+        this.animationInterval = setInterval(() => {
+            if (this.isDead()) {
+                this.animateDeath();
+            } else if (this.isTransforming) {
+                this.animateTransform();
+            } else if (this.isTakingHit) {
+                this.animateTakingHit();
+            } else if (this.spellCooldownQ && this.isAirborne()) {
+                this.animateQAttackAir();
+            } else if (!this.isTakingHit && this.isAirborne() && this.speedY > 0) {
+                this.animateJumpingUp();
+            } else if (!this.isTakingHit && this.isAirborne() && this.speedY <= 0) {
+                this.animateFallingDown();
+            } else if (this.spellCooldownQ) {
+                this.animateQAttack();
+            } else if (!this.isTakingHit && world && world.keyboard.RIGHT || world.keyboard.LEFT) {
+                this.animateMove();
+            } else if (!this.isTakingHit) {
+                this.animateIdle();
+            }
+        }, 1000 / 10);
+    }
+
+
+    animateIdle() {
+        if (!this.isTransformed) {
+            this.playAnimation(this.imageCollection.IMAGES_IDLE);
+        } else {
+            this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_IDLE);
+        }
+        this.animationStatus = 'IDLE';
+    }
+
+
+    animateMove() {
+        if (!this.isTransformed) {
+            this.playAnimation(this.imageCollection.IMAGES_WALKING);
+        } else {
+            this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_MOVE);
+        }
+        this.animationStatus = 'RUN';
+    }
+
+
+    animateQAttack() {
+        if (this.animationStatus != 'Q-ATTACK') {
+            this.currentImage = 0;
+            this.animationStatus = 'Q-ATTACK';
+        }
+
+        if (!this.isTransformed) {
+            this.playAnimation(this.imageCollection.IMAGES_ATTACK_Q);
+        } else {
+            this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_ATTACK_Q);
+        }
+    }
+
+
+    animateFallingDown() {
+        if (!this.isTransformed) {
+            this.playAnimation(this.imageCollection.IMAGES_JUMPING_DOWN);
+        } else {
+            this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_JUMPING_DOWN);
+        }
+        this.animationStatus = 'AIRBORNE';
+    }
+
+
+    animateJumpingUp() {
+        if (!this.isTransformed) {
+            this.playAnimation(this.imageCollection.IMAGES_JUMPING_UP);
+        } else {
+            this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_JUMPING_UP);
+        }
+        this.animationStatus = 'AIRBORNE';
+    }
+
+
+    animateQAttackAir() {
+        if (this.animationStatus != 'Q-ATTACK') {
+            this.currentImage = 0;
+            this.animationStatus = 'Q-ATTACK';
+        }
+        if (!this.isTransformed) {
+            this.playAnimation(this.imageCollection.IMAGES_ATTACK_Q_AIR);
+        } else {
+            this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_ATTACK_Q_AIR);
+        }
+    }
+
+
+    animateDeath() {
+        this.handleDeathFunctions();
+        if (!this.isTransformed) {
+            this.playAnimation(this.imageCollection.IMAGES_DEAD);
+            if (this.currentImage == this.imageCollection.IMAGES_DEAD.length) {
+                this.stopInterval(this.animationInterval);
+            }
+        } else {
+            this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_DEAD);
+            if (this.currentImage == this.imageCollection.IMAGES_TRANSFORM_DEAD.length) {
+                this.stopInterval(this.animationInterval);
+            }
+        }
+    }
+
+
+    handleDeathFunctions() {
+        if (this.animationStatus != 'DEAD') {
+            this.currentImage = 0;
+            this.animationStatus = 'DEAD';
+            this.handleGameoverSounds();
+            this.stopInterval(this.movementInterval);
+        }
+    }
+
+
+    handleGameoverSounds() {
+        this.walking_sound.stop();
+        playerSoundsGameOver.play();
+        playerBackgroundIdle.pause();
+        playerBackgroundBoss.pause();
+        if (!this.isTransformed) {
+            setTimeout(() => {
+                playerSoundsGameOverLoop.play();
+                GameOver(false);
+            }, 2000);
+        } else {
+            setTimeout(() => {
+                playerSoundsGameOverLoop.play();
+                GameOver(false);
+            }, 4000);
+        }
+    }
+
+
+    animateTransform() {
+        if (this.animationStatus != 'TRANSFORM') {
+            this.currentImage = 0;
+            this.animationStatus = 'TRANSFORM';
+            this.transform_sound.play();
+        }
+        this.playAnimation(this.imageCollection.IMAGES_TRANSFORM);
+        if (this.currentImage == this.imageCollection.IMAGES_TRANSFORM.length) {
+            this.isTransforming = false;
+        }
+    }
+
+
+    animateTakingHit() {
+        if (this.animationStatus != 'HIT') {
+            this.currentImage = 0;
+            this.animationStatus = 'HIT';
+            this.gettingHurt_sound.play();
+        }
+        if (!this.isTransformed) {
+            this.playAnimation(this.imageCollection.IMAGES_TAKING_HIT);
+        } else {
+            this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_TAKING_HIT);
+        }
     }
 }
