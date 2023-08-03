@@ -22,11 +22,35 @@ class Character extends MovableObject {
     playAir = false;
 
 
+    animateCharacter() {
+        this.animationInterval = setInterval(() => {
+            if (this.isDead()) {
+                this.animateDeath();
+            } else if (this.isTransforming) {
+                this.animateTransform();
+            } else if (this.isTakingHit) {
+                this.animateTakingHit();
+            } else if (this.spellCooldownQ && this.isAirborne()) {
+                this.animateQAttackAir();
+            } else if (!this.isTakingHit && this.isAirborne() && this.speedY > 0) {
+                this.animateJumpingUp();
+            } else if (!this.isTakingHit && this.isAirborne() && this.speedY <= 0) {
+                this.animateFallingDown();
+            } else if (this.spellCooldownQ) {
+                this.animateQAttack();
+            } else if (!this.isTakingHit && world && world.keyboard.RIGHT || world.keyboard.LEFT) {
+                this.animateMove();
+            } else if (!this.isTakingHit) {
+                this.animateIdle();
+            }
+        }, 1000 / 10);
+    }
+
+
     // Move Horizontal + plays running sound
     characterMove() {
-        this.moveRight();
-        this.moveLeft();
-
+        this.moveToRight();
+        this.moveToLeft();
 
         // Mutes running sound when standing or jumping
         if (world && (!world.keyboard.LEFT && !world.keyboard.RIGHT) || this.isAirborne()) {
@@ -42,19 +66,21 @@ class Character extends MovableObject {
         // Jumps or doubleJump and plays flying sound
         if (world && world.keyboard.SPACE == true && (!this.isAirborne() || (this.y < 120 && this.doubleJumpAvailable)) && !this.isTransforming) {
             this.jump();
-
             // Disables double jump when already jumped a second time while in air
             if (this.isAirborne() && this.y < 200 && this.doubleJumpAvailable) {
                 this.doubleJumpAvailable = false;
             }
-
+            // Plays Sound while airborne
             if (!this.playAir) {
                 this.airborne_sound.playpause();
                 this.playAir = true;
             }
         }
+        this.muteFlySound();
+    }
 
-        // Mutes fly sound on the the ground
+
+    muteFlySound() {
         if (!this.isAirborne() && this.playAir && this.speedY < 0) {
             this.airborne_sound.playpause();
             this.playAir = false;
@@ -64,55 +90,63 @@ class Character extends MovableObject {
 
 
     characterAttackQ() {
-        // Cast Q-Attack
         if (world && world.keyboard.Q == true && !this.spellCooldownQ && !this.isTransforming) {
             this.spellCooldownQ = true;
-
             // Expands hitbox to right synched with animation
-            if (this.movementStatus == 'RIGHT' || this.movementStatus == undefined) {
-                if (!this.isTransformed) {
-                    setTimeout(() => {
-                        this.offset = this.hitboxes.normalForm.qRight;
-                    }, 200);
-                } else {
-                    // Handles Transformed punch hitbox
-                    setTimeout(() => {
-                        this.offset = this.hitboxes.evolvedForm.qRight;
-                    }, 200);
-                }
-            }
-
+            this.expandHitboxRight();
             // Expands hitbox to left synched with animation
-            if (this.movementStatus == 'LEFT') {
-                if (!this.isTransformed) {
-                    setTimeout(() => {
-                        this.offset = this.hitboxes.normalForm.qLeft;
-
-                    }, 200);
-                } else {
-                    // Handles Transformed punch hitbox
-                    setTimeout(() => {
-                        this.offset = this.hitboxes.evolvedForm.qLeft;
-
-                    }, 200);
-                }
-            }
-
+            this.expandHitboxLeft();
             // Shrinks hitbox sychned with animation
+            this.hitboxBackToDefault();
+        }
+    }
+
+
+    expandHitboxLeft() {
+        if (this.movementStatus == 'LEFT') {
             if (!this.isTransformed) {
                 setTimeout(() => {
-                    this.spellCooldownQ = false;
-                    this.offset = this.hitboxes.normalForm.idle;
-                    this.isHitting = false;
-                }, 500);
+                    this.offset = this.hitboxes.normalForm.qLeft;
+
+                }, 200);
             } else {
-                // Handles Transformed punch hitbox reset
                 setTimeout(() => {
-                    this.spellCooldownQ = false;
-                    this.offset = this.hitboxes.evolvedForm.idle;
-                    this.isHitting = false;
-                }, 500);
+                    this.offset = this.hitboxes.evolvedForm.qLeft;
+                }, 200);
             }
+        }
+    }
+
+
+    expandHitboxRight() {
+        if (this.movementStatus == 'RIGHT' || this.movementStatus == undefined) {
+            if (!this.isTransformed) {
+                setTimeout(() => {
+                    this.offset = this.hitboxes.normalForm.qRight;
+                }, 200);
+            } else {
+                setTimeout(() => {
+                    this.offset = this.hitboxes.evolvedForm.qRight;
+                }, 200);
+            }
+        }
+    }
+
+
+    hitboxBackToDefault() {
+        if (!this.isTransformed) {
+            setTimeout(() => {
+                this.spellCooldownQ = false;
+                this.offset = this.hitboxes.normalForm.idle;
+                this.isHitting = false;
+            }, 500);
+        } else {
+            // Handles Transformed punch hitbox reset
+            setTimeout(() => {
+                this.spellCooldownQ = false;
+                this.offset = this.hitboxes.evolvedForm.idle;
+                this.isHitting = false;
+            }, 500);
         }
     }
 
@@ -121,25 +155,29 @@ class Character extends MovableObject {
         // Cast W-Spell only when having mana and the cooldown is up
         if (world && world.keyboard.W == true && !this.spellCooldown && !this.isAirborne() && world.statusBar[1].percentage >= 10 && !this.isTransforming) {
             world.rockShatterAudio.play();
-            if (!this.isTransformed) {
-                this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
-                    this.y + this.offset.top,
-                    this.movementStatus,
-                    'W',
-                    this.activeSpells.length, element));
-            } else {
-                this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
-                    this.y + this.offset.top + 52,
-                    this.movementStatus,
-                    'W',
-                    this.activeSpells.length, element));
-            }
-
+            this.setSpawnPointForWSpell(element);
             this.spellCooldown = true;
             world.statusBar[1].percentage -= 10;
             setTimeout(() => {
                 this.spellCooldown = false;
             }, 1000);
+        }
+    }
+
+
+    setSpawnPointForWSpell(element) {
+        if (!this.isTransformed) {
+            this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
+                this.y + this.offset.top,
+                this.movementStatus,
+                'W',
+                this.activeSpells.length, element));
+        } else {
+            this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
+                this.y + this.offset.top + 52,
+                this.movementStatus,
+                'W',
+                this.activeSpells.length, element));
         }
     }
 
@@ -175,7 +213,7 @@ class Character extends MovableObject {
     }
 
 
-    moveRight() {
+    moveToRight() {
         if (world && world.keyboard.RIGHT == true && !this.isTransforming) {
             this.moveRight();
             if (!this.playRun) {
@@ -187,7 +225,7 @@ class Character extends MovableObject {
     }
 
 
-    moveLeft() {
+    moveToLeft() {
         if (world && world.keyboard.LEFT == true && this.x > -550 && !this.isTransforming) {
             this.moveLeft();
             if (!this.playRun) {
@@ -199,29 +237,6 @@ class Character extends MovableObject {
     }
 
 
-    animateCharacter() {
-        this.animationInterval = setInterval(() => {
-            if (this.isDead()) {
-                this.animateDeath();
-            } else if (this.isTransforming) {
-                this.animateTransform();
-            } else if (this.isTakingHit) {
-                this.animateTakingHit();
-            } else if (this.spellCooldownQ && this.isAirborne()) {
-                this.animateQAttackAir();
-            } else if (!this.isTakingHit && this.isAirborne() && this.speedY > 0) {
-                this.animateJumpingUp();
-            } else if (!this.isTakingHit && this.isAirborne() && this.speedY <= 0) {
-                this.animateFallingDown();
-            } else if (this.spellCooldownQ) {
-                this.animateQAttack();
-            } else if (!this.isTakingHit && world && world.keyboard.RIGHT || world.keyboard.LEFT) {
-                this.animateMove();
-            } else if (!this.isTakingHit) {
-                this.animateIdle();
-            }
-        }, 1000 / 10);
-    }
 
 
     animateIdle() {
