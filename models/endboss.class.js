@@ -17,6 +17,7 @@ class Endboss extends MovableObject {
     IMAGES_CLEAVE = allImages.enemies.endboss.evolvedForm.abilities.cleave;
     IMAGES_BREATH = allImages.enemies.endboss.evolvedForm.abilities.breath;
 
+
     constructor(start) {
         super().loadImage(this.IMAGES_WALKING_BEFORE[0]);
         this.loadImages(this.IMAGES_WALKING_BEFORE);
@@ -49,147 +50,215 @@ class Endboss extends MovableObject {
     updateBoss() {
         this.handleBossMovement();
         this.moveBoss();
+        this.animateBoss();
+    }
 
+
+    animateBoss() {
         this.animationInterval = setInterval(() => {
-            if (this.isDead() && !this.isTransformed) {
-                // Triggers transform, stops movement and switches soundtracks
-                if (world && this.animationStatus != 'DEAD') {
-                    playerBackgroundIdle.playpause();
-                    playerBackgroundBoss.playpause();
-                    this.currentImage = 0;
-                    this.animationStatus = 'DEAD';
-                    this.offset.top = -200;
-                    this.stopInterval(this.movementInterval);
-                }
-                this.playAnimation(this.IMAGES_DEAD);
-                if (this.currentImage == this.IMAGES_DEAD.length) {
-                    this.lifePoints = 2000;
-                    this.isTransformed = true;
-                    this.animationStatus = 'SMASH';
-                }
-            } else if (!this.isTransformed) {
-                this.playAnimation(this.IMAGES_WALKING_BEFORE);
-            }
-
-
-            // Handles animations after transformation
-            if (this.isTransformed && this.animationStatus == 'SMASH') {
-                if (this.resetCurrentImage) {
-                    this.currentImage = 0;
-                    this.resetCurrentImage = false;
-                }
-                this.playAnimation(this.IMAGES_SMASH);
-                if (this.currentImage >= 12) {
-                    this.setTransformHitbox();
-                }
-
-                // After spawn Boss does smash once and then starts running after Character
-                if (this.currentImage == this.IMAGES_SMASH.length) {
-                    this.animationStatus = 'MOVE';
-                    this.setTransformHitbox();
-                    this.moveBoss();
-                    if (world) {
-                        world.statusBar.push(new StatusBar(350, 380, true));
-                    }
-                }
-                // Play animation when killed and stop Game
-            } else if (this.lifePoints <= 0 && this.isTransformed) {
-                if (this.animationStatus != 'DEAD') {
-                    this.currentImage = 0;
-                    this.animationStatus = 'DEAD';
-                    playerBackgroundBoss.pause();
-                }
-                this.playAnimation(this.IMAGES_DEAD_FINAL);
-                // Attacks with random spell when in reach of the character
-            } else if (this.isTransformed && this.movementStatus == 'STAND') {
-                if (this.isNextAttack) {
-                    this.nextAttack = Math.random() * 100;
-                    this.isNextAttack = false;
-                }
-
-                if (this.nextAttack >= 40) {
-                    if (this.animationStatus != 'CLEAVE') {
-                        this.currentImage = 0;
-                        this.animationStatus = 'CLEAVE';
-                    }
-
-                    if (this.currentImage >= 9 && this.currentImage <= 11) {
-                        this.setTransformHitbox(true);
-                        this.isImmune = true;
-                    } else {
-                        this.setTransformHitbox();
-                        this.isImmune = false;
-                    }
-
-                    this.playAnimation(this.IMAGES_CLEAVE);
-                    if (this.currentImage >= 15) {
-                        this.animationStatus = 'MOVE'
-                        this.setTransformHitbox();
-                        this.isNextAttack = true;
-                    }
-                }
-
-                if (this.nextAttack < 40) {
-                    if (this.animationStatus != 'BREATH') {
-                        this.currentImage = 0;
-                        this.animationStatus = 'BREATH';
-                    }
-
-                    if (this.currentImage >= 13 && this.currentImage <= 18) {
-                        this.setTransformHitbox(true);
-                        this.isImmune = true;
-                    } else {
-                        this.setTransformHitbox();
-                        this.isImmune = false;
-                    }
-
-                    this.playAnimation(this.IMAGES_BREATH);
-                    if (this.currentImage >= 21) {
-                        this.animationStatus = 'MOVE'
-                        this.setTransformHitbox();
-                        this.isNextAttack = true;
-                    }
-                }
-                console.log(this.currentImage, this.animationStatus);
-            } else if (this.isTakingHit) {
-                if (this.animationStatus != 'HIT') {
-                    this.currentImage = 0;
-                    this.animationStatus = 'HIT';
-                }
-                this.playAnimation(this.IMAGES_TAKE_HIT);
-                if (this.currentImage >= 5) {
-                    this.isTakingHit = false;
-                }
-            } else if (this.isTransformed) {
-                this.playAnimation(this.IMAGES_WALKING);
-            }
+            this.animateBossPreTransform();
+            this.animateBossPostTransform();
         }, 1000 / 5);
+    }
+
+
+    animateBossPostTransform() {
+        if (this.isTransformed && this.animationStatus == 'SMASH') {
+           this.animateSmashAttack();
+        } else if (this.lifePoints <= 0 && this.isTransformed) {
+            this.animateDeath();
+        } else if (this.isTransformed && this.movementStatus == 'STAND') {
+            this.setNextAttack();
+            this.animateCleaveAttack();
+            this.animateBreathAttack();
+        } else if (this.isTakingHit) {
+            this.animateTakingHit();
+        } else if (this.isTransformed) {
+            this.playAnimation(this.IMAGES_WALKING);
+        }
+    }
+
+
+    animateSmashAttack() {
+        if (this.resetCurrentImage) {
+            this.currentImage = 0;
+            this.resetCurrentImage = false;
+        }
+        this.playAnimation(this.IMAGES_SMASH);
+        if (this.currentImage >= 12) {
+            this.setTransformHitbox();
+        }
+        this.startBossAI();
+    }
+
+
+    startBossAI() {
+        if (this.currentImage == this.IMAGES_SMASH.length) {
+            this.animationStatus = 'MOVE';
+            this.setTransformHitbox();
+            this.moveBoss();
+            if (world) {
+                world.statusBar.push(new StatusBar(350, 380, true));
+            }
+        }
+    }
+
+
+    animateDeath() {
+        if (this.animationStatus != 'DEAD') {
+            this.currentImage = 0;
+            this.animationStatus = 'DEAD';
+            playerBackgroundBoss.pause();
+        }
+        this.playAnimation(this.IMAGES_DEAD_FINAL);
+    }
+
+
+    setNextAttack() {
+        if (this.isNextAttack) {
+            this.nextAttack = Math.random() * 100;
+            this.isNextAttack = false;
+        }
+    }
+
+
+    animateCleaveAttack() {
+        if (this.nextAttack >= 40) {
+            if (this.animationStatus != 'CLEAVE') {
+                this.currentImage = 0;
+                this.animationStatus = 'CLEAVE';
+            }
+            this.handleCleaveHitbox();
+            this.playAnimation(this.IMAGES_CLEAVE);
+            if (this.currentImage >= this.IMAGES_CLEAVE.length) {
+                this.animationStatus = 'MOVE'
+                this.setTransformHitbox();
+                this.isNextAttack = true;
+            }
+        }
+    }
+
+
+    handleCleaveHitbox() {
+        if (this.currentImage >= 9 && this.currentImage <= 11) {
+            this.setTransformHitbox(true);
+            this.isImmune = true;
+        } else {
+            this.setTransformHitbox();
+            this.isImmune = false;
+        }
+    }
+
+
+    animateBreathAttack() {
+        if (this.nextAttack < 40) {
+            if (this.animationStatus != 'BREATH') {
+                this.currentImage = 0;
+                this.animationStatus = 'BREATH';
+            }
+            this.handleBreathHitbox();
+            this.playAnimation(this.IMAGES_BREATH);
+            if (this.currentImage >= this.IMAGES_BREATH.length) {
+                this.animationStatus = 'MOVE'
+                this.setTransformHitbox();
+                this.isNextAttack = true;
+            }
+        }
+    }
+
+
+    handleBreathHitbox() {
+        if (this.currentImage >= 13 && this.currentImage <= 18) {
+            this.setTransformHitbox(true);
+            this.isImmune = true;
+        } else {
+            this.setTransformHitbox();
+            this.isImmune = false;
+        }
+    }
+
+
+    animateTakingHit() {
+        if (this.animationStatus != 'HIT') {
+            this.currentImage = 0;
+            this.animationStatus = 'HIT';
+        }
+        this.playAnimation(this.IMAGES_TAKE_HIT);
+        if (this.currentImage >= 5) {
+            this.isTakingHit = false;
+        }
+    }
+
+
+    animateBossPreTransform() {
+        if (this.isDead() && !this.isTransformed) {
+            // Triggers transform, stops movement and switches soundtracks
+            this.handlesPreTransformDeath();
+            if (this.currentImage == this.IMAGES_DEAD.length) {
+                this.lifePoints = 2000;
+                this.isTransformed = true;
+                this.animationStatus = 'SMASH';
+            }
+        } else if (!this.isTransformed) {
+            this.playAnimation(this.IMAGES_WALKING_BEFORE);
+        }
+    }
+
+
+    handlesPreTransformDeath() {
+        if (world && this.animationStatus != 'DEAD') {
+            playerBackgroundIdle.playpause();
+            playerBackgroundBoss.playpause();
+            this.currentImage = 0;
+            this.animationStatus = 'DEAD';
+            // Prevents Interaction with Character till Animation is finished
+            this.offset.top = -200;
+            this.stopInterval(this.movementInterval);
+        }
+        this.playAnimation(this.IMAGES_DEAD);
     }
 
 
     handleBossMovement() {
         setInterval(() => {
-            if (world && world.character.x + world.character.offset.left + world.character.width - world.character.offset.right < this.x + this.offset.left - 50
-                && this.animationStatus != 'CLEAVE' && this.animationStatus != 'BREATH') {
-                this.movementStatus = 'MOVELEFT';
-            }
-
-            if (world && world.character.x + world.character.offset.left > this.x + this.offset.left + this.width - this.offset.right + 50
-                && this.animationStatus != 'CLEAVE' && this.animationStatus != 'BREATH') {
-                this.movementStatus = 'MOVERIGHT';
-            }
-
-            if (world && (world.character.x + world.character.offset.left + world.character.width - world.character.offset.right < this.x + this.offset.left
-                && world.character.x + world.character.offset.left + world.character.width - world.character.offset.right > this.x + this.offset.left - 50)
-                || (world.character.x + world.character.offset.left < this.x + this.offset.left + this.width - this.offset.right + 50
-                    && world.character.x + world.character.offset.left > this.x + this.offset.left + this.width - this.offset.right)) {
-                this.movementStatus = 'STAND';
-            }
-
-            if (this. isTransformed && this.lifePoints <= 0) {
-                this.movementStatus = 'STAND';
-            }
+            this.setLeftMovement();
+            this.setRightMovement();
+            this.setIdleAlive();
+            this.setIdleDead();
         }, 1000 / 25);
+    }
+
+
+    setIdleDead() {
+        if (this.isTransformed && this.lifePoints <= 0) {
+            this.movementStatus = 'STAND';
+        }
+    }
+
+
+    setIdleAlive() {
+        if (world && (world.character.x + world.character.offset.left + world.character.width - world.character.offset.right < this.x + this.offset.left
+            && world.character.x + world.character.offset.left + world.character.width - world.character.offset.right > this.x + this.offset.left - 50)
+            || (world.character.x + world.character.offset.left < this.x + this.offset.left + this.width - this.offset.right + 50
+                && world.character.x + world.character.offset.left > this.x + this.offset.left + this.width - this.offset.right)) {
+            this.movementStatus = 'STAND';
+        }
+    }
+
+
+    setRightMovement() {
+        if (world && world.character.x + world.character.offset.left > this.x + this.offset.left + this.width - this.offset.right + 50
+            && this.animationStatus != 'CLEAVE' && this.animationStatus != 'BREATH') {
+            this.movementStatus = 'MOVERIGHT';
+        }
+    }
+
+
+    setLeftMovement() {
+        if (world && world.character.x + world.character.offset.left + world.character.width - world.character.offset.right < this.x + this.offset.left - 50
+            && this.animationStatus != 'CLEAVE' && this.animationStatus != 'BREATH') {
+            this.movementStatus = 'MOVELEFT';
+        }
     }
 
 
@@ -209,52 +278,72 @@ class Endboss extends MovableObject {
 
     setTransformHitbox(hitFrame) {
         if (this.animationStatus == 'SMASH') {
+            this.setSmashHitbox();
+        } else if (this.animationStatus == 'CLEAVE' && hitFrame) {
+            this.setCleaveHitbox();
+        } else if (this.animationStatus == 'BREATH' && hitFrame) {
+            this.setBreathHitbox();
+        } else {
+            this.setDefaultHitbox();
+        }
+    }
+
+
+    setDefaultHitbox() {
+        this.offset = {
+            top: 175,
+            bottom: 175,
+            left: 215,
+            right: 430
+        };
+    }
+
+
+    setSmashHitbox() {
+        this.offset = {
+            top: 175,
+            bottom: 175,
+            left: 100,
+            right: 200
+        };
+    }
+
+
+    setBreathHitbox() {
+        if (!this.otherDirection) {
+            this.offset = {
+                top: 185,
+                bottom: 175,
+                left: 50,
+                right: 430
+            };
+        } else {
+            this.offset = {
+                top: 185,
+                bottom: 175,
+                left: 215,
+                right: 290
+            };
+        }
+    }
+
+
+    setCleaveHitbox() {
+        if (!this.otherDirection) {
             this.offset = {
                 top: 175,
                 bottom: 175,
-                left: 100,
-                right: 200
+                left: 70,
+                right: 430
             };
-        } else if (this.animationStatus == 'CLEAVE' && hitFrame) {
-            if (!this.otherDirection) {
-                this.offset = {
-                    top: 175,
-                    bottom: 175,
-                    left: 70,
-                    right: 430
-                };
-            } else {
-                this.offset = {
-                    top: 175,
-                    bottom: 175,
-                    left: 215,
-                    right: 270
-                };
-            }
-        } else if (this.animationStatus == 'BREATH' && hitFrame) {
-            if (!this.otherDirection) {
-                this.offset = {
-                    top: 185,
-                    bottom: 175,
-                    left: 50,
-                    right: 430
-                };
-            } else {
-                this.offset = {
-                    top: 185,
-                    bottom: 175,
-                    left: 215,
-                    right: 290
-                };
-            }
         } else {
-            // Defines big hitbox on walking/ idle
             this.offset = {
                 top: 175,
                 bottom: 175,
                 left: 215,
-                right: 430
+                right: 270
             };
         }
     }
+    
 }
