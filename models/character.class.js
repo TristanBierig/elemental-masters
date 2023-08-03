@@ -51,7 +51,6 @@ class Character extends MovableObject {
     characterMove() {
         this.moveToRight();
         this.moveToLeft();
-
         // Mutes running sound when standing or jumping
         if (world && (!world.keyboard.LEFT && !world.keyboard.RIGHT) || this.isAirborne()) {
             if (this.playRun) {

@@ -2,7 +2,7 @@ class MovableObject extends DrawableObject {
     speed;
     speedY = 0;
     accelertion = 1; // 1 default
-    
+
     lifePoints = 100;
     isTakingHit;
     isKilled = false;
@@ -29,40 +29,40 @@ class MovableObject extends DrawableObject {
     applyGravitiy(spellCasted, element) {
         // Applys Gravitiy just for character
         if (!spellCasted) {
-        this.gravityForCharacter(element);
-        } else{
-        // Lets projectiles fall underneath ground level
-        this.gravityForSpells();
+            this.gravityForCharacter(element);
+        } else {
+            // Lets projectiles fall underneath ground level
+            this.gravityForSpells();
         }
     }
 
 
     gravityForCharacter(element) {
-            setInterval(() => {
-                if (this.y < 205 || this.speedY > 0) {
-                    this.y -= this.speedY;
-                    this.speedY -= this.accelertion;
-                    // Prevents Character from falling to low underneath ground level
-                    if (this.y > 205 && element == 'Earth') {
-                        this.y = 205
-                    }
-                    if (this.y > 192 && element != 'Earth') {
-                        this.y = 192
-                    }
-                    // Throttles Speed at a point where collision with enemy is still triggered (no infinite acceleration on falling)
-                    if (this.speedY < - 17) {
-                        this.speedY = -17;
-                    }
+        setInterval(() => {
+            if (this.y < 205 || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.accelertion;
+                // Prevents Character from falling to low underneath ground level
+                if (this.y > 205 && element == 'Earth') {
+                    this.y = 205
                 }
-            }, 1000 / 25);
-        }
+                if (this.y > 192 && element != 'Earth') {
+                    this.y = 192
+                }
+                // Throttles Speed at a point where collision with enemy is still triggered (no infinite acceleration on falling)
+                if (this.speedY < - 17) {
+                    this.speedY = -17;
+                }
+            }
+        }, 1000 / 25);
+    }
 
 
     gravityForSpells() {
-            setInterval(() => {
-                this.y -= this.speedY;
-                this.speedY -= this.accelertion;
-            }, 1000 / 25);
+        setInterval(() => {
+            this.y -= this.speedY;
+            this.speedY -= this.accelertion;
+        }, 1000 / 25);
     }
 
 
@@ -70,6 +70,7 @@ class MovableObject extends DrawableObject {
         return this.y < 192;
     }
 
+    
     isColliding(mo) {
         return this.x + this.offset.left + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.offset.top + this.height - this.offset.bottom > mo.y + mo.offset.top &&
