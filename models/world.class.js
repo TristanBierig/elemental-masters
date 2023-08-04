@@ -1,7 +1,7 @@
 class World {
     character;
     level = level1; // ground on Y-axis 440
-    floor = [];
+    
     statusBar = [
         new StatusBar(),
         new StatusBarMana(),
@@ -17,8 +17,7 @@ class World {
     endbossSpawned = false;
 
     // Starts background render from left out of sight
-    backgroundStartX = -2160; // -2160 default
-    oddBackgroundNeeded = true;
+   
 
     slimeKillAudio = playerSoundsKillSlime;
     rockShatterAudio = playerSoundsEarthSpell;
@@ -30,7 +29,6 @@ class World {
         this.keyboard = keyboard;
         this.updateGame();
         this.spawnClouds();
-        this.expandFloor();
         this.chooseCharacter(choosenChar);
         this.draw();
         this.spawnNewEnemies();
@@ -80,52 +78,7 @@ class World {
     }
 
 
-    /**
-     * This function pushes new objects into the this.floor-Array based on whether the character travelled a certain distance to the right. (infinite World generation)
-     * 
-     * @param {boolean} isNewScreen - This is True when the character travelled a certain distance to the right 
-     *                              in relation to the already rendered Background and Floor Sprites X-Coordinates 
-     */
-    expandFloor(isNewScreen) {
-        let oneScreenWidth = 6;
-        let tileStart = -720;
-        if (isNewScreen) {
-            oneScreenWidth + 6;
-            tileStart = this.floor[this.floor.length - 1].x;
-        }
-        for (let i = 0; i < oneScreenWidth; i++) {
-            this.floor.push(new Background('img/Background/tileset/ground.png', tileStart, 440, 150, 24),
-                new Background('img/Background/tileset/ground_fill.png', tileStart, 458, 400, 26),
-            );
-            tileStart = tileStart + 140;
-        }
-    }
-
-
-    expandBackground() {
-        let cloudHeight = Math.floor(Math.random() * 1);
-        let newStartSky = this.backgroundStartX + 719;
-        let newStartMountain = this.backgroundStartX + 717;
-
-        if (this.oddBackgroundNeeded && world) {
-            world.level.backgroundObjects.push(
-                new Background('img/Background/background/sky_odd.png', newStartSky, 0),
-                new Background('img/Background/background/cloud.png', newStartSky, cloudHeight, 720, 150),
-                new Background('img/Background/background/mountain2.png', newStartMountain, 150, 720, 200),
-                new Background('img/Background/background/mountain.png', newStartMountain, 80, 720, 400)
-            );
-            this.oddBackgroundNeeded = false;
-        } else if (world) {
-            world.level.backgroundObjects.push(
-                new Background('img/Background/background/sky.png', newStartSky, 0),
-                new Background('img/Background/background/cloud.png', newStartSky, cloudHeight, 720, 150),
-                new Background('img/Background/background/mountain2.png', newStartMountain, 150, 720, 200),
-                new Background('img/Background/background/mountain.png', newStartMountain, 80, 720, 400)
-            );
-            this.oddBackgroundNeeded = true;
-        }
-        this.backgroundStartX = newStartSky;
-    }
+   
 
 
     draw() {
@@ -135,7 +88,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.floor);
+        this.addObjectsToMap(this.level.floor);
         this.addObjectsToMap(this.level.foregroundObjects);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
@@ -152,12 +105,7 @@ class World {
         this.ctx.translate(this.camera_x, 0); // Forwards
         this.ctx.translate(-this.camera_x, 0);
         // Generate infinite World on moving right
-        if (this.floor[this.floor.length - 1].x - this.character.x < 800) {
-            this.expandFloor(true);
-        }
-        if (this.backgroundStartX < this.character.x || this.character.x + 720 > this.backgroundStartX) {
-            this.expandBackground();
-        }
+    
         // draw() wird immer wieder aufgerufen
         let self = this;
         requestAnimationFrame(function () {
@@ -269,7 +217,7 @@ class World {
             if (this.character.isColliding(enemy) && this.character.speedY < 0 && (this.character.isAirborne() || (this.character instanceof CharacterEarth && this.character.y < 205)) && !this.character.spellCooldownQ) {
                 this.character.jump();
                 this.slimeKillAudio.play();
-                this.damageEnemy(enemy, index, 100);
+                this.damageEnemy(enemy, 100);
             }
         }
     }
@@ -278,7 +226,7 @@ class World {
     checkMeleeAttack(enemy, index) {
         if (this.character.isColliding(enemy) && this.character.spellCooldownQ && !this.character.isHitting) {
             this.character.isHitting = true;
-            this.damageEnemy(enemy, index, 50);
+            this.damageEnemy(enemy, 50);
             this.character.punch_sound.playpause();
         }
     }
@@ -293,7 +241,7 @@ class World {
                     setTimeout(() => {
                         spell.isKilled = true;
                     }, 400);
-                    this.damageEnemy(enemy, spell, 100);
+                    this.damageEnemy(enemy, 100);
                 }
             })
         }
