@@ -4,9 +4,9 @@ class Level {
     backgroundObjects;
     foregroundObjects;
     floor = [];
+    // Starts background render from left out of sight
     backgroundStartX = -2160; // -2160 default
     oddBackgroundNeeded = true;
-    // level_end_x = 1200;
 
 
     constructor(enemies, clouds, backgroundObjects, foregroundObjects) {

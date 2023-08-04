@@ -1,7 +1,6 @@
 class World {
     character;
     level = level1; // ground on Y-axis 440
-    
     statusBar = [
         new StatusBar(),
         new StatusBarMana(),
@@ -15,9 +14,6 @@ class World {
     spawnInterval;
     camera_x = 0;
     endbossSpawned = false;
-
-    // Starts background render from left out of sight
-   
 
     slimeKillAudio = playerSoundsKillSlime;
     rockShatterAudio = playerSoundsEarthSpell;
@@ -56,14 +52,13 @@ class World {
 
     updateGame() {
         setInterval(() => {
-            this.level.enemies.forEach((enemy, index) => {
-                this.checkJumpOnEnemy(enemy, index);
-                this.checkMeleeAttack(enemy, index);
-                this.checkSpellAttack(enemy, index);
-                this.checkKillEnemyOutOfSight(enemy, index);
+            this.level.enemies.forEach((enemy) => {
+                this.checkJumpOnEnemy(enemy);
+                this.checkMeleeAttack(enemy);
+                this.checkSpellAttack(enemy);
+                this.checkKillEnemyOutOfSight(enemy);
                 this.checkGettingHit(enemy);
                 this.collectLoot();
-
                 if (world && world.statusBar[2].percentage == 100 && !this.endbossSpawned && this.character.x > 1400) {
                     this.endbossSpawned = true;
                     this.spawnEndboss();
@@ -78,39 +73,43 @@ class World {
     }
 
 
-   
-
-
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         // Prevents upscaling Pixelart to be smushy
         this.ctx.imageSmoothingEnabled = false;
         this.ctx.translate(this.camera_x, 0);
+        this.handleMultipleObjectDraw();
+        this.addToMap(this.character);
+        this.handleStaticObjectDraw();
+        this.ctx.translate(-this.camera_x, 0);
+        // draw() wird immer wieder aufgerufen
+        let self = this;
+        requestAnimationFrame(function () {
+            self.draw();
+        });
+    }
 
+
+    handleStaticObjectDraw() {
+        this.ctx.translate(-this.camera_x, 0); // Back
+        this.addObjectsToMap(this.statusBar);
+        this.addFrameToMap(this.statusBar);
+        this.ctx.translate(this.camera_x, 0); // Forwards
+    }
+
+
+    handleMultipleObjectDraw() {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.floor);
         this.addObjectsToMap(this.level.foregroundObjects);
         this.addObjectsToMap(this.level.enemies);
-        this.addToMap(this.character);
+        this.addObjectsToMap(this.level.clouds);
         if (this.character.activeSpells.length > 0) {
             this.addObjectsToMap(this.character.activeSpells);
         }
         if (this.collectableItems.length > 0) {
             this.addObjectsToMap(this.collectableItems);
         }
-        this.addObjectsToMap(this.level.clouds);
-        this.ctx.translate(-this.camera_x, 0); // Back
-        this.addObjectsToMap(this.statusBar);
-        this.addFrameToMap(this.statusBar);
-        this.ctx.translate(this.camera_x, 0); // Forwards
-        this.ctx.translate(-this.camera_x, 0);
-        // Generate infinite World on moving right
-    
-        // draw() wird immer wieder aufgerufen
-        let self = this;
-        requestAnimationFrame(function () {
-            self.draw();
-        });
     }
 
 
@@ -135,7 +134,7 @@ class World {
         }
 
         mo.draw(this.ctx);
-    
+
         // Is just need to adjust Hitboxes with e.g. new Spells
         // mo.drawHitbox(this.ctx);
 
@@ -160,7 +159,7 @@ class World {
 
 
     /**
-     * This function checks all 5 seconds if there are still enemies on the map and spawns new one if there are none
+     * This function checks every second if there are still enemies on the map and spawns new one if there are none
      * 
      */
     spawnNewEnemies() {
@@ -211,7 +210,7 @@ class World {
     }
 
 
-    checkJumpOnEnemy(enemy, index) {
+    checkJumpOnEnemy(enemy) {
         // Cant damage Endboss with jump
         if (enemy instanceof Slime || !enemy.isTransformed) {
             if (this.character.isColliding(enemy) && this.character.speedY < 0 && (this.character.isAirborne() || (this.character instanceof CharacterEarth && this.character.y < 205)) && !this.character.spellCooldownQ) {
@@ -223,7 +222,7 @@ class World {
     }
 
 
-    checkMeleeAttack(enemy, index) {
+    checkMeleeAttack(enemy) {
         if (this.character.isColliding(enemy) && this.character.spellCooldownQ && !this.character.isHitting) {
             this.character.isHitting = true;
             this.damageEnemy(enemy, 50);
@@ -264,31 +263,14 @@ class World {
 
 
     damageEnemy(enemy, damage) {
-        if (enemy instanceof Slime || !enemy.isTransformed) {
-            enemy.lifePoints -= damage;
-        } else if (enemy.isTransformed && enemy.Status != 'STAND') {
-            enemy.lifePoints -= damage;
-            enemy.isTakingHit = true;
-        }
+        this.handleDamageForSlimes(enemy, damage);
+        this.handleDamageForEndboss(enemy);
+        this.handleKillForSlimes(enemy);
+        this.handleKillForEndboss(enemy);
+    }
 
-        if (enemy instanceof Endboss && enemy.isTransformed) {
-            world.statusBar[3].percentage = enemy.lifePoints;
-            if (world.statusBar[3].percentage <= 0) {
-                world.statusBar[3].percentage = 0;
-            }
-        }
 
-        if (enemy.lifePoints <= 0 && enemy instanceof Slime) {
-            // Shrinks hitbox to prevent enemy interaction while death animation is playing
-            // Handles normal enemy Kills
-            setTimeout(() => {
-                this.dropLoot(enemy);
-                enemy.isKilled = true;
-            }, 1200); // 1200 default
-            enemy.offset.top = -500;
-        }
-        // Shrinks hitbox to prevent enemy interaction while death animation is playing
-        // Handles Endboss Kill
+    handleKillForEndboss(enemy) {
         if (enemy.lifePoints <= 0 && enemy.isTransformed) {
             playerSoundsEndbossDeath.play();
             setTimeout(() => {
@@ -297,36 +279,102 @@ class World {
                 GameOver(true);
                 world.character.isGameOver = true;
             }, 4000); // 4000 default
+            // Shrinks hitbox to prevent enemy interaction while death animation is playing
             enemy.offset.top = -500;
+        }
+    }
+
+
+    handleKillForSlimes(enemy) {
+        if (enemy.lifePoints <= 0 && enemy instanceof Slime) {
+            setTimeout(() => {
+                this.dropLoot(enemy);
+                enemy.isKilled = true;
+            }, 1200); // 1200 default
+            // Shrinks hitbox to prevent enemy interaction while death animation is playing
+            enemy.offset.top = -500;
+        }
+    }
+
+
+    handleDamageForEndboss(enemy) {
+        if (enemy instanceof Endboss && enemy.isTransformed) {
+            world.statusBar[3].percentage = enemy.lifePoints;
+            if (world.statusBar[3].percentage <= 0) {
+                world.statusBar[3].percentage = 0;
+            }
+        }
+    }
+
+
+    handleDamageForSlimes(enemy, damage) {
+        if (enemy instanceof Slime || !enemy.isTransformed) {
+            enemy.lifePoints -= damage;
+        } else if (enemy.isTransformed && enemy.Status != 'STAND') {
+            enemy.lifePoints -= damage;
+            enemy.isTakingHit = true;
         }
     }
 
 
     checkKillEnemy() {
         setInterval(() => {
-            for (let i = world.level.enemies.length - 1; i >= 0; i--) {
-                const enemy = world.level.enemies[i];
-                if (enemy.isKilled && !this.endbossSpawned) {
-                    world.level.enemies.splice(i, 1, new Slime(this.character.x, enemy.category));
-                }
-                if (enemy.isKilled && this.endbossSpawned) {
-                    world.level.enemies.splice(i, 1);
-                }
-            }
-            for (let i = this.character.activeSpells.length - 1; i >= 0; i--) {
-                const spell = this.character.activeSpells[i];
-                if (spell.isKilled) {
-                    this.character.activeSpells.splice(i, 1);
-                }
-            }
+            this.checkForDeadEnemy();
+            this.checkForDeadSpell();
         }, 1000 / 60);
     }
 
 
-    dropLoot(enemy) {
-        // Defines the droprate. Whether a manapot or star is dropped.
-        this.droprate = Math.random() * 100;
+    checkForDeadEnemy() {
+        for (let i = world.level.enemies.length - 1; i >= 0; i--) {
+            const enemy = world.level.enemies[i];
+            if (enemy.isKilled && !this.endbossSpawned) {
+                world.level.enemies.splice(i, 1, new Slime(this.character.x, enemy.category));
+            }
+            if (enemy.isKilled && this.endbossSpawned) {
+                world.level.enemies.splice(i, 1);
+            }
+        }
+    }
 
+
+    checkForDeadSpell() {
+        for (let i = this.character.activeSpells.length - 1; i >= 0; i--) {
+            const spell = this.character.activeSpells[i];
+            if (spell.isKilled) {
+                this.character.activeSpells.splice(i, 1);
+            }
+        }
+    }
+
+
+    dropLoot(enemy) {
+        // Defines the droprate, which is used to define the chance of a manapot or star being dropped
+        this.droprate = Math.random() * 100;
+        this.dropLootFromTinySlime(enemy);
+        this.dropLootFromFlyingSlime(enemy);
+        this.dropLootFromNormalSlime(enemy);
+    }
+
+
+    dropLootFromNormalSlime(enemy) {
+        if (enemy.category == 'normal') {
+            if (this.droprate < 70)
+                this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'MANA'));
+        }
+    }
+
+
+    dropLootFromFlyingSlime(enemy) {
+        if (enemy.category == 'fly') {
+            if (this.droprate < 40) {
+                this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'STAR'));
+            }
+        }
+    }
+
+
+    dropLootFromTinySlime(enemy) {
         if (enemy.category == 'tiny') {
             switch (true) {
                 case (this.droprate < 25):
@@ -337,41 +385,42 @@ class World {
                     break;
             }
         }
-
-        if (enemy.category == 'fly') {
-            if (this.droprate < 40) {
-                this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'STAR'));
-            }
-        }
-
-        if (enemy.category == 'normal') {
-            if (this.droprate < 70)
-                this.collectableItems.push(new StatusbarIcon(enemy.x + enemy.offset.left, enemy.y + 30, 'MANA'));
-        }
     }
 
 
     collectLoot() {
         if (this.collectableItems.length > 0) {
             this.collectableItems.forEach((item, i) => {
+                // Checks if colliding with any collectables
                 if (item.isColliding(this.character)) {
                     this.collectItemsAudio.play();
                     item.lifePoints = 0;
                     this.collectableItems.splice(i, 1);
                     // checks if collected item is mana pot or star and fills the statusbar accordingly
-                    if (item.category == 'MANA') {
-                        this.statusBar[1].percentage += 20;
-                        if (this.statusBar[1].percentage > 100) {
-                            this.statusBar[1].percentage = 100;
-                        }
-                    } else {
-                        this.statusBar[2].percentage += 20;
-                        if (this.statusBar[2].percentage > 100) {
-                            this.statusBar[2].percentage = 100;
-                        }
-                    }
+                    this.handleManapot(item);
+                    this.handleStar(item);
                 }
             })
+        }
+    }
+
+
+    handleStar(item) {
+        if (item.category == 'STAR') {
+            this.statusBar[2].percentage += 20;
+            if (this.statusBar[2].percentage > 100) {
+                this.statusBar[2].percentage = 100;
+            }
+        }
+    }
+
+
+    handleManapot(item) {
+        if (item.category == 'MANA') {
+            this.statusBar[1].percentage += 20;
+            if (this.statusBar[1].percentage > 100) {
+                this.statusBar[1].percentage = 100;
+            }
         }
     }
 
