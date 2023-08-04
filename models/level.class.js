@@ -30,7 +30,7 @@ class Level {
         if (world && this.floor[this.floor.length - 1].x - world.character.x < 800) {
             this.expandFloor(true);
         }
-        if (world &&this.backgroundStartX < world.character.x || world.character.x + 720 > this.backgroundStartX) {
+        if (world && this.backgroundStartX < world.character.x || world.character.x + 720 > this.backgroundStartX) {
             this.expandBackground();
         }
     }
@@ -62,23 +62,35 @@ class Level {
         let newStartSky = this.backgroundStartX + 719;
         let newStartMountain = this.backgroundStartX + 717;
 
-        if (this.oddBackgroundNeeded && this) {
-            this.backgroundObjects.push(
-                new Background('img/Background/background/sky_odd.png', newStartSky, 0),
-                new Background('img/Background/background/cloud.png', newStartSky, cloudHeight, 720, 150),
-                new Background('img/Background/background/mountain2.png', newStartMountain, 150, 720, 200),
-                new Background('img/Background/background/mountain.png', newStartMountain, 80, 720, 400)
-            );
-            this.oddBackgroundNeeded = false;
+        if (this.oddBackgroundNeeded) {
+            this.generateOddBackground(newStartMountain, cloudHeight, newStartSky);
         } else {
-            this.backgroundObjects.push(
-                new Background('img/Background/background/sky.png', newStartSky, 0),
-                new Background('img/Background/background/cloud.png', newStartSky, cloudHeight, 720, 150),
-                new Background('img/Background/background/mountain2.png', newStartMountain, 150, 720, 200),
-                new Background('img/Background/background/mountain.png', newStartMountain, 80, 720, 400)
-            );
-            this.oddBackgroundNeeded = true;
+            this.generateEvenBackground(newStartMountain, cloudHeight, newStartSky);
         }
         this.backgroundStartX = newStartSky;
+    }
+
+
+
+
+    generateOddBackground(newStartMountain, cloudHeight, newStartSky) {
+        this.backgroundObjects.push(
+            new Background('img/Background/background/sky_odd.png', newStartSky, 0),
+            new Background('img/Background/background/cloud.png', newStartSky, cloudHeight, 720, 150),
+            new Background('img/Background/background/mountain2.png', newStartMountain, 150, 720, 200),
+            new Background('img/Background/background/mountain.png', newStartMountain, 80, 720, 400)
+        );
+        this.oddBackgroundNeeded = false;
+    }
+
+
+    generateEvenBackground(newStartMountain, cloudHeight, newStartSky) {
+        this.backgroundObjects.push(
+            new Background('img/Background/background/sky.png', newStartSky, 0),
+            new Background('img/Background/background/cloud.png', newStartSky, cloudHeight, 720, 150),
+            new Background('img/Background/background/mountain2.png', newStartMountain, 150, 720, 200),
+            new Background('img/Background/background/mountain.png', newStartMountain, 80, 720, 400)
+        );
+        this.oddBackgroundNeeded = true;
     }
 }
