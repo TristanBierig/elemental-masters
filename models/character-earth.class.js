@@ -50,14 +50,14 @@ class CharacterEarth extends Character {
             qRight: {
                 top: 120,
                 bottom: 132,
-                left: 275,
+                left: 265,
                 right: 400
             },
             qLeft: {
                 top: 120,
                 bottom: 132,
                 left: 150,
-                right: 550
+                right: 520
             }
         }
     }
@@ -94,9 +94,6 @@ class CharacterEarth extends Character {
             this.characterAttackE('Earth');
             this.characterTransform();
             this.moveCamera();
-            if (this.isTransformed) {
-                this.offset = this.hitboxes.evolvedForm.idle;
-            }
         }, 1000 / 60);
     }
 

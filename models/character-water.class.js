@@ -95,9 +95,6 @@ class CharacterWater extends Character {
             this.characterAttackE('Water');
             this.characterTransform();
             this.moveCamera();
-            if (this.isTransformed) {
-                this.offset = this.hitboxes.evolvedForm.idle;
-            }
         }, 1000 / 60);
     }
 

@@ -95,9 +95,6 @@ class CharacterWind extends Character {
             this.characterAttackE('Wind');
             this.characterTransform();
             this.moveCamera();
-            if (this.isTransformed) {
-                this.offset = this.hitboxes.evolvedForm.idle;
-            }
         }, 1000 / 60);
     }
 
