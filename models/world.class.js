@@ -327,7 +327,7 @@ class World {
 
 
     handleDamageForEndboss(enemy) {
-        if (enemy instanceof Endboss && enemy.isTransformed) {
+        if (enemy instanceof Endboss && enemy.isTransformed && this.statusBar[3]) {
             world.statusBar[3].percentage = enemy.lifePoints;
             if (world.statusBar[3].percentage <= 0) {
                 world.statusBar[3].percentage = 0;
