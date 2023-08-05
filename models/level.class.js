@@ -19,6 +19,10 @@ class Level {
     }
 
 
+    /**
+     * This function sets an Interval to check if there needs to be a new background to be generated
+     * 
+     */
     updateLevel() {
         setInterval(() => {
             this.keepGenerateBackground();
@@ -26,6 +30,10 @@ class Level {
     }
 
 
+    /**
+     * This function checks if there needs to be a new background depending on the distance the character travelled to the right in relation to the already renderd background
+     * 
+     */
     keepGenerateBackground() {
         if (world && this.floor[this.floor.length - 1].x - world.character.x < 800) {
             this.expandFloor(true);
@@ -57,6 +65,11 @@ class Level {
     }
 
 
+    /**
+     * This function sets the numbers for the start of the new generated background should be and switches the sky image to a different one on every odd occasion.
+     * That is needed because the sky image can not be put together seaminglessly without being flipped
+     *  
+     */
     expandBackground() {
         let cloudHeight = Math.floor(Math.random() * 1);
         let newStartSky = this.backgroundStartX + 719;
@@ -71,8 +84,13 @@ class Level {
     }
 
 
-
-
+    /**
+     * This functions pushes new background Objects into the backgroundObject-Array from where they get renderd
+     * 
+     * @param {integer} newStartMountain - X-coordinates where the image needs to start
+     * @param {integer} cloudHeight - X-coordinates where the image needs to start
+     * @param {integer} newStartSky - X-coordinates where the image needs to start
+     */
     generateOddBackground(newStartMountain, cloudHeight, newStartSky) {
         this.backgroundObjects.push(
             new Background('img/Background/background/sky_odd.png', newStartSky, 0),
@@ -84,6 +102,13 @@ class Level {
     }
 
 
+    /**
+     * This functions pushes new background Objects into the backgroundObject-Array from where they get renderd
+     * 
+     * @param {integer} newStartMountain - X-coordinates where the image needs to start
+     * @param {integer} cloudHeight - X-coordinates where the image needs to start
+     * @param {integer} newStartSky - X-coordinates where the image needs to start
+     */
     generateEvenBackground(newStartMountain, cloudHeight, newStartSky) {
         this.backgroundObjects.push(
             new Background('img/Background/background/sky.png', newStartSky, 0),

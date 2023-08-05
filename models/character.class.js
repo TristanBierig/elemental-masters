@@ -22,6 +22,10 @@ class Character extends MovableObject {
     playAir = false;
 
 
+    /**
+     * This function sets an animationInterval to check continuously the state of the character and plays the proper animation
+     * 
+     */
     animateCharacter() {
         this.animationInterval = setInterval(() => {
             if (this.isDead()) {
@@ -47,11 +51,13 @@ class Character extends MovableObject {
     }
 
 
-    // Move Horizontal + plays running sound
+    /**
+     * This function moves the character to left or right depending on key events and plays the walking sound while doing so and mutes it when character starts being airborne
+     * 
+     */
     characterMove() {
         this.moveToRight();
         this.moveToLeft();
-        // Mutes running sound when standing or jumping
         if (world && (!world.keyboard.LEFT && !world.keyboard.RIGHT) || this.isAirborne()) {
             if (this.playRun) {
                 this.walking_sound.playpause();
@@ -61,15 +67,18 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * This function lets the character jump on certain key event and plays a sound while in the air. Allows for a single second jump while in the air.
+     * Needs to be on ground first before having again access to the double jump
+     * 
+     */
     characterJump() {
-        // Jumps or doubleJump and plays flying sound
         if (world && world.keyboard.SPACE == true && (!this.isAirborne() || (this.y < 120 && this.doubleJumpAvailable)) && !this.isTransforming) {
             this.jump();
             // Disables double jump when already jumped a second time while in air
             if (this.isAirborne() && this.y < 200 && this.doubleJumpAvailable) {
                 this.doubleJumpAvailable = false;
             }
-            // Plays Sound while airborne
             if (!this.playAir) {
                 this.airborne_sound.playpause();
                 this.playAir = true;
@@ -88,6 +97,10 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * This function handles the Q-Attack
+     * 
+     */
     characterAttackQ() {
         if (world && world.keyboard.Q == true && !this.spellCooldownQ && !this.isTransforming) {
             this.spellCooldownQ = true;
@@ -106,7 +119,6 @@ class Character extends MovableObject {
             if (!this.isTransformed) {
                 setTimeout(() => {
                     this.offset = this.hitboxes.normalForm.qLeft;
-
                 }, 200);
             } else {
                 setTimeout(() => {
@@ -140,7 +152,6 @@ class Character extends MovableObject {
                 this.isHitting = false;
             }, 500);
         } else {
-            // Handles Transformed punch hitbox reset
             setTimeout(() => {
                 this.spellCooldownQ = false;
                 this.offset = this.hitboxes.evolvedForm.idle;
@@ -150,8 +161,12 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * This function casts W-Spell only when having mana and the cooldown is up
+     * 
+     * @param {string} element - Defines the element of the character that is playing
+     */
     characterAttackW(element) {
-        // Cast W-Spell only when having mana and the cooldown is up
         if (world && world.keyboard.W == true && !this.spellCooldown && !this.isAirborne() && world.statusBar[1].percentage >= 10 && !this.isTransforming) {
             world.rockShatterAudio.play();
             this.setSpawnPointForWSpell(element);
@@ -164,6 +179,11 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * This function sets the spawning point to left or right depending on character orientation
+     * 
+     * @param {string} element - Defines the element of the character that is playing
+     */
     setSpawnPointForWSpell(element) {
         if (!this.isTransformed) {
             this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
@@ -181,8 +201,14 @@ class Character extends MovableObject {
     }
 
 
+
+
+    /**
+     * Casts E-Spell only when having mana and the cooldown is up
+     * 
+     * @param {string} element - Defines the element of the character that is playing
+     */
     characterAttackE(element) {
-        // Casts E-Spell only when having mana and the cooldown is up
         if (world && world.keyboard.E == true && !this.spellCooldown && world.statusBar[1].percentage >= 10 && !this.isTransforming) {
             this.activeSpells.push(new ThrowableObject(this.x + this.offset.left + this.width - this.offset.right,
                 this.y + this.offset.top,
@@ -199,7 +225,6 @@ class Character extends MovableObject {
 
 
     characterTransform() {
-        // Evolves into ultimate Form
         if (world && world.keyboard.R == true && world.statusBar[2].percentage >= 100 && !this.isTransformed) {
             this.isTransforming = true;
             this.isTransformed = true;
@@ -234,8 +259,6 @@ class Character extends MovableObject {
             this.movementStatus = 'LEFT';
         }
     }
-
-
 
 
     animateIdle() {
@@ -327,10 +350,17 @@ class Character extends MovableObject {
             this.animationStatus = 'DEAD';
             this.handleGameoverSounds();
             this.stopInterval(this.movementInterval);
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
         }
     }
 
 
+    /**
+     * This function starts playing the game over music after a certain timeout depending on the character death animation time needed
+     * 
+     */
     handleGameoverSounds() {
         this.walking_sound.stop();
         playerSoundsGameOver.play();

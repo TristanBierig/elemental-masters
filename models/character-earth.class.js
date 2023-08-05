@@ -81,6 +81,10 @@ class CharacterEarth extends Character {
     }
 
 
+    /**
+     * This function sets an Interval to check on numerous movement commands for the character and executes them accordingly
+     * 
+     */
     updateCharacter() {
         this.movementInterval = setInterval(() => {
             this.characterMove();
@@ -97,13 +101,17 @@ class CharacterEarth extends Character {
     }
 
 
+    /**
+     * This function sets an Interval to continuously checking if the game is over and stops
+     * certain intervals preventing the player to further move or interact with the game when its over.
+     * 
+     */
     gameOver() {
         setInterval(() => {
             if (this.isGameOver) {
                 this.stopInterval(this.movementInterval);
                 this.stopInterval(this.animationIntervalNormal);
                 this.stopInterval(this.animationIntervalTransform);
-
             }
         }, 1000);
     }

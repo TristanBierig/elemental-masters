@@ -216,7 +216,7 @@ function showLooseScreen() {
 
 
 /* ========== EventListener ========== */
-window.addEventListener('fullscreenchange', (e) => {
+window.addEventListener('fullscreenchange', () => {
     let enterBtn = document.getElementById('enterFullscreen');
     let exitBtn = document.getElementById('exitFullscreen');
 

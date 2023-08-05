@@ -37,12 +37,17 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * This function sets an Interval to check continuously if the character is in the air and lets him fall down to ground level
+     * Earth Character is validated seperatly beacuse of a different image it needs to be set on a different Y-coordinate 
+     * 
+     * @param {string} element - Defines the element of the choosen character
+     */
     gravityForCharacter(element) {
         setInterval(() => {
             if (this.y < 205 || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.accelertion;
-                // Prevents Character from falling to low underneath ground level
                 if (this.y > 205 && element == 'Earth') {
                     this.y = 205
                 }
@@ -58,6 +63,10 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * This function applys the same garvitiy to spells as it is been added to the character with the exception that spells can fall through the ground and have no accelerating threshhold
+     * 
+     */
     gravityForSpells() {
         setInterval(() => {
             this.y -= this.speedY;
@@ -71,6 +80,12 @@ class MovableObject extends DrawableObject {
     }
 
     
+    /**
+     * This function checks if the calling object (this) collides with another movable Object passed in as a param 
+     * 
+     * @param {Object} mo - Takes a movable object as param
+     * @returns - true or false
+     */
     isColliding(mo) {
         return this.x + this.offset.left + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.offset.top + this.height - this.offset.bottom > mo.y + mo.offset.top &&

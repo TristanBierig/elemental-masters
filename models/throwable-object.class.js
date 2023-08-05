@@ -25,6 +25,11 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function loads only the images of the choosen character elements spells
+     * 
+     * @param {string} element - element of choosen character
+     */
     handleTypeImages(element) {
         switch (element) {
             case 'Earth':
@@ -83,6 +88,14 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function processes all relevant data and functionality regarding the W-Spell
+     * 
+     * @param {integer} x - X-coordinates of the character
+     * @param {integer} y - Y-coordinates of the character
+     * @param {string} category - category of the pressed spellkey
+     * @param {string} element - element of the choosen character
+     */
     processWSpell(x, y, category, element) {
         if (category == 'W') {
             this.y += 2;
@@ -95,6 +108,13 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function sets the data depending on the given element
+     * 
+     * @param {integer} x - X-coordinates of the character
+     * @param {integer} y - Y-coordinates of the character
+     * @param {string} element - element of the choosen character
+     */
     setWSpellData(x, y, element) {
         switch (element) {
             case 'Earth':
@@ -113,6 +133,12 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function sets all the base data depending on the element and character orientation
+     * 
+     * @param {integer} x - X-coordinates of the character
+     * @param {integer} y - Y-coordinates of the character
+     */
     setWindW(x, y) {
         this.width = 200;
         this.height = 100;
@@ -131,6 +157,12 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function sets all the base data depending on the element and character orientation
+     * 
+     * @param {integer} x - X-coordinates of the character
+     * @param {integer} y - Y-coordinates of the character
+     */
     setWaterW(x, y) {
         this.width = 96;
         this.height = 240;
@@ -145,6 +177,12 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function sets all the base data depending on the element and character orientation
+     * 
+     * @param {integer} x - X-coordinates of the character
+     * @param {integer} y - Y-coordinates of the character
+     */
     setFireW(x, y) {
         this.width = 160;
         this.height = 160;
@@ -163,11 +201,17 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function sets all the base data depending on the element and character orientation
+     * 
+     * @param {integer} x - X-coordinates of the character
+     * @param {integer} y - Y-coordinates of the character
+     */
     setEarthW(x, y) {
         this.width = 96;
         this.height = 96;
         this.x = x;
-        this.y = y - 20;
+        this.y = y - 15;
         this.offset = {
             top: 30,
             bottom: 30,
@@ -177,6 +221,14 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function processes all relevant data and functionality regarding the W-Spell
+     * 
+     * @param {integer} x - X-coordinates of the character
+     * @param {integer} y - Y-coordinates of the character
+     * @param {string} category - category of the pressed spellkey
+     * @param {string} element - element of the choosen character
+     */
     processESpell(x, y, category, element) {
         if (category == 'E') {
             this.x -= 56;
@@ -190,6 +242,13 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function sets the data depending on the given element
+     * 
+     * @param {integer} x - X-coordinates of the character
+     * @param {integer} y - Y-coordinates of the character
+     * @param {string} element - element of the choosen character
+     */
     setESpellData(x, y, element) {
         switch (element) {
             case 'Earth':
@@ -208,6 +267,12 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function sets all the base data depending on the element and character orientation
+     * 
+     * @param {integer} x - X-coordinates of the character
+     * @param {integer} y - Y-coordinates of the character
+     */
     setEarthE(x, y) {
         this.width = 96;
         this.height = 96;
@@ -231,6 +296,12 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function sets all the base data depending on the element and character orientation
+     * 
+     * @param {integer} x - X-coordinates of the character
+     * @param {integer} y - Y-coordinates of the character
+     */
     setFireE(x, y) {
         this.width = 96;
         this.height = 96;
@@ -245,6 +316,12 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function sets all the base data depending on the element and character orientation
+     * 
+     * @param {integer} x - X-coordinates of the character
+     * @param {integer} y - Y-coordinates of the character
+     */
     setWaterE(x, y) {
         this.width = 96;
         this.height = 96;
@@ -259,6 +336,12 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function sets all the base data depending on the element and character orientation
+     * 
+     * @param {integer} x - X-coordinates of the character
+     * @param {integer} y - Y-coordinates of the character
+     */
     setWindE(x, y) {
         this.width = 96;
         this.height = 96;
@@ -295,7 +378,10 @@ class ThrowableObject extends MovableObject {
         }, 1000 / 25);
     }
 
-
+    /**
+     * This function plays the W-Spell animation once and deletes the object from the activeSpells array afterwards whether it hit something or not
+     * 
+     */
     animateWAttack() {
         this.animationInterval = setInterval(() => {
             if (this.animationStatus != 'ONCE') {
@@ -334,8 +420,12 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function plays the death animation and stops the movementInterval after hitting an enemy and 
+     * the animation Intervall after the whole animation played
+     * 
+     */
     animateEAttackHit() {
-        // Death Animation and stops Intervals
         if (this.animationStatus != 'DEAD') {
             this.currentImage = 0;
             this.animationStatus = 'DEAD';

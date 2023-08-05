@@ -7,6 +7,7 @@ class StatusbarIcon extends MovableObject {
     ICONS_STAR = allImages.ingameUI.icons.stars;
 
     constructor(x, y, icons) {
+        // Empty image on first frame loaded
         super().loadImage('img/Enemies/Slime/BlueSlime/death/death_8.png');
         this.loadImages(this.ICONS_LIFE);
         this.loadImages(this.ICONS_MANA);
@@ -27,6 +28,12 @@ class StatusbarIcon extends MovableObject {
         this.animate();
     }
 
+
+    /**
+     * This function sets the type of the icon to the desired one
+     * 
+     * @param {string} icons - param defines the type of the icon
+     */
     setType(icons) {
         if (icons == 'LIFE') {
             this.icons = this.ICONS_LIFE;

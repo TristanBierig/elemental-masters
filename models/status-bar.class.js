@@ -31,6 +31,10 @@ class StatusBar extends DrawableObject {
     }
 
 
+    /**
+     * This function sets the progress of the status bar depending on the returning index
+     * 
+     */
     setPercentage() {
         if (!this.bossBar) {
             let path = this.IMAGES_BAR[this.resolveCharacterBarIndex()];
@@ -42,6 +46,11 @@ class StatusBar extends DrawableObject {
     }
 
 
+    /**
+     * This function returns a different index depending on the percentage (higher percentage = image with filled bar)
+     * 
+     * @returns the index of the image that should be used
+     */
     resolveCharacterBarIndex() {
         if (this.percentage > 80) {
             return 5;
@@ -59,6 +68,11 @@ class StatusBar extends DrawableObject {
     }
 
 
+    /**
+     * This function returns a different index depending on the percentage (higher percentage = image with filled bar)
+     * 
+     * @returns the index of the image that should be used
+     */
     resolveBossBarIndex() {
         if (this.percentage > 1600) {
             return 5;

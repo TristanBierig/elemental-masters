@@ -40,6 +40,11 @@ class Slime extends MovableObject {
     }
 
 
+    /**
+     * This function sets the data for the spawning point of different slimes and theire base data
+     * 
+     * @param {integer} start - X-Coordinates of the character at the time
+     */
     setDataForDifferentType(start) {
         if (start != undefined) {
             this.x = start + 720 + Math.random() * 300;
@@ -94,8 +99,11 @@ class Slime extends MovableObject {
     }
 
 
+    /**
+     * This function animates the death animation and stops the animationInterval after the whole animation played
+     * 
+     */
     animateNormalSlimeDeath() {
-        // Death Animation and stops Intervals
         if (this.animationStatus != 'DEAD') {
             this.currentImage = 0;
             this.animationStatus = 'DEAD';
@@ -119,8 +127,11 @@ class Slime extends MovableObject {
     }
 
 
+     /**
+     * This function animates the death animation and stops the animationInterval after the whole animation played
+     * 
+     */
     animateTinySlimeDeath() {
-        // Death Animation and stops Intervals
         if (this.animationStatus != 'DEAD') {
             this.currentImage = 0;
             this.animationStatus = 'DEAD';
@@ -134,7 +145,6 @@ class Slime extends MovableObject {
 
 
     animateFlyingSlime() {
-        // Handling flying slimes
         this.animationInterval = setInterval(() => {
             if (this.isDead()) {
                 this.animateFlyingSlimeDeath();
@@ -145,8 +155,11 @@ class Slime extends MovableObject {
     }
 
 
+     /**
+     * This function animates the death animation and stops the animationInterval after the whole animation played
+     * 
+     */
     animateFlyingSlimeDeath() {
-        // Death Animation and stops Intervals
         if (this.animationStatus != 'DEAD') {
             this.currentImage = 0;
             this.animationStatus = 'DEAD';

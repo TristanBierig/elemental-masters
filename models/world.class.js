@@ -32,6 +32,11 @@ class World {
     }
 
 
+    /**
+     * This function creates a new Character Object depending on the choosen character
+     * 
+     * @param {string} choosenChar - element of the choosen character
+     */
     chooseCharacter(choosenChar) {
         switch (choosenChar) {
             case 'Earth':
@@ -50,6 +55,10 @@ class World {
     }
 
 
+    /**
+     * This function sets an Interval and checks continuously if certain interactions between character and enemies occur
+     * 
+     */
     updateGame() {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
@@ -73,6 +82,10 @@ class World {
     }
 
 
+    /**
+     * This function draws all the images on the canvas
+     * 
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         // Prevents upscaling Pixelart to be smushy
@@ -90,6 +103,10 @@ class World {
     }
 
 
+    /**
+     * This function draws only static items
+     * 
+     */
     handleStaticObjectDraw() {
         this.ctx.translate(-this.camera_x, 0); // Back
         this.addObjectsToMap(this.statusBar);
@@ -98,6 +115,10 @@ class World {
     }
 
 
+    /**
+     * This function draws images containing multiple objects
+     * 
+     */
     handleMultipleObjectDraw() {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.floor);
@@ -113,6 +134,11 @@ class World {
     }
 
 
+    /**
+     * This function draws the static status bar frames and icons
+     * 
+     * @param {object} object - either an object regarding the icon or frame used for the status bars
+     */
     addFrameToMap(object) {
         object.forEach(obj => {
             this.addToMap(obj.statusbarFrame);
@@ -132,18 +158,20 @@ class World {
         if (mo.otherDirection) {
             this.flipImage(mo);
         }
-
         mo.draw(this.ctx);
-
         // Is just need to adjust Hitboxes with e.g. new Spells
         // mo.drawHitbox(this.ctx);
-
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
     }
 
 
+    /**
+     * This function flips the image if need. E.g. if its travelling in opposing direction thant its grafic is designed for
+     * 
+     * @param {object} mo - object that needs to be drawn
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -210,6 +238,7 @@ class World {
     }
 
 
+    
     checkJumpOnEnemy(enemy) {
         // Cant damage Endboss with jump
         if (enemy instanceof Slime || !enemy.isTransformed) {
