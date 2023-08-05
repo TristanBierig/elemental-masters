@@ -77,11 +77,15 @@ class CharacterWind extends Character {
         this.offset = this.hitboxes.normalForm.idle;
         this.updateCharacter();
         this.applyGravitiy();
-        this.animateCharacterNormal();
+        this.animateCharacter();
         this.gameOver();
     }
 
 
+    /**
+     * This function sets an Interval to check on numerous movement commands for the character and executes them accordingly
+     * 
+     */
     updateCharacter() {
         this.movementInterval = setInterval(() => {
             this.characterMove();
@@ -91,10 +95,18 @@ class CharacterWind extends Character {
             this.characterAttackE('Wind');
             this.characterTransform();
             this.moveCamera();
+            if (this.isTransformed) {
+                this.offset = this.hitboxes.evolvedForm.idle;
+            }
         }, 1000 / 60);
     }
 
-
+    
+    /**
+     * This function sets an Interval to continuously checking if the game is over and stops
+     * certain intervals preventing the player to further move or interact with the game when its over.
+     * 
+     */
     gameOver() {
         setInterval(() => {
             if (this.isGameOver) {
@@ -103,150 +115,5 @@ class CharacterWind extends Character {
                 this.stopInterval(this.animationIntervalTransform);
             }
         }, 1000);
-    }
-
-
-    animateCharacterNormal() {
-        this.animationIntervalNormal = setInterval(() => {
-            if (this.isDead()) {
-                // Death Animation and stops Intervals
-                if (this.animationStatus != 'DEAD') {
-                    this.currentImage = 0;
-                    this.animationStatus = 'DEAD';
-                    this.walking_sound.stop();
-                    playerSoundsGameOver.play();
-                    playerBackgroundIdle.pause();
-                    playerBackgroundBoss.pause();
-                    setTimeout(() => {
-                        playerSoundsGameOverLoop.play();
-                        GameOver(false);
-                    }, 2000);
-                    this.stopInterval(this.movementInterval);
-                }
-                this.playAnimation(this.imageCollection.IMAGES_DEAD);
-                if (this.currentImage == this.imageCollection.IMAGES_DEAD.length) {
-                    this.stopInterval(this.animationIntervalNormal);
-                }
-            } else if (this.isTransforming) {
-                // Transforming
-                if (this.animationStatus != 'TRANSFORM') {
-                    this.currentImage = 0;
-                    this.animationStatus = 'TRANSFORM';
-                    this.transform_sound.play();
-                }
-                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM);
-                if (this.currentImage == this.imageCollection.IMAGES_TRANSFORM.length) {
-                    this.stopInterval(this.animationIntervalNormal);
-                    this.animateCharacterTransform();
-                    this.isTransforming = false;
-                }
-            } else if (this.isTakingHit) {
-                // Taking Hit
-                if (this.animationStatus != 'HIT') {
-                    this.currentImage = 0;
-                    this.animationStatus = 'HIT';
-                    this.gettingHurt_sound.play();
-                }
-                this.playAnimation(this.imageCollection.IMAGES_TAKING_HIT);
-            } else if (this.spellCooldownQ && this.isAirborne()) {
-                // Q-Attack in Air
-                if (this.animationStatus != 'Q-ATTACK') {
-                    this.currentImage = 0;
-                    this.animationStatus = 'Q-ATTACK';
-                }
-                this.playAnimation(this.imageCollection.IMAGES_ATTACK_Q_AIR);
-            } else if (!this.isTakingHit && this.isAirborne() && this.speedY > 0) {
-                // Jumping up
-                this.playAnimation(this.imageCollection.IMAGES_JUMPING_UP);
-                this.animationStatus = 'AIRBORNE';
-            } else if (!this.isTakingHit && this.isAirborne() && this.speedY <= 0) {
-                // Falling Down
-                this.playAnimation(this.imageCollection.IMAGES_JUMPING_DOWN);
-                this.animationStatus = 'AIRBORNE';
-            } else if (this.spellCooldownQ) {
-                // Q-ATTACK
-                if (this.animationStatus != 'Q-ATTACK') {
-                    this.currentImage = 0;
-                    this.animationStatus = 'Q-ATTACK';
-                }
-                this.playAnimation(this.imageCollection.IMAGES_ATTACK_Q);
-            } else if (!this.isTakingHit && world && world.keyboard.RIGHT || world.keyboard.LEFT) {
-                // Run Animation
-                this.playAnimation(this.imageCollection.IMAGES_WALKING);
-                this.animationStatus = 'RUN';
-            }
-            else if (!this.isTakingHit) {
-                // Doing nothing
-                this.playAnimation(this.imageCollection.IMAGES_IDLE);
-                this.animationStatus = 'IDLE';
-            }
-        }, 1000 / 10);
-    }
-
-
-    // Handles animations in evolved Transform
-    animateCharacterTransform() {
-        this.offset = this.hitboxes.evolvedForm.idle;
-        this.animationIntervalTransform = setInterval(() => {
-            if (this.isDead()) {
-                // Death Animation and stops Intervals
-                if (this.animationStatus != 'DEAD') {
-                    this.currentImage = 0;
-                    this.animationStatus = 'DEAD';
-                    this.walking_sound.stop();
-                    playerSoundsGameOver.play();
-                    playerBackgroundIdle.pause();
-                    playerBackgroundBoss.pause();
-                    setTimeout(() => {
-                        playerSoundsGameOverLoop.play();
-                        GameOver(false);
-                    }, 4000);
-                    this.stopInterval(this.movementInterval);
-                }
-                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_DEAD);
-                if (this.currentImage == this.imageCollection.IMAGES_TRANSFORM_DEAD.length) {
-                    this.stopInterval(this.animationIntervalTransform);
-                }
-            } else if (this.isTakingHit) {
-                // Taking Hit
-                if (this.animationStatus != 'HIT') {
-                    this.currentImage = 0;
-                    this.animationStatus = 'HIT';
-                    this.gettingHurt_sound.play();
-                }
-                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_TAKING_HIT);
-            } else if (this.spellCooldownQ && this.isAirborne()) {
-                // Q-Attack in Air
-                if (this.animationStatus != 'Q-ATTACK') {
-                    this.currentImage = 0;
-                    this.animationStatus = 'Q-ATTACK';
-                }
-                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_ATTACK_Q_AIR);
-            } else if (!this.isTakingHit && this.isAirborne() && this.speedY > 0) {
-                // Jumping up
-                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_JUMPING_UP);
-                this.animationStatus = 'AIRBORNE';
-            } else if (!this.isTakingHit && this.isAirborne() && this.speedY <= 0) {
-                // Falling Down
-                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_JUMPING_DOWN);
-                this.animationStatus = 'AIRBORNE';
-            } else if (this.spellCooldownQ) {
-                // Q-ATTACK
-                if (this.animationStatus != 'Q-ATTACK') {
-                    this.currentImage = 0;
-                    this.animationStatus = 'Q-ATTACK';
-                }
-                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_ATTACK_Q);
-            } else if (!this.isTakingHit && world && world.keyboard.RIGHT || world.keyboard.LEFT) {
-                // Run Animation
-                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_MOVE);
-                this.animationStatus = 'RUN';
-            }
-            else if (!this.isTakingHit) {
-                // Doing nothing
-                this.playAnimation(this.imageCollection.IMAGES_TRANSFORM_IDLE);
-                this.animationStatus = 'IDLE';
-            }
-        }, 100);
     }
 }

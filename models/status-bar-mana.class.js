@@ -7,7 +7,6 @@ class StatusBarMana extends DrawableObject {
     IMAGES_BAR = allImages.ingameUI.statusbar.mana;
 
     constructor() {
-        // debugger
         super();
         this.loadImage(this.IMAGES_BAR[0]);
         this.loadImages(this.IMAGES_BAR);
@@ -23,12 +22,23 @@ class StatusBarMana extends DrawableObject {
         }, 100);
     }
 
+
+    /**
+     * This function sets the progress of the status bar depending on the returning index
+     * 
+     */
     setPercentage() {
         let path = this.IMAGES_BAR[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
 
+
+    /**
+     * This function returns a different index depending on the percentage (higher percentage = image with filled bar)
+     * 
+     * @returns the index of the image that should be used
+     */
     resolveImageIndex() {
         if (this.percentage > 80) {
             return 5;

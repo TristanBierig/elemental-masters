@@ -17,6 +17,7 @@ class Endboss extends MovableObject {
     IMAGES_CLEAVE = allImages.enemies.endboss.evolvedForm.abilities.cleave;
     IMAGES_BREATH = allImages.enemies.endboss.evolvedForm.abilities.breath;
 
+
     constructor(start) {
         super().loadImage(this.IMAGES_WALKING_BEFORE[0]);
         this.loadImages(this.IMAGES_WALKING_BEFORE);
@@ -46,153 +47,301 @@ class Endboss extends MovableObject {
     }
 
 
+    /**
+     * This function starts all functions needed for the Endboss to behave properly
+     * 
+     */
     updateBoss() {
         this.handleBossMovement();
         this.moveBoss();
+        this.animateBoss();
+    }
 
+
+    /**
+     *  This function sets an animationInterval for both, the animations in the preEvolve form and postEvolve form 
+     * 
+     */
+    animateBoss() {
         this.animationInterval = setInterval(() => {
-            if (this.isDead() && !this.isTransformed) {
-                // Triggers transform, stops movement and switches soundtracks
-                if (world && this.animationStatus != 'DEAD') {
-                    playerBackgroundIdle.playpause();
-                    playerBackgroundBoss.playpause();
-                    this.currentImage = 0;
-                    this.animationStatus = 'DEAD';
-                    this.offset.top = -200;
-                    this.stopInterval(this.movementInterval);
-                }
-                this.playAnimation(this.IMAGES_DEAD);
-                if (this.currentImage == this.IMAGES_DEAD.length) {
-                    this.lifePoints = 2000;
-                    this.isTransformed = true;
-                    this.animationStatus = 'SMASH';
-                }
-            } else if (!this.isTransformed) {
-                this.playAnimation(this.IMAGES_WALKING_BEFORE);
-            }
-
-
-            // Handles animations after transformation
-            if (this.isTransformed && this.animationStatus == 'SMASH') {
-                if (this.resetCurrentImage) {
-                    this.currentImage = 0;
-                    this.resetCurrentImage = false;
-                }
-                this.playAnimation(this.IMAGES_SMASH);
-                if (this.currentImage >= 12) {
-                    this.setTransformHitbox();
-                }
-
-                // After spawn Boss does smash once and then starts running after Character
-                if (this.currentImage == this.IMAGES_SMASH.length) {
-                    this.animationStatus = 'MOVE';
-                    this.setTransformHitbox();
-                    this.moveBoss();
-                    if (world) {
-                        world.statusBar.push(new StatusBar(350, 380, true));
-                    }
-                }
-                // Play animation when killed and stop Game
-            } else if (this.lifePoints <= 0 && this.isTransformed) {
-                if (this.animationStatus != 'DEAD') {
-                    this.currentImage = 0;
-                    this.animationStatus = 'DEAD';
-                    playerBackgroundBoss.pause();
-                }
-                this.playAnimation(this.IMAGES_DEAD_FINAL);
-                // Attacks with random spell when in reach of the character
-            } else if (this.isTransformed && this.movementStatus == 'STAND') {
-                if (this.isNextAttack) {
-                    this.nextAttack = Math.random() * 100;
-                    this.isNextAttack = false;
-                }
-
-                if (this.nextAttack >= 40) {
-                    if (this.animationStatus != 'CLEAVE') {
-                        this.currentImage = 0;
-                        this.animationStatus = 'CLEAVE';
-                    }
-
-                    if (this.currentImage >= 9 && this.currentImage <= 11) {
-                        this.setTransformHitbox(true);
-                        this.isImmune = true;
-                    } else {
-                        this.setTransformHitbox();
-                        this.isImmune = false;
-                    }
-
-                    this.playAnimation(this.IMAGES_CLEAVE);
-                    if (this.currentImage >= 15) {
-                        this.animationStatus = 'MOVE'
-                        this.setTransformHitbox();
-                        this.isNextAttack = true;
-                    }
-                }
-
-                if (this.nextAttack < 40) {
-                    if (this.animationStatus != 'BREATH') {
-                        this.currentImage = 0;
-                        this.animationStatus = 'BREATH';
-                    }
-
-                    if (this.currentImage >= 13 && this.currentImage <= 18) {
-                        this.setTransformHitbox(true);
-                        this.isImmune = true;
-                    } else {
-                        this.setTransformHitbox();
-                        this.isImmune = false;
-                    }
-
-                    this.playAnimation(this.IMAGES_BREATH);
-                    if (this.currentImage >= 21) {
-                        this.animationStatus = 'MOVE'
-                        this.setTransformHitbox();
-                        this.isNextAttack = true;
-                    }
-                }
-                console.log(this.currentImage, this.animationStatus);
-            } else if (this.isTakingHit) {
-                if (this.animationStatus != 'HIT') {
-                    this.currentImage = 0;
-                    this.animationStatus = 'HIT';
-                }
-                this.playAnimation(this.IMAGES_TAKE_HIT);
-                if (this.currentImage >= 5) {
-                    this.isTakingHit = false;
-                }
-            } else if (this.isTransformed) {
-                this.playAnimation(this.IMAGES_WALKING);
-            }
+            this.animateBossPreTransform();
+            this.animateBossPostTransform();
         }, 1000 / 5);
     }
 
 
+    /**
+     * This function handles postEvolve animation from the Boss. It will always perform a "SMASH" after evolving and then attacks with random attacks when in reach
+     * 
+     */
+    animateBossPostTransform() {
+        if (this.isTransformed && this.animationStatus == 'SMASH') {
+            this.animateSmashAttack();
+        } else if (this.lifePoints <= 0 && this.isTransformed) {
+            this.animateDeath();
+        } else if (this.isTransformed && this.movementStatus == 'STAND') {
+            this.setNextAttack();
+            this.animateCleaveAttack();
+            this.animateBreathAttack();
+        } else if (this.isTakingHit) {
+            this.animateTakingHit();
+        } else if (this.isTransformed) {
+            this.playAnimation(this.IMAGES_WALKING);
+        }
+    }
+
+
+    /**
+     *  This function only animates the first "Smash"-Attack and starts the automated movement scheme afterwards
+     * 
+     */
+    animateSmashAttack() {
+        if (this.resetCurrentImage) {
+            this.currentImage = 0;
+            this.resetCurrentImage = false;
+        }
+        this.playAnimation(this.IMAGES_SMASH);
+        if (this.currentImage >= 12) {
+            this.setTransformHitbox();
+        }
+        this.startBossAI();
+    }
+
+
+    /**
+     * This function is triggered when the introduction animation from the Boss is played. He now starts walking after the character and attacks with random attacks whenever he is in reach
+     * 
+     */
+    startBossAI() {
+        if (this.currentImage == this.IMAGES_SMASH.length) {
+            this.animationStatus = 'MOVE';
+            this.setTransformHitbox();
+            this.moveBoss();
+            if (world) {
+                world.statusBar.push(new StatusBar(350, 380, true));
+            }
+        }
+    }
+
+
+    /**
+     * This function animates the Death scene on the evolved Form
+     * 
+     */
+    animateDeath() {
+        if (this.animationStatus != 'DEAD') {
+            this.currentImage = 0;
+            this.animationStatus = 'DEAD';
+            playerBackgroundBoss.pause();
+        }
+        this.playAnimation(this.IMAGES_DEAD_FINAL);
+    }
+
+
+    /**
+     * This function sets a new number everytime the boss is about to perform his next attack. This number is used to set a certain Attack
+     * 
+     */
+    setNextAttack() {
+        if (this.isNextAttack) {
+            this.nextAttack = Math.random() * 100;
+            this.isNextAttack = false;
+        }
+    }
+
+
+    /**
+     * This function handles the "Cleave"-Attack. Animates it and adjusts the hitbox. Its only trigggerd 60% of the time
+     * 
+     */
+    animateCleaveAttack() {
+        if (this.nextAttack >= 40) {
+            if (this.animationStatus != 'CLEAVE') {
+                this.currentImage = 0;
+                this.animationStatus = 'CLEAVE';
+            }
+            this.handleCleaveHitbox();
+            this.playAnimation(this.IMAGES_CLEAVE);
+            if (this.currentImage >= this.IMAGES_CLEAVE.length) {
+                this.animationStatus = 'MOVE'
+                this.setTransformHitbox();
+                this.isNextAttack = true;
+            }
+        }
+    }
+
+
+    /**
+     * This function sets the bigger Hitbox only on the frames where the boss graphics would actualy hit the character
+     * 
+     */
+    handleCleaveHitbox() {
+        if (this.currentImage >= 9 && this.currentImage <= 11) {
+            this.setTransformHitbox(true);
+            this.isImmune = true;
+        } else {
+            this.setTransformHitbox();
+            this.isImmune = false;
+        }
+    }
+
+
+    /**
+     * This function handles the "Breath"-Attack. Animtes it and adjusts the hitbox. Its only triggered 40% of the time
+     * 
+     */
+    animateBreathAttack() {
+        if (this.nextAttack < 40) {
+            if (this.animationStatus != 'BREATH') {
+                this.currentImage = 0;
+                this.animationStatus = 'BREATH';
+            }
+            this.handleBreathHitbox();
+            this.playAnimation(this.IMAGES_BREATH);
+            if (this.currentImage >= this.IMAGES_BREATH.length) {
+                this.animationStatus = 'MOVE'
+                this.setTransformHitbox();
+                this.isNextAttack = true;
+            }
+        }
+    }
+
+
+    /**
+     * This function sets the bigger Hitbox only on the frames where the boss graphics would actualy hit the character
+     * 
+     */
+    handleBreathHitbox() {
+        if (this.currentImage >= 13 && this.currentImage <= 18) {
+            this.setTransformHitbox(true);
+            this.isImmune = true;
+        } else {
+            this.setTransformHitbox();
+            this.isImmune = false;
+        }
+    }
+
+
+    /**
+     * This function animates the taking hit animation of the boss
+     * 
+     */
+    animateTakingHit() {
+        if (this.animationStatus != 'HIT') {
+            this.currentImage = 0;
+            this.animationStatus = 'HIT';
+        }
+        this.playAnimation(this.IMAGES_TAKE_HIT);
+        if (this.currentImage >= this.IMAGES_TAKE_HIT.length) {
+            this.isTakingHit = false;
+        }
+    }
+
+
+    /**
+     * This function triggers transform, stops movement and switches soundtracks
+     * 
+     */
+    animateBossPreTransform() {
+        if (this.isDead() && !this.isTransformed) {    
+            this.handlesPreTransformDeath();
+            if (this.currentImage == this.IMAGES_DEAD.length) {
+                this.lifePoints = 2000;
+                this.isTransformed = true;
+                this.animationStatus = 'SMASH';
+            }
+        } else if (!this.isTransformed) {
+            this.playAnimation(this.IMAGES_WALKING_BEFORE);
+        }
+    }
+
+
+    /**
+     * This function handles the first death of the boss before he transforms
+     * 
+     */
+    handlesPreTransformDeath() {
+        if (world && this.animationStatus != 'DEAD') {
+            playerBackgroundIdle.playpause();
+            playerBackgroundBoss.playpause();
+            this.currentImage = 0;
+            this.animationStatus = 'DEAD';
+            // Prevents Interaction with Character till Animation is finished
+            this.offset.top = -200;
+            this.stopInterval(this.movementInterval);
+        }
+        this.playAnimation(this.IMAGES_DEAD);
+    }
+
+
+    /**
+     * This function sets an Interval to check for certain states and moves/animates the boss accordingly
+     * 
+     */
     handleBossMovement() {
         setInterval(() => {
-            if (world && world.character.x + world.character.offset.left + world.character.width - world.character.offset.right < this.x + this.offset.left - 50
-                && this.animationStatus != 'CLEAVE' && this.animationStatus != 'BREATH') {
-                this.movementStatus = 'MOVELEFT';
-            }
-
-            if (world && world.character.x + world.character.offset.left > this.x + this.offset.left + this.width - this.offset.right + 50
-                && this.animationStatus != 'CLEAVE' && this.animationStatus != 'BREATH') {
-                this.movementStatus = 'MOVERIGHT';
-            }
-
-            if (world && (world.character.x + world.character.offset.left + world.character.width - world.character.offset.right < this.x + this.offset.left
-                && world.character.x + world.character.offset.left + world.character.width - world.character.offset.right > this.x + this.offset.left - 50)
-                || (world.character.x + world.character.offset.left < this.x + this.offset.left + this.width - this.offset.right + 50
-                    && world.character.x + world.character.offset.left > this.x + this.offset.left + this.width - this.offset.right)) {
-                this.movementStatus = 'STAND';
-            }
-
-            if (this. isTransformed && this.lifePoints <= 0) {
-                this.movementStatus = 'STAND';
-            }
+            this.setLeftMovement();
+            this.setRightMovement();
+            this.setIdleAlive();
+            this.setIdleDead();
         }, 1000 / 25);
     }
 
 
+    /**
+     * This function sets the movement state into stand
+     * 
+     */
+    setIdleDead() {
+        if (this.isTransformed && this.lifePoints <= 0) {
+            this.movementStatus = 'STAND';
+        }
+    }
+
+
+    /**
+     * This function sets the movement state into idle and is just executed right before the boss attacks to prevent glitchy animations
+     * 
+     */
+    setIdleAlive() {
+        if (world && (world.character.x + world.character.offset.left + world.character.width - world.character.offset.right < this.x + this.offset.left
+            && world.character.x + world.character.offset.left + world.character.width - world.character.offset.right > this.x + this.offset.left - 50)
+            || (world.character.x + world.character.offset.left < this.x + this.offset.left + this.width - this.offset.right + 50
+                && world.character.x + world.character.offset.left > this.x + this.offset.left + this.width - this.offset.right)) {
+            this.movementStatus = 'STAND';
+        }
+    }
+
+
+
+    /**
+     * This function sets the movement state into moving right and is only set when the character is on the right side of the boss
+     *  
+     */
+    setRightMovement() {
+        if (world && world.character.x + world.character.offset.left > this.x + this.offset.left + this.width - this.offset.right + 50
+            && this.animationStatus != 'CLEAVE' && this.animationStatus != 'BREATH') {
+            this.movementStatus = 'MOVERIGHT';
+        }
+    }
+
+
+    /**
+     * This function sets the movement state into moving left and is only set when the character is on the right side of the boss
+     * 
+     */
+    setLeftMovement() {
+        if (world && world.character.x + world.character.offset.left + world.character.width - world.character.offset.right < this.x + this.offset.left - 50
+            && this.animationStatus != 'CLEAVE' && this.animationStatus != 'BREATH') {
+            this.movementStatus = 'MOVELEFT';
+        }
+    }
+
+
+    /**
+     * This function sets an movementInterval to move the boss around the map depending on the current movement state
+     * 
+     */
     moveBoss() {
         this.movementInterval = setInterval(() => {
             if (this.movementStatus == 'MOVELEFT') {
@@ -207,54 +356,96 @@ class Endboss extends MovableObject {
     }
 
 
+    /**
+     * This function sets the hitbox to a given size depending on the performing attack
+     * 
+     * @param {Boolean} hitFrame - Is always true but only passed in on the frames where it visualy makes sense
+     * that the boss is actuly hitting something, rather than having a big hitbox even when he is currently just started swinging e.g.
+     */
     setTransformHitbox(hitFrame) {
         if (this.animationStatus == 'SMASH') {
+            this.setSmashHitbox();
+        } else if (this.animationStatus == 'CLEAVE' && hitFrame) {
+            this.setCleaveHitbox();
+        } else if (this.animationStatus == 'BREATH' && hitFrame) {
+            this.setBreathHitbox();
+        } else {
+            this.setDefaultHitbox();
+        }
+    }
+
+
+    /**
+     * Sets the default hitbox while moving and idle
+     * 
+     */
+    setDefaultHitbox() {
+        this.offset = {
+            top: 175,
+            bottom: 175,
+            left: 215,
+            right: 430
+        };
+    }
+
+
+    /**
+     * Sets the hitbox for the smash attack
+     * 
+     */
+    setSmashHitbox() {
+        this.offset = {
+            top: 175,
+            bottom: 175,
+            left: 100,
+            right: 200
+        };
+    }
+
+
+    /**
+     * Sets the hitbox of the breath attack in the proper direction
+     * 
+     */
+    setBreathHitbox() {
+        if (!this.otherDirection) {
+            this.offset = {
+                top: 185,
+                bottom: 175,
+                left: 50,
+                right: 430
+            };
+        } else {
+            this.offset = {
+                top: 185,
+                bottom: 175,
+                left: 215,
+                right: 290
+            };
+        }
+    }
+
+    
+    /**
+     * Sets the hitbox of cleave attack in the proper direction
+     * 
+     */
+    setCleaveHitbox() {
+        if (!this.otherDirection) {
             this.offset = {
                 top: 175,
                 bottom: 175,
-                left: 100,
-                right: 200
+                left: 70,
+                right: 430
             };
-        } else if (this.animationStatus == 'CLEAVE' && hitFrame) {
-            if (!this.otherDirection) {
-                this.offset = {
-                    top: 175,
-                    bottom: 175,
-                    left: 70,
-                    right: 430
-                };
-            } else {
-                this.offset = {
-                    top: 175,
-                    bottom: 175,
-                    left: 215,
-                    right: 270
-                };
-            }
-        } else if (this.animationStatus == 'BREATH' && hitFrame) {
-            if (!this.otherDirection) {
-                this.offset = {
-                    top: 185,
-                    bottom: 175,
-                    left: 50,
-                    right: 430
-                };
-            } else {
-                this.offset = {
-                    top: 185,
-                    bottom: 175,
-                    left: 215,
-                    right: 290
-                };
-            }
         } else {
-            // Defines big hitbox on walking/ idle
             this.offset = {
                 top: 175,
                 bottom: 175,
                 left: 215,
-                right: 430
+                right: 270
             };
         }
     }
+
 }

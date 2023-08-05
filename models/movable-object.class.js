@@ -2,7 +2,7 @@ class MovableObject extends DrawableObject {
     speed;
     speedY = 0;
     accelertion = 1; // 1 default
-    
+
     lifePoints = 100;
     isTakingHit;
     isKilled = false;
@@ -29,41 +29,49 @@ class MovableObject extends DrawableObject {
     applyGravitiy(spellCasted, element) {
         // Applys Gravitiy just for character
         if (!spellCasted) {
-        this.gravityForCharacter(element);
-        } else{
-        // Lets projectiles fall underneath ground level
-        this.gravityForSpells();
+            this.gravityForCharacter(element);
+        } else {
+            // Lets projectiles fall underneath ground level
+            this.gravityForSpells();
         }
     }
 
 
+    /**
+     * This function sets an Interval to check continuously if the character is in the air and lets him fall down to ground level
+     * Earth Character is validated seperatly beacuse of a different image it needs to be set on a different Y-coordinate 
+     * 
+     * @param {string} element - Defines the element of the choosen character
+     */
     gravityForCharacter(element) {
-            setInterval(() => {
-                if (this.y < 205 || this.speedY > 0) {
-                    this.y -= this.speedY;
-                    this.speedY -= this.accelertion;
-                    // Prevents Character from falling to low underneath ground level
-                    if (this.y > 205 && element == 'Earth') {
-                        this.y = 205
-                    }
-                    if (this.y > 192 && element != 'Earth') {
-                        this.y = 192
-                    }
-                    // Throttles Speed at a point where collision with enemy is still triggered (no infinite acceleration on falling)
-                    if (this.speedY < - 17) {
-                        this.speedY = -17;
-                    }
-                }
-                console.log(this.speedY);
-            }, 1000 / 25);
-        }
-
-
-    gravityForSpells() {
-            setInterval(() => {
+        setInterval(() => {
+            if (this.y < 205 || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.accelertion;
-            }, 1000 / 25);
+                if (this.y > 205 && element == 'Earth') {
+                    this.y = 205
+                }
+                if (this.y > 192 && element != 'Earth') {
+                    this.y = 192
+                }
+                // Throttles Speed at a point where collision with enemy is still triggered (no infinite acceleration on falling)
+                if (this.speedY < - 17) {
+                    this.speedY = -17;
+                }
+            }
+        }, 1000 / 25);
+    }
+
+
+    /**
+     * This function applys the same garvitiy to spells as it is been added to the character with the exception that spells can fall through the ground and have no accelerating threshhold
+     * 
+     */
+    gravityForSpells() {
+        setInterval(() => {
+            this.y -= this.speedY;
+            this.speedY -= this.accelertion;
+        }, 1000 / 25);
     }
 
 
@@ -71,6 +79,13 @@ class MovableObject extends DrawableObject {
         return this.y < 192;
     }
 
+    
+    /**
+     * This function checks if the calling object (this) collides with another movable Object passed in as a param 
+     * 
+     * @param {Object} mo - Takes a movable object as param
+     * @returns - true or false
+     */
     isColliding(mo) {
         return this.x + this.offset.left + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.offset.top + this.height - this.offset.bottom > mo.y + mo.offset.top &&

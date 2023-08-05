@@ -139,6 +139,7 @@ function playSound() {
     isSoundOn = true;
 }
 
+
 function fullscreen(state) {
     let fullscreen = document.getElementById('canvas');
     if (state == 'enter') {
@@ -215,7 +216,7 @@ function showLooseScreen() {
 
 
 /* ========== EventListener ========== */
-window.addEventListener('fullscreenchange', (e) => {
+window.addEventListener('fullscreenchange', () => {
     let enterBtn = document.getElementById('enterFullscreen');
     let exitBtn = document.getElementById('exitFullscreen');
 
