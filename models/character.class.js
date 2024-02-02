@@ -353,9 +353,6 @@ class Character extends MovableObject {
             this.animationStatus = 'DEAD';
             this.handleGameoverSounds();
             this.stopInterval(this.movementInterval);
-            if (document.fullscreenElement) {
-                document.exitFullscreen();
-            }
         }
     }
 
